@@ -14,6 +14,12 @@ export interface Project {
   category: ProjectCategory;
   /** Screenshot under /public. Omitted when none exists yet - UIs render a placeholder. */
   image?: string;
+  /**
+   * How the image is framed: 'artwork' (square illustration, shown as an
+   * icon on the project page) or 'screenshot' (16:10 page capture, shown
+   * large). Defaults to 'artwork'.
+   */
+  imageType?: 'artwork' | 'screenshot';
   description: string;
   /** Source repository. */
   link: string;

@@ -27,7 +27,7 @@ const Projects = () => {
           left: 0;
           width: 100%;
           height: 100%;
-          background: linear-gradient(to top, rgba(12, 12, 14, 0.97), rgba(12, 12, 14, 0.2));
+          background: linear-gradient(to top, rgba(12, 12, 14, 0.97) 0%, rgba(12, 12, 14, 0.92) 45%, rgba(12, 12, 14, 0.25) 100%);
           display: flex;
           flex-direction: column;
           justify-content: flex-end;
@@ -154,7 +154,7 @@ const Projects = () => {
           }
           .project-card-overlay {
             padding: 22px !important;
-            background: linear-gradient(to top, rgba(12, 12, 14, 0.98), rgba(12, 12, 14, 0.35)) !important;
+            background: linear-gradient(to top, rgba(12, 12, 14, 0.98) 0%, rgba(12, 12, 14, 0.94) 50%, rgba(12, 12, 14, 0.4) 100%) !important;
           }
           .project-card-title {
             font-size: 1.2rem !important;

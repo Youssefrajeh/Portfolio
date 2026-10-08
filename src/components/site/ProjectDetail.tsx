@@ -77,6 +77,20 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
           margin: 0 auto 35px;
         }
 
+        /* Website screenshots: full width, 16:10, like a browser window */
+        .detail-hero-frame--screenshot {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 16 / 10;
+          border-radius: 12px;
+          margin: 0 auto 40px;
+          box-shadow: 0 12px 32px rgb(0 0 0 / 0.12);
+        }
+        .detail-hero-frame--screenshot .detail-hero-img {
+          object-fit: cover;
+          object-position: top;
+        }
+
         .detail-hero-img {
           width: 100%;
           height: 100%;
@@ -290,7 +304,7 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
             text-align: center;
           }
 
-          .detail-hero-frame {
+          .detail-hero-frame:not(.detail-hero-frame--screenshot) {
             width: 80px !important;
             height: 80px !important;
             margin: 0 auto 16px !important;
@@ -384,14 +398,18 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
 
         {/* Hero image */}
         <m.div
-          className="detail-hero-frame"
+          className={`detail-hero-frame${project.imageType === 'screenshot' ? ' detail-hero-frame--screenshot' : ''}`}
           variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
         >
-          <ProjectImage project={project} className="detail-hero-img" variant="icon" />
+          <ProjectImage
+            project={project}
+            className="detail-hero-img"
+            variant={project.imageType === 'screenshot' ? 'card' : 'icon'}
+          />
         </m.div>
 
         {/* Main layout */}
