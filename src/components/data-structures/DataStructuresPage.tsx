@@ -785,7 +785,7 @@ export default function DataStructuresPage() {
           ))}
         </aside>
 
-        <main className="ds-main">
+        <div className="ds-main">
           <div className="ds-hero">
             <p className="ds-hero-eyebrow">Reference & teaching notes</p>
             <h1 className="ds-hero-title">Data structures, explained by watching them work.</h1>
@@ -825,7 +825,7 @@ export default function DataStructuresPage() {
               })}
             </div>
           ))}
-        </main>
+        </div>
       </div>
     </div>
   );

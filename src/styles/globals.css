@@ -174,8 +174,145 @@
 
 #about,
 #experience,
+#education,
 #skills,
 #projects,
 #contact {
   padding-block: var(--section-space);
+}
+
+/* ─── Timeline cards: shared by Experience and Education ─── */
+.timeline-container,
+.experience-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.exp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+  transition: border-color 0.3s ease;
+  text-align: left;
+}
+.exp-card:hover {
+  border-color: var(--border-strong);
+}
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.exp-title {
+  font-family: var(--font-space), sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 4px 0;
+  text-align: left;
+}
+.exp-company {
+  font-family: var(--font-hanken), sans-serif;
+  font-size: 0.88rem;
+  color: var(--accent);
+  margin: 0;
+  text-align: left;
+  font-weight: 500;
+}
+.exp-duration {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.75rem;
+  color: var(--text-faint);
+  white-space: nowrap;
+  padding: 4px 12px;
+  background: var(--border);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.exp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px 0;
+}
+.exp-list-item {
+  padding: 6px 0 6px 16px;
+  border-left: 2px solid var(--border);
+  color: var(--text-dim);
+  font-family: var(--font-hanken), sans-serif;
+  font-size: 0.93rem;
+  line-height: 1.6;
+  text-align: left;
+}
+.exp-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tech-tag {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: rgb(var(--accent-rgb) / 0.06);
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+.tech-tag:hover {
+  color: var(--text-dim);
+}
+@media (max-width: 768px) {
+  .exp-card {
+    padding: 22px 20px;
+  }
+  .exp-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .exp-list-item {
+    font-size: 0.9rem;
+  }
+}
+
+/* ─── Accessibility ─── */
+
+/* Visible focus ring for keyboard users only (mouse clicks don't show it).
+   Form fields keep their own accent border on focus. */
+a:focus-visible,
+button:focus-visible,
+[role='button']:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* "Skip to content" link: hidden until focused with the keyboard */
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-hanken), sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }

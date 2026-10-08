@@ -447,13 +447,23 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
 
             {/* Actions */}
             <div className="detail-actions">
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="detail-btn primary"
+                >
+                  <i className="fas fa-arrow-up-right-from-square" aria-hidden="true"></i> Live Demo
+                </a>
+              )}
               <a
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="detail-btn primary"
+                className={`detail-btn ${project.demo ? 'secondary' : 'primary'}`}
               >
-                <i className="fab fa-github"></i> Visit Repository
+                <i className="fab fa-github" aria-hidden="true"></i> Visit Repository
               </a>
               <Link href="/portfolio" onClick={handleBackClick} className="detail-btn secondary">
                 Back to Projects

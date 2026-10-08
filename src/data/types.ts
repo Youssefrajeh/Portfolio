@@ -15,7 +15,12 @@ export interface Project {
   /** Screenshot under /public. Omitted when none exists yet - UIs render a placeholder. */
   image?: string;
   description: string;
+  /** Source repository. */
   link: string;
+  /** Live, publicly reachable deployment, when one exists. */
+  demo?: string;
+  /** Shown first, with a "Featured" label. Keep to two or three projects. */
+  featured?: boolean;
   duration: string;
   role: string;
   detailedDescription: string;
@@ -36,6 +41,19 @@ export interface Experience {
   duration: string;
   responsibilities: string[];
   technologies: string[];
+}
+
+export interface Education {
+  id: number;
+  credential: string;
+  institution: string;
+  location: string;
+  /** e.g. "2023 – 2026" */
+  period: string;
+  /** Short facts shown as tags, e.g. "Co-op", "GPA 3.9". */
+  highlights: string[];
+  /** Notable coursework or transferable skills. */
+  details: string[];
 }
 
 export type SkillCategory = 'programming' | 'web' | 'database' | 'tools';

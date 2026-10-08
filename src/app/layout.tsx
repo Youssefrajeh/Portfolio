@@ -33,14 +33,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: `${SITE_URL}/`,
     siteName: 'Youssef Rajeh Portfolio',
-    images: [
-      {
-        url: `${SITE_URL}/images/portfolio-preview.jpg`,
-        width: 1200,
-        height: 630,
-        alt: 'Youssef Rajeh Software Developer Portfolio',
-      },
-    ],
+    // Preview image comes from app/opengraph-image.tsx
     locale: 'en_CA',
   },
   twitter: {
@@ -50,7 +43,6 @@ export const metadata: Metadata = {
     title: 'Youssef Rajeh | Software Developer Platform',
     description:
       'Software developer platform featuring portfolio projects, technical case studies, and future software tools.',
-    images: [`${SITE_URL}/images/portfolio-preview.jpg`],
   },
   alternates: {
     canonical: `${SITE_URL}/`,
@@ -86,7 +78,7 @@ const jsonLd = {
   mainEntityOfPage: `${SITE_URL}/`,
   email: 'youssefrrajeh@gmail.com',
   telephone: '+1-548-388-4360',
-  image: `${SITE_URL}/images/portfolio-preview.jpg`,
+  image: `${SITE_URL}/images/youssef.jpeg`,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'London',

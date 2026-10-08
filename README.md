@@ -59,10 +59,12 @@ public/                   Static assets, CV, /3D demo, CNAME
 
 All content lives in `src/data` and is rendered by **both** editions:
 
-- `projectsData.ts` - projects (a new entry automatically gets a `/project/<id>` page, a sitemap entry and a file in the retro Explorer). `image` is optional; projects without a screenshot get a title card.
-- `experienceData.ts`, `skillsData.ts` - experience and skills.
+- `projectsData.ts` - projects (a new entry automatically gets a `/project/<id>` page, a sitemap entry and a file in the retro Explorer). `image` is optional; projects without a screenshot get a title card. `demo` adds a "Live demo" link; `featured: true` lists the project first with a Featured label.
+- `experienceData.ts`, `educationData.ts`, `skillsData.ts` - experience, education (from the CV) and skills.
 - `dataStructuresMeta.ts` - copy for the data structures reference.
 - `src/lib/site.ts` - contact details, CV path, Formspree endpoint, site URL.
+- Accent colour and theme tokens live at the top of `src/styles/globals.css`.
+- `src/app/opengraph-image.png` is the link-preview card shown when the site is shared.
 
 ## Design notes
 

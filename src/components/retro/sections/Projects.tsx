@@ -163,6 +163,16 @@ const Projects: React.FC = () => {
 
                             {/* Buttons */}
                             <div className="flex justify-end gap-2 mt-1 select-none">
+                                {showProperties.demo && (
+                                    <a
+                                        href={showProperties.demo}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="win95-button text-xs font-semibold py-1 px-4 text-black border-2 flex items-center justify-center gap-1.5 hover:no-underline"
+                                    >
+                                        🌐 Live Demo
+                                    </a>
+                                )}
                                 <a 
                                     href={showProperties.link}
                                     target="_blank"

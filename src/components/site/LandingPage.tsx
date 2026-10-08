@@ -2,7 +2,7 @@
 
 import { m } from "motion/react";
 import Link from "next/link";
-import { RETRO_PATH, withBasePath } from "@/lib/site";
+import { CONTACT, CV_PATH, RETRO_PATH, withBasePath } from "@/lib/site";
 import { staggerContainer, scaleIn } from "@/lib/motionVariants";
 import ThemeToggle from "./ThemeToggle";
 
@@ -143,7 +143,48 @@ const LandingPage = () => {
           font-size: clamp(0.9rem, 1.6vw, 0.98rem);
           text-decoration: none;
           transition: background 0.15s ease;
+        }
+        .hub-actions {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          flex-wrap: wrap;
           margin-bottom: clamp(24px, 4vh, 36px);
+        }
+        .hub-cta-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 12px 24px;
+          border: 1px solid var(--border-strong);
+          border-radius: 6px;
+          color: var(--text);
+          font-family: var(--font-hanken), sans-serif;
+          font-weight: 600;
+          font-size: clamp(0.9rem, 1.6vw, 0.98rem);
+          text-decoration: none;
+          transition: border-color 0.15s ease, background 0.15s ease;
+        }
+        .hub-cta-secondary:hover {
+          border-color: var(--text-faint);
+          background: var(--surface);
+        }
+        .hub-status {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin: 0 0 clamp(20px, 3vh, 28px);
+          font-family: var(--font-jetbrains), monospace;
+          font-size: 0.78rem;
+          color: var(--text-dim);
+        }
+        .hub-status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #22c55e;
+          box-shadow: 0 0 0 3px rgb(34 197 94 / 0.18);
         }
 
         .hub-cta:hover {
@@ -277,15 +318,30 @@ const LandingPage = () => {
           Computer Programming & Analysis student building practical web, database, and software projects.
         </m.p>
 
+        <m.p
+          className="hub-status"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.5 }}
+        >
+          <span className="hub-status-dot" aria-hidden="true" />
+          Open to software development roles · {CONTACT.location.split(',')[0]}, ON
+        </m.p>
+
         <m.div
+          className="hub-actions"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
           <Link href="/portfolio" className="hub-cta">
             <span>View Portfolio</span>
-            <i className="fas fa-arrow-right"></i>
+            <i className="fas fa-arrow-right" aria-hidden="true"></i>
           </Link>
+          <a href={withBasePath(CV_PATH)} className="hub-cta-secondary" download>
+            <i className="fas fa-file-arrow-down" aria-hidden="true"></i>
+            <span>Download CV</span>
+          </a>
         </m.div>
 
         <m.div

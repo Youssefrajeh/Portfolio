@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { educationData } from '@/data/educationData';
 import { experienceData } from '@/data/experienceData';
 
 const Experience: React.FC = () => {
@@ -139,6 +140,42 @@ const Experience: React.FC = () => {
                                         </span>
                                     ))}
                                 </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <h1 className="text-2xl font-bold border-b border-black pb-2 mt-10 mb-6">EDUCATION</h1>
+
+                    <div className="space-y-6">
+                        {educationData.map((edu) => (
+                            <div key={edu.id} className="border-b border-[#dfdfdf] pb-4 last:border-0 last:pb-0">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+                                    <div>
+                                        <h2 className="text-base font-bold text-black">{edu.credential}</h2>
+                                        <h3 className="text-xs text-[#000080] font-semibold">{edu.institution} - {edu.location}</h3>
+                                    </div>
+                                    <span className="text-[11px] text-gray-600 bg-gray-100 border border-gray-300 px-2 py-0.5 rounded font-mono mt-1 sm:mt-0">
+                                        {edu.period}
+                                    </span>
+                                </div>
+
+                                <ul className="list-disc pl-5 space-y-1 mt-2 text-xs leading-relaxed text-gray-800">
+                                    {edu.details.map((detail) => (
+                                        <li key={detail} className="pl-1">
+                                            {detail}
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                {edu.highlights.length > 0 && (
+                                    <div className="flex flex-wrap gap-1.5 mt-3 select-none">
+                                        {edu.highlights.map((highlight) => (
+                                            <span key={highlight} className="text-[10px] bg-[#dfdfdf] border border-[#808080] px-1.5 py-0.5 text-black">
+                                                {highlight}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>

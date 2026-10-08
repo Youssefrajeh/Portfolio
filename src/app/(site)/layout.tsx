@@ -14,8 +14,13 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
         precedence="default"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       />
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <ThemeProvider>
-        <MotionProvider>{children}</MotionProvider>
+        <MotionProvider>
+          <main id="main-content">{children}</main>
+        </MotionProvider>
       </ThemeProvider>
     </>
   );

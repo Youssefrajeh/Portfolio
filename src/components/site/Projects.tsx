@@ -12,9 +12,11 @@ import ProjectImage from './ProjectImage';
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter['id']>('all');
 
-  const filteredProjects = activeFilter === 'all'
+  // Featured projects lead; the rest keep their data-file order.
+  const filteredProjects = [...(activeFilter === 'all'
     ? projectsData
-    : projectsData.filter(project => project.category === activeFilter);
+    : projectsData.filter(project => project.category === activeFilter)
+  )].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
 
   return (
     <section id="projects" className="projects" style={{ paddingInline: '20px' }}>
@@ -69,6 +71,39 @@ const Projects = () => {
         .view-project-btn:hover {
           background: var(--accent-strong);
           transform: translateY(-1px);
+        }
+        .project-card-actions {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          flex-wrap: wrap;
+        }
+        .project-demo-link {
+          font-family: var(--font-hanken), sans-serif;
+          font-weight: 600;
+          font-size: 0.85rem;
+          color: #e8e8ed;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          text-decoration-color: rgb(232 232 237 / 0.4);
+        }
+        .project-demo-link:hover {
+          text-decoration-color: currentColor;
+        }
+        .project-featured-badge {
+          position: absolute;
+          top: 16px;
+          left: 16px;
+          z-index: 2;
+          font-family: var(--font-jetbrains), monospace;
+          font-size: 0.68rem;
+          font-weight: 600;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          padding: 4px 10px;
+          border-radius: 4px;
+          background: var(--accent);
+          color: var(--on-accent);
         }
         .project-filters {
           display: flex;
@@ -221,6 +256,7 @@ const Projects = () => {
                 ) : (
                   <ProjectImage project={project} variant="backdrop" />
                 )}
+                {project.featured && <span className="project-featured-badge">Featured</span>}
                 <div className="project-card-overlay">
                   <h3 className="project-card-title">
                     {project.title}
@@ -228,12 +264,24 @@ const Projects = () => {
                   <p className="project-card-desc">
                     {project.description}
                   </p>
-                  <Link
-                    href={`/project/${project.id}`}
-                    className="view-project-btn"
-                  >
-                    View Details →
-                  </Link>
+                  <div className="project-card-actions">
+                    <Link
+                      href={`/project/${project.id}`}
+                      className="view-project-btn"
+                    >
+                      View Details →
+                    </Link>
+                    {project.demo && (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-demo-link"
+                      >
+                        Live demo ↗
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             </m.div>
