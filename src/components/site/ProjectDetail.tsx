@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { m } from 'motion/react';
 import type { Project } from '@/data/types';
 import { fadeInUp, fadeInLeft } from '@/lib/motionVariants';
+import { DEMO_WAKE_NOTE, demoMaySleep } from '@/data/demoHosting';
 import ProjectImage from './ProjectImage';
 
 interface ProjectDetailProps {
@@ -75,6 +76,13 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
           overflow: hidden;
           border: 1px solid var(--border);
           margin: 0 auto 35px;
+        }
+
+        .detail-demo-note {
+          flex-basis: 100%;
+          margin: 4px 0 0;
+          font-size: 0.82rem;
+          color: var(--text-faint);
         }
 
         /* Website screenshots: full width, 16:10, like a browser window */
@@ -483,6 +491,7 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
               >
                 <i className="fab fa-github" aria-hidden="true"></i> Visit Repository
               </a>
+              {demoMaySleep(project.demo) && <p className="detail-demo-note">{DEMO_WAKE_NOTE}</p>}
               <Link href="/portfolio" onClick={handleBackClick} className="detail-btn secondary">
                 Back to Projects
               </Link>

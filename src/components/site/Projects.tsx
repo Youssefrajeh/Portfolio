@@ -7,6 +7,7 @@ import { projectsData, projectFilters } from '@/data/projectsData';
 import type { ProjectFilter } from '@/data/types';
 import { fadeInUp, scaleStaggerItem, viewportConfig } from '@/lib/motionVariants';
 import { withBasePath } from '@/lib/site';
+import { DEMO_WAKE_NOTE, demoMaySleep } from '@/data/demoHosting';
 import ProjectImage from './ProjectImage';
 
 const Projects = () => {
@@ -277,6 +278,7 @@ const Projects = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="project-demo-link"
+                        title={demoMaySleep(project.demo) ? DEMO_WAKE_NOTE : undefined}
                       >
                         Live demo ↗
                       </a>
