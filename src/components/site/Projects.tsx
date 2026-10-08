@@ -56,8 +56,8 @@ const Projects = () => {
           align-items: center;
           gap: 6px;
           padding: 9px 22px;
-          background: #6e7cff;
-          color: #fff;
+          background: var(--accent);
+          color: var(--on-accent);
           border-radius: 6px;
           text-decoration: none;
           font-family: var(--font-hanken), sans-serif;
@@ -67,7 +67,7 @@ const Projects = () => {
           transition: background 0.2s ease, transform 0.2s ease;
         }
         .view-project-btn:hover {
-          background: #5a66e5;
+          background: var(--accent-strong);
           transform: translateY(-1px);
         }
         .project-filters {
@@ -166,8 +166,8 @@ const Projects = () => {
             onClick={() => setActiveFilter(filter.id)}
             whileTap={{ scale: 0.97 }}
             style={{
-              border: activeFilter === filter.id ? '1px solid rgba(110, 124, 255, 0.3)' : '1px solid var(--border)',
-              background: activeFilter === filter.id ? 'rgba(110, 124, 255, 0.1)' : 'transparent',
+              border: activeFilter === filter.id ? '1px solid rgb(var(--accent-rgb) / 0.3)' : '1px solid var(--border)',
+              background: activeFilter === filter.id ? 'rgb(var(--accent-rgb) / 0.1)' : 'transparent',
               color: activeFilter === filter.id ? 'var(--text)' : 'var(--text-faint)',
               fontWeight: activeFilter === filter.id ? '600' : '500'
             }}

@@ -154,7 +154,7 @@ const Navigation = () => {
           letter-spacing: -0.02em;
         }
         .nav-logo-dot {
-          color: #6e7cff;
+          color: var(--accent);
           font-size: 1.3rem;
           font-weight: 700;
           line-height: 1;
@@ -184,7 +184,7 @@ const Navigation = () => {
         }
         .nav-link.active {
           color: var(--text);
-          background: rgba(110, 124, 255, 0.08);
+          background: rgb(var(--accent-rgb) / 0.08);
         }
         .nav-link.active::after {
           content: "";
@@ -194,7 +194,7 @@ const Navigation = () => {
           transform: translateX(-50%);
           width: 4px;
           height: 4px;
-          background: #6e7cff;
+          background: var(--accent);
           border-radius: 50%;
         }
 
@@ -219,8 +219,8 @@ const Navigation = () => {
         }
 
         .nav-feedback-btn {
-          background: #6e7cff;
-          color: #fff;
+          background: var(--accent);
+          color: var(--on-accent);
           padding: 7px 18px;
           border-radius: 6px;
           font-weight: 600;
@@ -234,7 +234,7 @@ const Navigation = () => {
           margin-left: 12px;
         }
         .nav-feedback-btn:hover {
-          background: #5a66e5;
+          background: var(--accent-strong);
           transform: translateY(-1px);
         }
 
@@ -338,7 +338,7 @@ const Navigation = () => {
         .mobile-link:hover, .mobile-link.active {
           color: var(--text);
           padding-left: 8px;
-          border-bottom-color: rgba(110, 124, 255, 0.2);
+          border-bottom-color: rgb(var(--accent-rgb) / 0.2);
         }
         .mobile-hub-btn {
           display: block;
@@ -347,8 +347,8 @@ const Navigation = () => {
           margin-top: 24px;
           padding: 12px;
           border-radius: 8px;
-          background: rgba(110, 124, 255, 0.06);
-          border: 1px solid rgba(110, 124, 255, 0.15);
+          background: rgb(var(--accent-rgb) / 0.06);
+          border: 1px solid rgb(var(--accent-rgb) / 0.15);
           color: var(--text-dim);
           font-size: 0.88rem;
           font-weight: 500;
@@ -356,8 +356,8 @@ const Navigation = () => {
           transition: all 0.3s ease;
         }
         .mobile-hub-btn:hover {
-          background: rgba(110, 124, 255, 0.1);
-          border-color: rgba(110, 124, 255, 0.3);
+          background: rgb(var(--accent-rgb) / 0.1);
+          border-color: rgb(var(--accent-rgb) / 0.3);
           color: var(--text);
         }
 

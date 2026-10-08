@@ -172,9 +172,9 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
           font-weight: 500;
           padding: 5px 14px;
           border-radius: 6px;
-          background: rgba(110, 124, 255, 0.08);
-          color: #6e7cff;
-          border: 1px solid rgba(110, 124, 255, 0.2);
+          background: rgb(var(--accent-rgb) / 0.08);
+          color: var(--accent);
+          border: 1px solid rgb(var(--accent-rgb) / 0.2);
           text-transform: uppercase;
           letter-spacing: 0.05em;
         }
@@ -219,7 +219,7 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
           content: "▸";
           position: absolute;
           left: 0;
-          color: #6e7cff;
+          color: var(--accent);
           font-weight: bold;
         }
 
@@ -245,13 +245,13 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
         }
 
         .detail-btn.primary {
-          background: #6e7cff;
-          color: #fff;
+          background: var(--accent);
+          color: var(--on-accent);
           border: none;
         }
 
         .detail-btn.primary:hover {
-          background: #5a66e5;
+          background: var(--accent-strong);
           transform: translateY(-2px);
         }
 

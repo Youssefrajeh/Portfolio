@@ -43,7 +43,7 @@ const Hero = () => {
         .hero-greeting {
           font-family: var(--font-jetbrains), monospace;
           font-size: 0.85rem;
-          color: #6e7cff;
+          color: var(--accent);
           letter-spacing: 0.1em;
           margin: 0 0 16px 0;
         }
@@ -90,8 +90,8 @@ const Hero = () => {
           justify-content: center;
           gap: 8px;
           padding: 13px 32px;
-          background: #6e7cff;
-          color: #fff;
+          background: var(--accent);
+          color: var(--on-accent);
           border-radius: 8px;
           text-decoration: none;
           font-family: var(--font-hanken), sans-serif;
@@ -100,9 +100,9 @@ const Hero = () => {
           transition: all 0.25s ease;
         }
         .hero-btn-primary:hover {
-          background: #5a66e5;
+          background: var(--accent-strong);
           transform: translateY(-2px);
-          box-shadow: 0 4px 16px rgba(110, 124, 255, 0.25);
+          box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
         }
         .hero-btn-secondary {
           display: inline-flex;

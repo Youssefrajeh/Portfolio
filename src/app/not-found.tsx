@@ -25,7 +25,8 @@ export default function NotFound() {
         href="/"
         style={{
           padding: '12px 28px',
-          background: '#6e7cff',
+          // Outside the site layout, so theme tokens aren't loaded: literal teal
+          background: '#0f766e',
           color: '#fff',
           borderRadius: '8px',
           textDecoration: 'none',

@@ -82,7 +82,7 @@ const Contact = () => {
           display: block;
           width: 32px;
           height: 2px;
-          background: #6e7cff;
+          background: var(--accent);
           border-radius: 2px;
           margin: 14px auto 0;
         }
@@ -123,13 +123,13 @@ const Contact = () => {
           transition: border-color 0.3s ease;
         }
         .contact-input:focus {
-          border-color: #6e7cff;
+          border-color: var(--accent);
         }
         .contact-submit-btn {
           width: 100%;
           padding: 14px 30px;
-          background: #6e7cff;
-          color: #fff;
+          background: var(--accent);
+          color: var(--on-accent);
           border: none;
           border-radius: 8px;
           font-size: 1rem;
@@ -143,7 +143,7 @@ const Contact = () => {
           gap: 10px;
         }
         .contact-submit-btn:hover:not(:disabled) {
-          background: #5a66e5;
+          background: var(--accent-strong);
           transform: translateY(-1px);
         }
         .contact-submit-btn:disabled {
@@ -174,12 +174,12 @@ const Contact = () => {
           width: 44px;
           height: 44px;
           border-radius: 10px;
-          background: rgba(110, 124, 255, 0.06);
+          background: rgb(var(--accent-rgb) / 0.06);
           border: 1px solid var(--border);
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #6e7cff;
+          color: var(--accent);
           font-size: 1.05rem;
           flex-shrink: 0;
         }
@@ -281,7 +281,7 @@ const Contact = () => {
                   </m.div>
                   <h3 style={{ fontFamily: 'var(--font-space), sans-serif', fontSize: "1.3rem", fontWeight: 600, color: "var(--text)", marginBottom: 8 }}>Message Sent</h3>
                   <p style={{ fontFamily: 'var(--font-hanken), sans-serif', color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.6, marginBottom: 20 }}>Thanks for reaching out. I’ll get back to you soon.</p>
-                  <m.button onClick={closeModal} whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }} style={{ padding: "10px 28px", background: "#6e7cff", color: "#fff", border: "none", borderRadius: 6, fontSize: "0.9rem", fontWeight: 600, cursor: "pointer" }}>Close</m.button>
+                  <m.button onClick={closeModal} whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }} style={{ padding: "10px 28px", background: "var(--accent)", color: "var(--on-accent)", border: "none", borderRadius: 6, fontSize: "0.9rem", fontWeight: 600, cursor: "pointer" }}>Close</m.button>
                 </>
               ) : (
                 <>
@@ -291,8 +291,8 @@ const Contact = () => {
                     </svg>
                   </m.div>
                   <h3 style={{ fontFamily: 'var(--font-space), sans-serif', fontSize: "1.3rem", fontWeight: 600, color: "var(--text)", marginBottom: 8 }}>Something went wrong</h3>
-                  <p style={{ fontFamily: 'var(--font-hanken), sans-serif', color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.6, marginBottom: 20 }}>Email me at <a href="mailto:youssefrrajeh@gmail.com" style={{ color: "#6e7cff", fontWeight: 600 }}>youssefrrajeh@gmail.com</a></p>
-                  <m.button onClick={closeModal} whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }} style={{ padding: "10px 28px", background: "#6e7cff", color: "#fff", border: "none", borderRadius: 6, fontSize: "0.9rem", fontWeight: 600, cursor: "pointer" }}>Close</m.button>
+                  <p style={{ fontFamily: 'var(--font-hanken), sans-serif', color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.6, marginBottom: 20 }}>Email me at <a href="mailto:youssefrrajeh@gmail.com" style={{ color: "var(--accent)", fontWeight: 600 }}>youssefrrajeh@gmail.com</a></p>
+                  <m.button onClick={closeModal} whileHover={{ y: -1 }} whileTap={{ scale: 0.97 }} style={{ padding: "10px 28px", background: "var(--accent)", color: "var(--on-accent)", border: "none", borderRadius: 6, fontSize: "0.9rem", fontWeight: 600, cursor: "pointer" }}>Close</m.button>
                 </>
               )}
             </m.div>

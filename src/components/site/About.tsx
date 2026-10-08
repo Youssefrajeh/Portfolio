@@ -73,7 +73,7 @@ const About = () => {
           font-weight: 500;
           padding: 5px 12px;
           border-radius: 6px;
-          background: rgba(110, 124, 255, 0.06);
+          background: rgb(var(--accent-rgb) / 0.06);
           color: var(--text-dim);
           border: 1px solid var(--border);
           letter-spacing: 0.03em;
@@ -132,8 +132,8 @@ const About = () => {
           align-items: center;
           gap: 8px;
           padding: 12px 28px;
-          background: #6e7cff;
-          color: #fff;
+          background: var(--accent);
+          color: var(--on-accent);
           border: none;
           border-radius: 8px;
           text-decoration: none;
@@ -144,9 +144,9 @@ const About = () => {
         }
 
         .about-cv-btn:hover {
-          background: #5a66e5;
+          background: var(--accent-strong);
           transform: translateY(-2px);
-          box-shadow: 0 4px 16px rgba(110, 124, 255, 0.2);
+          box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
         }
 
         @media (max-width: 768px) {

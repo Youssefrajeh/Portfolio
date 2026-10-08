@@ -1,8 +1,8 @@
 :root {
   /* Design System — Professional Portfolio */
-  --primary-color: #6e7cff;
+  --primary-color: var(--accent);
   --secondary-color: #a3e635;
-  --accent-color: #6e7cff;
+  --accent-color: var(--accent);
   --success-color: #a3e635;
   --warning-color: #f39c12;
   --error-color: #ffb4ab;
@@ -23,11 +23,11 @@
   --nav-text: var(--text);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #6e7cff, #5a66e5);
+  --gradient-primary: var(--accent);
   --gradient-secondary: linear-gradient(135deg, #a3e635, #86c91a);
   --gradient-hero: var(--bg);
   --gradient-glow: #111113;
-  --gradient-text: #6e7cff;
+  --gradient-text: var(--accent);
 
   /* Transitions */
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -38,7 +38,7 @@
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 4px 16px rgba(110, 124, 255, 0.15);
+  --shadow-glow: 0 4px 16px rgb(0 0 0 / 0.12);
   --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
 
   /* Borders */
@@ -171,7 +171,7 @@ section {
   display: block;
   width: 32px;
   height: 2px;
-  background: #6e7cff;
+  background: var(--accent);
   border-radius: 2px;
   margin: 14px auto 0;
 }
@@ -361,7 +361,7 @@ p {
 
 .secondary-btn:hover {
   background: var(--primary-color);
-  color: var(--white);
+  color: var(--on-accent);
   transform: translateY(-3px);
 }
 
@@ -450,9 +450,9 @@ p {
 
 .category-filter:hover,
 .category-filter.active {
-  background: rgba(110, 124, 255, 0.1);
+  background: rgb(var(--accent-rgb) / 0.1);
   color: var(--text);
-  border-color: rgba(110, 124, 255, 0.3);
+  border-color: rgb(var(--accent-rgb) / 0.3);
 }
 
 /* Neural Network Grid Layout */
@@ -515,7 +515,7 @@ p {
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--gradient-primary);
+  background: var(--accent);
   opacity: 0;
   border-radius: 20px;
   transition: all 0.4s ease;
@@ -529,7 +529,7 @@ p {
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: var(--gradient-primary);
+  background: var(--accent);
   border-radius: 22px;
   opacity: 0;
   transition: all 0.4s ease;
@@ -605,7 +605,7 @@ p {
 
 .progress-bar {
   height: 100%;
-  background: var(--gradient-primary);
+  background: var(--accent);
   border-radius: 3px;
   width: 0%;
   transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -717,7 +717,7 @@ p {
 
 /* Skill Categories Styling */
 .skill[data-category="programming"] .skill-card::after {
-  background: var(--gradient-primary);
+  background: var(--accent);
 }
 
 .skill[data-category="web"] .skill-card::after {
@@ -729,7 +729,7 @@ p {
 }
 
 .skill[data-category="networking"] .skill-card::after {
-  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  background: var(--accent);
 }
 
 /* 🧠 NEURAL NETWORK ANIMATIONS */
@@ -838,9 +838,9 @@ p {
 
 .filter-btn:hover,
 .filter-btn.active {
-  background: rgba(110, 124, 255, 0.1);
+  background: rgb(var(--accent-rgb) / 0.1);
   color: var(--text);
-  border-color: rgba(110, 124, 255, 0.3);
+  border-color: rgb(var(--accent-rgb) / 0.3);
 }
 
 .project-grid {
@@ -1189,7 +1189,7 @@ p {
   align-items: center;
   justify-content: center;
   background: var(--primary-color);
-  color: var(--white);
+  color: var(--on-accent);
   border: none;
   padding: 12px 30px;
   border-radius: 4px;
@@ -1200,7 +1200,7 @@ p {
 }
 
 .submit-btn:hover {
-  background: #3a7bc8;
+  background: var(--accent-strong);
   transform: none;
   box-shadow: none;
 }
@@ -3101,7 +3101,7 @@ section {
     z-index: 101 !important;
     pointer-events: auto !important;
     cursor: pointer !important;
-    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.3);
+    -webkit-tap-highlight-color: rgb(var(--accent-rgb) / 0.3);
     touch-action: manipulation;
     min-height: 44px;
     min-width: 44px;
@@ -3110,8 +3110,8 @@ section {
 
   .category-filter:active {
     transform: scale(0.97);
-    background: var(--gradient-primary) !important;
-    color: white !important;
+    background: var(--accent) !important;
+    color: var(--on-accent) !important;
   }
 
   /* Fix project filter buttons on mobile */
@@ -3125,7 +3125,7 @@ section {
     z-index: 101 !important;
     pointer-events: auto !important;
     cursor: pointer !important;
-    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.3);
+    -webkit-tap-highlight-color: rgb(var(--accent-rgb) / 0.3);
     touch-action: manipulation;
     min-height: 44px;
     min-width: 44px;
@@ -3134,7 +3134,7 @@ section {
   .filter-btn:active {
     transform: scale(0.97);
     background: var(--primary-color) !important;
-    color: white !important;
+    color: var(--on-accent) !important;
   }
 
   /* Fix contact form on mobile */
@@ -3162,7 +3162,7 @@ section {
   }
 
   #contact button[type="submit"] {
-    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.3);
+    -webkit-tap-highlight-color: rgb(var(--accent-rgb) / 0.3);
     touch-action: manipulation;
     min-height: 50px;
     cursor: pointer !important;
@@ -3177,7 +3177,7 @@ section {
     position: relative;
     z-index: 20 !important;
     pointer-events: auto !important;
-    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.3);
+    -webkit-tap-highlight-color: rgb(var(--accent-rgb) / 0.3);
     touch-action: manipulation;
     display: inline-block;
     min-height: 44px;
@@ -3200,7 +3200,7 @@ section {
 
   #contact > div > div > div:last-child > div:active {
     transform: scale(0.98);
-    background: rgba(99, 102, 241, 0.05);
+    background: rgb(var(--accent-rgb) / 0.05);
   }
 
   /* Make entire contact info row clickable */
@@ -3242,7 +3242,7 @@ section {
     position: relative;
     z-index: 20 !important;
     pointer-events: auto !important;
-    -webkit-tap-highlight-color: rgba(99, 102, 241, 0.3);
+    -webkit-tap-highlight-color: rgb(var(--accent-rgb) / 0.3);
     touch-action: manipulation;
     min-height: 44px;
     min-width: 44px;

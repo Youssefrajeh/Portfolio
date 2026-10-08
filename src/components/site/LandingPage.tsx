@@ -135,8 +135,8 @@ const LandingPage = () => {
           justify-content: center;
           gap: 8px;
           padding: 13px 30px;
-          background: #6e7cff;
-          color: #fff;
+          background: var(--accent);
+          color: var(--on-accent);
           border-radius: 6px;
           font-family: var(--font-hanken), sans-serif;
           font-weight: 600;
@@ -147,7 +147,7 @@ const LandingPage = () => {
         }
 
         .hub-cta:hover {
-          background: #5a66e5;
+          background: var(--accent-strong);
         }
 
         .hub-cta i {
@@ -192,8 +192,8 @@ const LandingPage = () => {
         }
 
         .hub-more-link:hover {
-          color: #6e7cff;
-          border-bottom-color: #6e7cff;
+          color: var(--accent);
+          border-bottom-color: var(--accent);
         }
 
         .hub-more-sep {

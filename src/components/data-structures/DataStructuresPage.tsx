@@ -170,9 +170,9 @@ export default function DataStructuresPage() {
         }
 
         .ds-sidebar-link.active {
-          color: #a5b0ff;
-          background: rgba(110, 124, 255, 0.08);
-          border-left-color: #6e7cff;
+          color: var(--accent-soft);
+          background: rgb(var(--accent-rgb) / 0.08);
+          border-left-color: var(--accent);
         }
 
         .ds-main {
@@ -192,7 +192,7 @@ export default function DataStructuresPage() {
         .ds-hero-eyebrow {
           font-family: var(--font-jetbrains), monospace;
           font-size: 0.78rem;
-          color: #8c98ff;
+          color: var(--accent-soft);
           text-transform: uppercase;
           letter-spacing: 0.08em;
           margin: 0 0 12px 0;
@@ -265,7 +265,7 @@ export default function DataStructuresPage() {
           display: inline-block;
           font-family: var(--font-jetbrains), monospace;
           font-size: 0.72rem;
-          color: #8c98ff;
+          color: var(--accent-soft);
           text-transform: uppercase;
           letter-spacing: 0.06em;
           margin-bottom: 8px;
@@ -415,12 +415,12 @@ export default function DataStructuresPage() {
         }
 
         .ds-cell-active {
-          border-color: rgba(110, 124, 255, 0.5);
-          background: rgba(110, 124, 255, 0.12);
+          border-color: rgb(var(--accent-rgb) / 0.5);
+          background: rgb(var(--accent-rgb) / 0.12);
         }
 
         .ds-cell-active .ds-cell-value {
-          color: #a5b0ff;
+          color: var(--accent-soft);
         }
 
         .ds-cell-flash {
@@ -435,7 +435,7 @@ export default function DataStructuresPage() {
           font-size: 0.58rem;
           text-transform: uppercase;
           letter-spacing: 0.04em;
-          color: #8c98ff;
+          color: var(--accent-soft);
           background: var(--bg);
           padding: 0 5px;
         }
@@ -499,8 +499,8 @@ export default function DataStructuresPage() {
         }
 
         .ds-hash-row-active {
-          background: rgba(110, 124, 255, 0.08);
-          border-color: rgba(110, 124, 255, 0.25);
+          background: rgb(var(--accent-rgb) / 0.08);
+          border-color: rgb(var(--accent-rgb) / 0.25);
         }
 
         .ds-hash-index {
@@ -532,7 +532,7 @@ export default function DataStructuresPage() {
         }
 
         .ds-hash-key {
-          color: #a5b0ff;
+          color: var(--accent-soft);
         }
 
         .ds-hash-val {
@@ -567,13 +567,13 @@ export default function DataStructuresPage() {
         }
 
         .ds-graph-node-visited {
-          fill: rgba(110, 124, 255, 0.18);
-          stroke: rgba(110, 124, 255, 0.4);
+          fill: rgb(var(--accent-rgb) / 0.18);
+          stroke: rgb(var(--accent-rgb) / 0.4);
         }
 
         .ds-tree-node-active {
-          fill: rgba(110, 124, 255, 0.3);
-          stroke: #6e7cff;
+          fill: rgb(var(--accent-rgb) / 0.3);
+          stroke: var(--accent);
         }
 
         .ds-heap-note {
@@ -616,14 +616,14 @@ export default function DataStructuresPage() {
         }
 
         .ds-btn-primary {
-          background: #6e7cff;
-          border-color: #6e7cff;
-          color: #fff;
+          background: var(--accent);
+          border-color: var(--accent);
+          color: var(--on-accent);
         }
 
         .ds-btn-primary:hover:not(:disabled) {
-          background: #5a66e5;
-          border-color: #5a66e5;
+          background: var(--accent-strong);
+          border-color: var(--accent-strong);
         }
 
         .ds-inline-input {
@@ -644,7 +644,7 @@ export default function DataStructuresPage() {
         }
 
         .ds-input:focus {
-          border-color: #6e7cff;
+          border-color: var(--accent);
         }
 
         /* ── Operation log ──────────────────────────────────────── */
@@ -674,7 +674,7 @@ export default function DataStructuresPage() {
         }
 
         .ds-log-call {
-          color: #a5b0ff;
+          color: var(--accent-soft);
         }
 
         .ds-log-result {
@@ -715,9 +715,9 @@ export default function DataStructuresPage() {
           }
 
           .ds-mobile-nav-link.active {
-            color: #a5b0ff;
-            background: rgba(110, 124, 255, 0.12);
-            border-color: rgba(110, 124, 255, 0.3);
+            color: var(--accent-soft);
+            background: rgb(var(--accent-rgb) / 0.12);
+            border-color: rgb(var(--accent-rgb) / 0.3);
           }
 
           .ds-section-meta {

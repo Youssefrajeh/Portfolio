@@ -166,8 +166,8 @@ const Skills = () => {
             onClick={() => setActiveCategory(category.id)}
             whileTap={{ scale: 0.97 }}
             style={{
-              background: activeCategory === category.id ? 'rgba(110, 124, 255, 0.1)' : 'transparent',
-              border: activeCategory === category.id ? '1px solid rgba(110, 124, 255, 0.3)' : '1px solid var(--border)',
+              background: activeCategory === category.id ? 'rgb(var(--accent-rgb) / 0.1)' : 'transparent',
+              border: activeCategory === category.id ? '1px solid rgb(var(--accent-rgb) / 0.3)' : '1px solid var(--border)',
               color: activeCategory === category.id ? 'var(--text)' : 'var(--text-faint)',
               fontFamily: 'var(--font-hanken), sans-serif',
               fontWeight: activeCategory === category.id ? '600' : '500'

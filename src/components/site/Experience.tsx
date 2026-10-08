@@ -49,7 +49,7 @@ const Experience = () => {
         .exp-company {
           font-family: var(--font-hanken), sans-serif;
           font-size: 0.88rem;
-          color: #6e7cff;
+          color: var(--accent);
           margin: 0;
           text-align: left;
           font-weight: 500;
@@ -89,7 +89,7 @@ const Experience = () => {
           font-size: 0.7rem;
           padding: 3px 10px;
           border-radius: 4px;
-          background: rgba(110, 124, 255, 0.06);
+          background: rgb(var(--accent-rgb) / 0.06);
           color: var(--text-faint);
           border: 1px solid var(--border);
           letter-spacing: 0.02em;
