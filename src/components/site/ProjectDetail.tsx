@@ -23,7 +23,6 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
 
   return (
     <section className="project-detail-page" style={{
-      background: 'var(--bg)',
       minHeight: '100vh',
       padding: '120px 20px 80px',
       width: '100%',

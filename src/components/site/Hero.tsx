@@ -27,7 +27,6 @@ const Hero = () => {
           text-align: center;
           position: relative;
           overflow: hidden;
-          background: var(--bg);
         }
         .hero-content {
           position: relative;

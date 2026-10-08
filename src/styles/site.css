@@ -216,7 +216,6 @@ p {
 /* About Section */
 .about {
   padding-inline: 20px;
-  background-color: var(--bg);
   width: 100%;
   box-sizing: border-box;
 }
@@ -251,7 +250,6 @@ p {
 /* Skills Section */
 .skills {
   padding-inline: 20px;
-  background: var(--bg);
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -337,7 +335,6 @@ p {
 /* Projects Section */
 .projects {
   padding-inline: 20px;
-  background-color: var(--section-bg);
   text-align: center;
   width: 100%;
   box-sizing: border-box;
@@ -408,7 +405,6 @@ p {
 /* Contact Section */
 .contact {
   padding-inline: 20px;
-  background-color: var(--alt-section-bg);
   text-align: center;
   width: 100%;
   box-sizing: border-box;
@@ -416,7 +412,6 @@ p {
 
 /* Footer */
 .footer {
-  background-color: var(--section-bg);
   padding: 30px 20px;
   text-align: center;
   border-top: 1px solid var(--border-light);
@@ -619,7 +614,6 @@ p {
 /* Experience Section */
 .experience {
   padding-inline: 20px;
-  background-color: var(--section-bg);
   text-align: center;
   width: 100%;
   box-sizing: border-box;

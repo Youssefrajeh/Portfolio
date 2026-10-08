@@ -62,7 +62,6 @@ export default function DataStructuresPage() {
         .ds-page {
           min-height: 100vh;
           min-height: 100dvh;
-          background: var(--bg);
           color: var(--text);
           font-family: var(--font-hanken), sans-serif;
         }

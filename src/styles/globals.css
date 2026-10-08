@@ -316,3 +316,32 @@ summary:focus-visible {
 .skip-link:focus {
   transform: translateY(0);
 }
+
+/* ─── Page backdrop: faint engineering grid + soft accent glow ───
+   One fixed layer behind every page of the modern site. Sections are
+   transparent so it shows through; cards, inputs and overlays keep
+   their own surfaces. The grid fades out away from the top-centre so
+   it never competes with text. */
+:root {
+  --grid-line: rgb(255 255 255 / 0.045);
+  --grid-glow: rgb(var(--accent-rgb) / 0.14);
+}
+
+:root[data-theme='light'] {
+  --grid-line: rgb(15 23 42 / 0.06);
+  --grid-glow: rgb(var(--accent-rgb) / 0.10);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 45% at 50% -5%, var(--grid-glow), transparent 70%),
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px) 0 0 / 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, #000 35%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, #000 35%, transparent 100%);
+}

@@ -62,7 +62,6 @@ const Contact = () => {
       <style>{`
         #contact {
           padding-inline: 20px;
-          background: var(--bg);
           position: relative;
         }
         .contact-wrapper {

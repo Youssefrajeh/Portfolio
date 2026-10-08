@@ -11,7 +11,6 @@ const Education = () => {
       <style>{`
         .education {
           padding-inline: 20px;
-          background: var(--bg);
         }
         .edu-highlight {
           color: var(--accent);

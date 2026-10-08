@@ -15,7 +15,6 @@ const Footer = () => {
     >
       <style>{`
         .footer {
-          background: var(--bg);
           padding: 40px 20px 30px;
           text-align: center;
           border-top: 1px solid var(--border);

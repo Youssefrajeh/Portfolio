@@ -10,7 +10,6 @@ const Experience = () => {
       <style>{`
         .experience {
           padding-inline: 20px;
-          background: var(--bg);
         }
       `}</style>
 

@@ -55,7 +55,6 @@ const LandingPage = () => {
           height: 100dvh;
           width: 100%;
           overflow: hidden;
-          background: var(--bg);
           display: flex;
           flex-direction: column;
           align-items: center;
