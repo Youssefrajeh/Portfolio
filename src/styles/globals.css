@@ -148,3 +148,18 @@
   color: var(--primary-color);
   opacity: 0.55;
 }
+
+/* One vertical rhythm for every portfolio section: 100px on wide screens,
+   easing down to 36px on phones. Section components only set horizontal
+   padding, so spacing is tuned here in one place. */
+:root {
+  --section-space: clamp(36px, 7vw, 100px);
+}
+
+#about,
+#experience,
+#skills,
+#projects,
+#contact {
+  padding-block: var(--section-space);
+}

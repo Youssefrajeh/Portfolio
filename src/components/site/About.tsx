@@ -194,19 +194,11 @@ const About = () => {
             justify-content: center;
             padding: 14px 24px;
           }
-          #about.about {
-            padding-top: 70px !important;
-            padding-bottom: 30px !important;
-          }
           #about .section-title {
             margin-bottom: 20px !important;
           }
         }
         @media (max-width: 480px) {
-          #about.about {
-            padding-top: 65px !important;
-            padding-bottom: 20px !important;
-          }
           .about-photo-frame {
             width: 130px;
             height: 130px;

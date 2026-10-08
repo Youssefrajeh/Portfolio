@@ -61,7 +61,7 @@ const Contact = () => {
     <section id="contact">
       <style>{`
         #contact {
-          padding: 90px 20px;
+          padding-inline: 20px;
           background: var(--bg);
           position: relative;
         }

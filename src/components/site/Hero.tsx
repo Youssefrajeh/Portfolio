@@ -127,8 +127,9 @@ const Hero = () => {
         }
         @media (max-width: 768px) {
           #home {
-            padding-top: 80px;
-            padding-bottom: 40px;
+            height: auto;
+            padding-top: 112px;
+            padding-bottom: 0;
           }
           .hero-buttons {
             flex-direction: row;

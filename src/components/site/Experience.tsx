@@ -9,7 +9,7 @@ const Experience = () => {
     <section id="experience" className="experience">
       <style>{`
         .experience {
-          padding: 90px 20px;
+          padding-inline: 20px;
           background: var(--bg);
         }
         .experience-container {

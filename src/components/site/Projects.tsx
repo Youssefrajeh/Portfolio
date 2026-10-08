@@ -17,7 +17,7 @@ const Projects = () => {
     : projectsData.filter(project => project.category === activeFilter);
 
   return (
-    <section id="projects" className="projects" style={{ padding: '100px 20px' }}>
+    <section id="projects" className="projects" style={{ paddingInline: '20px' }}>
       <style>{`
         .project-card-overlay {
           position: absolute;
