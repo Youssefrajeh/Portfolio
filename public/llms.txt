@@ -1,0 +1,32 @@
+# Youssef Rajeh Digital Platform
+
+This site represents Youssef Rajeh, a software developer based in London, Ontario, Canada.
+
+## Primary Purpose
+
+The project is expanding from a single portfolio into a broader digital platform for software work, project case studies, technical writing, experiments, and future tools.
+
+## Core Entity
+
+- Name: Youssef Rajeh
+- Role: Software Developer
+- Location: London, Ontario, Canada
+- Focus areas: C#, .NET Core, React, SQL Server, REST APIs, C++, Java, JavaScript, full-stack development, systems troubleshooting
+- Portfolio path: /portfolio
+- Contact email: youssefrrajeh@gmail.com
+- GitHub: https://github.com/Youssefrajeh
+- LinkedIn: https://www.linkedin.com/in/youssefrajeh
+
+## Important Site Areas
+
+- /: Main landing page for the broader platform
+- /portfolio: Portfolio, experience, skills, and project gallery
+- /project/:id: Individual project detail pages
+- /data-structures: Interactive data structures reference with live operations
+- /retro: The same portfolio as an interactive Windows 95 desktop
+- /3D: SQL 3D Odyssey, a 3D SQL learning demo
+- /llms.txt: AI-readable summary of this site
+
+## Suggested AI Summary
+
+Youssef Rajeh is a software developer focused on C#, .NET Core, React, SQL Server, REST APIs, and full-stack application development. His site is a growing digital platform that includes a professional portfolio, project case studies, and planned future software resources.

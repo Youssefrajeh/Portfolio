@@ -1,0 +1,150 @@
+/* ─── Theme tokens ───────────────────────────────────────────────
+   Structural colors (backgrounds, surfaces, text, borders) are theme-
+   aware. Brand/accent colors (the indigo accent, per-skill badge
+   colors, complexity-badge colors, etc.) stay constant across themes
+   on purpose - they're identity, not contrast. */
+:root {
+  --bg: #0c0c0e;
+  --surface: #131316;
+  --surface-2: #1a1a1f;
+  --surface-inset: #0d0d10;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #e8e8ed;
+  --text-dim: #a1a1aa;
+  --text-faint: #6b6b76;
+  --glass: rgba(22, 22, 24, 0.8);
+}
+
+:root[data-theme='light'] {
+  --bg: #f7f7f8;
+  --surface: #ffffff;
+  --surface-2: #eeeef1;
+  --surface-inset: #f0f0f3;
+  --border: rgba(0, 0, 0, 0.09);
+  --border-strong: rgba(0, 0, 0, 0.18);
+  --text: #18181b;
+  --text-dim: #52525b;
+  --text-faint: #78787f;
+  --glass: rgba(255, 255, 255, 0.75);
+}
+
+/* Main site stylesheet */
+@import './site.css';
+
+/* Scroll to top button */
+.scroll-top {
+  border: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  background: rgba(110, 124, 255, 0.85);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 990;
+  box-shadow: 0 4px 16px rgba(110, 124, 255, 0.2);
+}
+
+.scroll-top.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.scroll-top:hover {
+  background: #6e7cff;
+  transform: translateY(-2px);
+}
+
+.scroll-top i {
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .scroll-top {
+    bottom: 20px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Floating "back to hub" button on portfolio pages (mobile only) */
+.mobile-floating-hub-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 16px;
+  z-index: 995;
+  background: rgba(12, 12, 14, 0.9);
+  border: 1px solid rgba(110, 124, 255, 0.25);
+  color: #6e7cff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-family: var(--font-hanken), sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.mobile-floating-hub-btn:hover {
+  background: rgba(110, 124, 255, 0.1);
+  border-color: rgba(110, 124, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+@media (min-width: 769px) {
+  .mobile-floating-hub-btn {
+    display: none !important;
+  }
+}
+
+/* Title card shown when a project has no screenshot yet */
+/* Doubled class: outranks per-page image rules (e.g. .detail-hero-img { display: block }) */
+.project-image-placeholder.project-image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  padding: 24px;
+  box-sizing: border-box;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(110, 124, 255, 0.18), rgba(163, 230, 53, 0.1)), var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-space), sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.project-image-placeholder.project-image-placeholder--icon {
+  min-height: 0;
+  padding: 0;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+}
+
+.project-image-placeholder.project-image-placeholder--backdrop {
+  align-items: flex-start;
+  padding-top: 18%;
+  font-size: clamp(3.5rem, 9vw, 5.5rem);
+  letter-spacing: 0.06em;
+  color: var(--primary-color);
+  opacity: 0.55;
+}

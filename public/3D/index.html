@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 3D ODYSSEY // Master Databases in Spatial Dimension</title>
+  <meta name="description" content="An ultra-immersive 3D interactive journey to master SQL using Babylon.js WebGL graphics, scroll-driven visual simulations, and a live real-time query engine.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&family=Outfit:wght@300;400;600;800;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Babylon.js CDN -->
+  <script src="https://cdn.babylonjs.com/babylon.js"></script>
+  <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/3D/style.css">
+</head>
+<body class="cyber-theme">
+  <!-- Audio Context Activation Shield -->
+  <div id="audioInitBanner" class="audio-banner hidden">
+    <span>🔊 Click anywhere to activate spatial audio FX</span>
+    <button id="dismissAudioBtn" class="hud-mini-btn">OK</button>
+  </div>
+
+  <!-- Background 3D Canvas -->
+  <canvas id="renderCanvas"></canvas>
+
+  <!-- Cyberpunk Vignette & Scanline Overlay -->
+  <div class="cyber-overlay"></div>
+  <div class="scanlines"></div>
+
+  <!-- Top Fixed HUD Navigation Bar -->
+  <header class="hud-header">
+    <div class="hud-brand">
+      <div class="brand-logo-icon">
+        <i data-lucide="database" class="icon-pulse"></i>
+      </div>
+      <div class="brand-text">
+        <span class="brand-title">SQL.ODYSSEY</span>
+        <span class="brand-subtitle">BABYLON 3D ENGINE // V2.6</span>
+      </div>
+    </div>
+
+    <!-- Active Stage Radar / Navigation -->
+    <nav class="hud-nav" id="hudNav">
+      <button class="nav-btn active" data-stage="0"><span class="step-num">01</span> CORE</button>
+      <button class="nav-btn" data-stage="1"><span class="step-num">02</span> SCHEMA</button>
+      <button class="nav-btn" data-stage="2"><span class="step-num">03</span> SELECT</button>
+      <button class="nav-btn" data-stage="3"><span class="step-num">04</span> WHERE</button>
+      <button class="nav-btn" data-stage="4"><span class="step-num">05</span> JOINS</button>
+      <button class="nav-btn" data-stage="5"><span class="step-num">06</span> GROUP BY</button>
+      <button class="nav-btn" data-stage="6"><span class="step-num">07</span> B-TREE</button>
+      <button class="nav-btn" data-stage="7"><span class="step-num">08</span> TERMINAL</button>
+    </nav>
+
+    <!-- Right Controls: Audio & Camera Reset & Mode -->
+    <div class="hud-actions">
+      <button id="audioToggleBtn" class="hud-btn" title="Toggle Sound FX">
+        <i data-lucide="volume-2" id="audioIcon"></i>
+        <span class="btn-label" id="audioLabel">SFX ON</span>
+      </button>
+      <button id="camFreeBtn" class="hud-btn" title="Toggle 3D Free Orbit Cam">
+        <i data-lucide="orbit"></i>
+        <span class="btn-label">3D ORBIT</span>
+      </button>
+      <button id="quickTerminalBtn" class="hud-btn glow-accent" title="Open SQL Terminal">
+        <i data-lucide="terminal"></i>
+        <span class="btn-label">SQL CONSOLE</span>
+      </button>
+      <!-- Mobile Hamburger Button -->
+      <button id="mobileMenuBtn" class="hud-btn mobile-menu-btn" title="Toggle Navigation Menu">
+        <i data-lucide="menu" id="menuIcon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-out Navigation Drawer -->
+  <div id="mobileNavDrawer" class="mobile-drawer hidden">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <i data-lucide="compass"></i>
+        <span>CHAPTER DIRECTORY</span>
+      </div>
+      <button id="closeDrawerBtn" class="drawer-close-btn"><i data-lucide="x"></i></button>
+    </div>
+    <div class="drawer-body">
+      <button class="drawer-nav-item active" data-stage="0"><span class="d-num">01</span> <span class="d-label">DATABASE CORE</span><i data-lucide="chevron-right"></i></button>
+      <button class="drawer-nav-item" data-stage="1"><span class="d-num">02</span> <span class="d-label">TABLE ANATOMY</span><i data-lucide="chevron-right"></i></button>
+      <button class="drawer-nav-item" data-stage="2"><span class="d-num">03</span> <span class="d-label">SELECT PROJECTION</span><i data-lucide="chevron-right"></i></button>
+      <button class="drawer-nav-item" data-stage="3"><span class="d-num">04</span> <span class="d-label">WHERE FILTER MATRIX</span><i data-lucide="chevron-right"></i></button>
+      <button class="drawer-nav-item" data-stage="4"><span class="d-num">05</span> <span class="d-label">RELATIONAL JOINS</span><i data-lucide="chevron-right"></i></button>
+      <button class="drawer-nav-item" data-stage="5"><span class="d-num">06</span> <span class="d-label">GROUP BY GRAVITONS</span><i data-lucide="chevron-right"></i></button>
+      <button class="drawer-nav-item" data-stage="6"><span class="d-num">07</span> <span class="d-label">B-TREE INDEX WARP</span><i data-lucide="chevron-right"></i></button>
+      <button class="drawer-nav-item" data-stage="7"><span class="d-num">08</span> <span class="d-label">LIVE SQL SANDBOX</span><i data-lucide="chevron-right"></i></button>
+    </div>
+  </div>
+  <div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+
+  <!-- Left Holographic Telemetry HUD -->
+  <aside class="hud-telemetry">
+    <div class="telemetry-box">
+      <div class="telemetry-label">ACTIVE DIMENSION</div>
+      <div class="telemetry-value" id="hudActiveChapter">DATABASE_GENESIS</div>
+    </div>
+    <div class="telemetry-box">
+      <div class="telemetry-label">CAMERA ORBIT (ALPHA / BETA)</div>
+      <div class="telemetry-value mono" id="hudCamCoords">α: 1.57 | β: 1.20</div>
+    </div>
+    <div class="telemetry-box">
+      <div class="telemetry-label">LIVE DATA NODES</div>
+      <div class="telemetry-value mono text-cyan" id="hudNodeCount">32 ACTIVE CUBES</div>
+    </div>
+    <div class="telemetry-box">
+      <div class="telemetry-label">SQL EXECUTION ORDER</div>
+      <div class="telemetry-pipeline" id="hudPipeline">
+        <span class="pipe-step" data-step="from">FROM</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="where">WHERE</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="group">GROUP BY</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="having">HAVING</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="select">SELECT</span>
+        <span class="pipe-arrow">→</span>
+        <span class="pipe-step" data-step="order">ORDER BY</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right Floating 3D Interaction Control Panel -->
+  <aside class="hud-interaction-panel" id="interactionPanel">
+    <div class="panel-header">
+      <i data-lucide="cpu" class="panel-icon"></i>
+      <span id="panelTitle">3D MATRIX CONTROLS</span>
+    </div>
+    <div class="panel-body" id="panelDynamicControls">
+      <!-- Dynamic controllers inserted via JS according to current active chapter -->
+    </div>
+  </aside>
+
+  <!-- Scrollable Storyline Content (GSAP ScrollTrigger tracks these sections) -->
+  <main class="scroll-container" id="scrollContainer">
+
+    <!-- SECTION 0: HERO & DATABASE GENESIS -->
+    <section class="story-section hero-section" data-index="0" id="section-0">
+      <div class="glass-card hero-card">
+        <div class="card-badge"><i data-lucide="sparkles"></i> WELCOME TO THE SQL MATRIX</div>
+        <h1 class="hero-title">MASTER SQL IN <span class="gradient-text">3D SPACE</span></h1>
+        <p class="hero-desc">
+          Step into a spatial universe where Relational Databases are not boring flat tables, but vibrant, interconnected 3D holographic structures powered by <strong>Babylon.js WebGL</strong>.
+        </p>
+        <div class="hero-cta-group">
+          <button class="cta-primary scroll-to-btn" data-target="#section-1">
+            <span>START 3D ODYSSEY</span>
+            <i data-lucide="arrow-down"></i>
+          </button>
+          <button class="cta-secondary scroll-to-btn" data-target="#section-7">
+            <span>LIVE SQL SANDBOX</span>
+            <i data-lucide="play-circle"></i>
+          </button>
+        </div>
+        <div class="scroll-indicator">
+          <span class="scroll-mouse"><span class="wheel"></span></span>
+          <span class="scroll-text">SCROLL TO FLY THROUGH DIMENSIONS</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: THE CORE (CREATE TABLE & SCHEMAS) -->
+    <section class="story-section" data-index="1" id="section-1">
+      <div class="glass-card narrative-card">
+        <div class="card-badge"><i data-lucide="box"></i> CHAPTER 01 // ARCHITECTURE</div>
+        <h2 class="card-title">The Anatomy of a Table</h2>
+        <p class="card-text">
+          In SQL, everything begins with relations. A <strong>Table</strong> is a 3D coordinate grid of memory:
+          <strong>Columns</strong> define attributes and types, while <strong>Rows (Tuples)</strong> represent distinct physical data cubes floating in the database cluster.
+        </p>
+
+        <div class="code-terminal-snippet">
+          <div class="snippet-header">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="snippet-lang">SQL // DDL</span>
+          </div>
+          <pre><code><span class="kw">CREATE TABLE</span> <span class="tbl">starships</span> (
+  <span class="col">id</span> <span class="type">INT PRIMARY KEY</span>,
+  <span class="col">name</span> <span class="type">VARCHAR(50)</span>,
+  <span class="col">class</span> <span class="type">VARCHAR(30)</span>,
+  <span class="col">warp_speed</span> <span class="type">FLOAT</span>,
+  <span class="col">shields</span> <span class="type">INT</span>
+);</code></pre>
+        </div>
+
+        <div class="interactive-hint">
+          <i data-lucide="hand"></i>
+          <span>Hover over or click on any 3D data cube to inspect its live relational tuple in the HUD!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: THE SCANNER (SELECT & PROJECTION) -->
+    <section class="story-section" data-index="2" id="section-2">
+      <div class="glass-card narrative-card">
+        <div class="card-badge"><i data-lucide="scan"></i> CHAPTER 02 // PROJECTION</div>
+        <h2 class="card-title">SELECT: Spatial Column Laser</h2>
+        <p class="card-text">
+          <code>SELECT</code> does not copy data; it acts as a spatial prism beam extracting only the requested dimensional axes.
+          Querying <code>SELECT name, warp_speed</code> isolates specific coordinate planes, collapsing unneeded attributes.
+        </p>
+
+        <div class="code-terminal-snippet">
+          <div class="snippet-header">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="snippet-lang">SQL // QUERY</span>
+          </div>
+          <pre><code><span class="kw">SELECT</span> <span class="col">name</span>, <span class="col">warp_speed</span>, <span class="col">shields</span>
+<span class="kw">FROM</span> <span class="tbl">starships</span>;</code></pre>
+        </div>
+
+        <div class="feature-pills">
+          <button class="pill active" id="btnSelectAll">SELECT * (ALL AXES)</button>
+          <button class="pill" id="btnSelectSpeed">SELECT name, warp_speed</button>
+          <button class="pill" id="btnSelectShields">SELECT name, shields</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: THE FILTER MATRIX (WHERE CLAUSE) -->
+    <section class="story-section" data-index="3" id="section-3">
+      <div class="glass-card narrative-card">
+        <div class="card-badge"><i data-lucide="filter"></i> CHAPTER 03 // SELECTION</div>
+        <h2 class="card-title">WHERE: The Laser Scanner</h2>
+        <p class="card-text">
+          The <code>WHERE</code> clause sweeps through rows like a particle laser. Cubes satisfying the boolean predicate ignite with radiant energy; non-matching cubes dissolve into holographic wireframes.
+        </p>
+
+        <div class="code-terminal-snippet">
+          <div class="snippet-header">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="snippet-lang">SQL // FILTER</span>
+          </div>
+          <pre><code><span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="tbl">starships</span>
+<span class="kw">WHERE</span> <span class="col">shields</span> >= <span class="num" id="liveShieldNum">75</span>;</code></pre>
+        </div>
+
+        <div class="interactive-slider-box">
+          <div class="slider-header">
+            <span>ADJUST SHIELD THRESHOLD:</span>
+            <span class="slider-val" id="shieldValDisplay">75%</span>
+          </div>
+          <input type="range" min="0" max="100" value="75" class="cyber-slider" id="shieldSlider">
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: THE INTERDIMENSIONAL BRIDGE (JOINS) -->
+    <section class="story-section" data-index="4" id="section-4">
+      <div class="glass-card narrative-card">
+        <div class="card-badge"><i data-lucide="git-merge"></i> CHAPTER 04 // RELATIONS</div>
+        <h2 class="card-title">JOIN: Entangled Light Bridges</h2>
+        <p class="card-text">
+          Relational power unlocks when two distinct 3D tables connect. Foreign keys ignite laser links across space.
+          Choose a JOIN topology below to witness how <code>INNER</code>, <code>LEFT</code>, <code>RIGHT</code>, and <code>FULL OUTER</code> morph the resulting platform!
+        </p>
+
+        <div class="join-mode-selector">
+          <button class="join-btn active" data-join="INNER">
+            <span class="join-title">INNER JOIN</span>
+            <span class="join-sub">Intersection Only</span>
+          </button>
+          <button class="join-btn" data-join="LEFT">
+            <span class="join-title">LEFT JOIN</span>
+            <span class="join-sub">All Left + Matched</span>
+          </button>
+          <button class="join-btn" data-join="RIGHT">
+            <span class="join-title">RIGHT JOIN</span>
+            <span class="join-sub">All Right + Matched</span>
+          </button>
+          <button class="join-btn" data-join="FULL">
+            <span class="join-title">FULL OUTER</span>
+            <span class="join-sub">Complete Union</span>
+          </button>
+        </div>
+
+        <div class="code-terminal-snippet">
+          <pre><code id="liveJoinCodeSnippet"><span class="kw">SELECT</span> <span class="tbl">pilots</span>.name, <span class="tbl">starships</span>.name 
+<span class="kw">FROM</span> <span class="tbl">pilots</span>
+<span class="kw" id="joinKeyword">INNER JOIN</span> <span class="tbl">starships</span> 
+  <span class="kw">ON</span> <span class="tbl">pilots</span>.ship_id = <span class="tbl">starships</span>.id;</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: THE AGGREGATION CHAMBER (GROUP BY & HAVING) -->
+    <section class="story-section" data-index="5" id="section-5">
+      <div class="glass-card narrative-card">
+        <div class="card-badge"><i data-lucide="layers"></i> CHAPTER 05 // COMPRESSION</div>
+        <h2 class="card-title">GROUP BY & Aggregation Gravitons</h2>
+        <p class="card-text">
+          <code>GROUP BY</code> compresses discrete records into dense gravity wells.
+          Mathematical operators (<code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MAX</code>) measure energy within each cluster, while <code>HAVING</code> filters entire collapsed pillars.
+        </p>
+
+        <div class="code-terminal-snippet">
+          <pre><code><span class="kw">SELECT</span> <span class="col">class</span>, 
+       <span class="func">COUNT</span>(*) <span class="kw">AS</span> ship_count,
+       <span class="func">AVG</span>(warp_speed) <span class="kw">AS</span> avg_speed
+<span class="kw">FROM</span> <span class="tbl">starships</span>
+<span class="kw">GROUP BY</span> <span class="col">class</span>;</code></pre>
+        </div>
+
+        <div class="aggregate-toggles">
+          <button class="agg-btn active" data-agg="COUNT"><i data-lucide="hash"></i> COUNT(*)</button>
+          <button class="agg-btn" data-agg="AVG"><i data-lucide="trending-up"></i> AVG(SPEED)</button>
+          <button class="agg-btn" data-agg="SUM"><i data-lucide="plus-circle"></i> SUM(SHIELDS)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: THE SPEED OF LIGHT (INDEXES & B-TREES) -->
+    <section class="story-section" data-index="6" id="section-6">
+      <div class="glass-card narrative-card">
+        <div class="card-badge"><i data-lucide="zap"></i> CHAPTER 06 // OPTIMIZATION</div>
+        <h2 class="card-title">B-Tree Indexes: Warping Query Space</h2>
+        <p class="card-text">
+          Without an index, the database must perform a grueling <strong>Full Table Scan</strong> $O(N)$ checking every block in storage.
+          A <strong>B-Tree Index</strong> creates a 3D branching hyperlane, finding the target record in logarithmic $O(\log N)$ leaps!
+        </p>
+
+        <div class="race-controls">
+          <button id="startIndexRaceBtn" class="cta-pulse">
+            <i data-lucide="play"></i> START SCAN VS INDEX RACE
+          </button>
+        </div>
+
+        <div class="race-scoreboard">
+          <div class="score-card slow">
+            <div class="score-label">FULL TABLE SCAN [O(N)]</div>
+            <div class="score-time" id="scanTimeDisplay">1,024 MS (10,000 LOOKUPS)</div>
+          </div>
+          <div class="score-card fast">
+            <div class="score-label">B-TREE INDEX [O(log N)]</div>
+            <div class="score-time" id="indexTimeDisplay">3 MS (4 HOPS)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: THE 3D SQL SANDBOX & LIVE RUNTIME -->
+    <section class="story-section full-sandbox-section" data-index="7" id="section-7">
+      <div class="sandbox-wrapper">
+        <!-- Terminal & Editor UI -->
+        <div class="glass-card sandbox-console-card">
+          <div class="console-header">
+            <div class="console-title">
+              <i data-lucide="terminal"></i>
+              <span>CYBER SQL CONSOLE // LIVE 3D ENGINE</span>
+            </div>
+            <div class="preset-dropdown">
+              <span>PRESETS:</span>
+              <select id="queryPresetSelect" class="cyber-select">
+                <option value="all_ships">1. SELECT * FROM starships</option>
+                <option value="shield_filter">2. Filter: WHERE shields > 80</option>
+                <option value="inner_join">3. Join: Pilots & Starships</option>
+                <option value="group_by_class">4. Aggregate: Group by Class</option>
+                <option value="top_speed">5. Order By: Fastest Ships</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="editor-area">
+            <textarea id="sqlInput" spellcheck="false" class="sql-textarea">SELECT name, class, warp_speed, shields
+FROM starships
+WHERE shields >= 70
+ORDER BY warp_speed DESC;</textarea>
+          </div>
+
+          <div class="console-actions">
+            <button id="runQueryBtn" class="cta-execute">
+              <i data-lucide="zap"></i>
+              <span>EXECUTE IN 3D SPACE</span>
+            </button>
+            <button id="resetTableBtn" class="hud-mini-btn">
+              <i data-lucide="rotate-ccw"></i> RESET
+            </button>
+            <div class="exec-stats" id="execStats">
+              <span class="status-dot"></span>
+              <span id="execStatsText">READY // 0.00ms</span>
+            </div>
+          </div>
+
+          <!-- Result Table -->
+          <div class="query-result-box" id="queryResultBox">
+            <div class="result-table-wrapper" id="resultTableWrapper">
+              <!-- Dynamically populated table -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Quest / Challenge Overlay -->
+        <div class="glass-card quest-card" id="questCard">
+          <div class="quest-header">
+            <div class="card-badge"><i data-lucide="award"></i> SQL QUEST ARENA</div>
+            <div class="quest-score">XP: <span id="userXp" class="text-gold">450</span></div>
+          </div>
+          <h3 class="quest-title" id="questTitle">Mission 1: The High Shield Vanguard</h3>
+          <p class="quest-desc" id="questDesc">
+            Write a query to retrieve all starships with <code>shields >= 80</code> and <code>warp_speed > 7.0</code>.
+          </p>
+          <div class="quest-hint">
+            <i data-lucide="help-circle"></i>
+            <span id="questHintText">Use: <code>WHERE shields >= 80 AND warp_speed > 7.0</code></span>
+          </div>
+          <div class="quest-nav">
+            <button class="hud-mini-btn" id="prevQuestBtn"><i data-lucide="chevron-left"></i> PREV</button>
+            <span id="questProgress">1 / 5</span>
+            <button class="hud-mini-btn" id="nextQuestBtn">NEXT <i data-lucide="chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Footer & Credits -->
+  <footer class="hud-footer">
+    <div class="footer-left">
+      <span>SQL 3D ODYSSEY // POWERED BY BABYLON.JS & WEBGL SHADERS</span>
+    </div>
+    <div class="footer-right">
+      <span class="fps-counter" id="fpsDisplay">FPS: 60</span>
+      <span class="status-tag">SYSTEM: OPTIMAL</span>
+    </div>
+  </footer>
+
+  <!-- Notification Hologram / Toast -->
+  <div id="cyberToast" class="cyber-toast hidden">
+    <i data-lucide="check-circle" class="toast-icon"></i>
+    <div class="toast-content">
+      <div class="toast-title" id="toastTitle">QUERY EXECUTED</div>
+      <div class="toast-msg" id="toastMsg">3D matrix updated with 6 records.</div>
+    </div>
+  </div>
+
+  <!-- App Script -->
+  <script src="/3D/app.js"></script>
+</body>
+</html>
