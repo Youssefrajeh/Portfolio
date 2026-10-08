@@ -2,7 +2,7 @@
 
 import { m } from "motion/react";
 import Link from "next/link";
-import { RETRO_PATH } from "@/lib/site";
+import { RETRO_PATH, withBasePath } from "@/lib/site";
 import { staggerContainer, scaleIn } from "@/lib/motionVariants";
 import ThemeToggle from "./ThemeToggle";
 
@@ -244,7 +244,7 @@ const LandingPage = () => {
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <img
-            src="/images/youssef.jpeg"
+            src={withBasePath('/images/youssef.jpeg')}
             alt="Youssef Rajeh"
             className="hub-avatar-img"
           />
@@ -301,7 +301,7 @@ const LandingPage = () => {
                 {p.kind === "route" ? (
                   <Link href={p.href} className="hub-more-link">{p.label}</Link>
                 ) : (
-                  <a href={p.href} className="hub-more-link">{p.label}</a>
+                  <a href={withBasePath(p.href)} className="hub-more-link">{p.label}</a>
                 )}
                 {i < otherProjects.length - 1 && <span className="hub-more-sep">/</span>}
               </span>

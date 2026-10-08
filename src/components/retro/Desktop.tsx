@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { SITE_URL } from '@/lib/site';
+import { SITE_URL, withBasePath } from '@/lib/site';
 import DesktopIcon from '@/components/retro/DesktopIcon';
 import Window from '@/components/retro/Window';
 import StartMenu from '@/components/retro/StartMenu';
@@ -51,8 +51,7 @@ interface WindowItem {
  * not client-side routing: /retro has its own global stylesheet (Tailwind +
  * Win95 body styles) that must not stay loaded on the modern site.
  */
-// eslint-disable-next-line @next/next/no-location-assign-relative-destination -- full load is intentional (see above)
-const goToModernSite = () => window.location.assign('/');
+const goToModernSite = () => window.location.assign(withBasePath('/'));
 
 // Detect mobile for auto-maximizing windows
 const isMobile = () => typeof window !== 'undefined' && window.innerWidth < 768;
@@ -471,9 +470,8 @@ const Portfolio: React.FC = () => {
             >
               Restart Portfolio
             </button>
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- full load, see goToModernSite */}
             <a
-              href="/"
+              href={withBasePath('/')}
               className="win95-button text-xs font-semibold py-1.5 px-4 text-black border-2 border-orange-700 bg-[#c0c0c0] hover:no-underline"
             >
               Go to youssefrajeh.com
@@ -543,9 +541,8 @@ const Portfolio: React.FC = () => {
 
             {/* Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-3 select-none">
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- full load, see goToModernSite */}
               <a
-                href="/"
+                href={withBasePath('/')}
                 className="win95-button text-xs font-bold py-1.5 px-4 border-2 hover:no-underline text-black"
               >
                 📱 View the mobile-friendly site

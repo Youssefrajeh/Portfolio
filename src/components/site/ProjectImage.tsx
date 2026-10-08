@@ -1,4 +1,5 @@
 import type { Project } from '@/data/types';
+import { withBasePath } from '@/lib/site';
 
 interface ProjectImageProps {
   project: Pick<Project, 'title' | 'image'>;
@@ -24,7 +25,7 @@ function initials(title: string): string {
  */
 export default function ProjectImage({ project, className = '', variant = 'card' }: ProjectImageProps) {
   if (project.image) {
-    return <img src={project.image} alt={project.title} className={className} loading="lazy" />;
+    return <img src={withBasePath(project.image)} alt={project.title} className={className} loading="lazy" />;
   }
 
   return (

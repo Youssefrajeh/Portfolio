@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CONTACT, CV_PATH } from '@/lib/site';
+import { CONTACT, CV_PATH, withBasePath } from '@/lib/site';
 
 const About: React.FC = () => {
     const initialText = `ABOUT ME
@@ -36,7 +36,7 @@ Phone: ${CONTACT.phone}`;
             <div className="flex justify-between items-center mt-1 pt-1.5 px-2 bg-[#c0c0c0] win95-sunken-gray py-1 border-2">
                 <span className="text-[10px] text-gray-700 font-sans">For Help, press F1</span>
                 <a 
-                  href={CV_PATH} 
+                  href={withBasePath(CV_PATH)} 
                   download 
                   className="win95-button text-xs font-semibold py-0.5 px-3 text-black border-2 flex items-center gap-1 hover:no-underline"
                 >

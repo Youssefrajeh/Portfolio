@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FolderIcon } from '@/components/retro/RetroIcons';
 import { projectFilters, projectsData } from '@/data/projectsData';
 import type { Project, ProjectFilter } from '@/data/types';
+import { withBasePath } from '@/lib/site';
 
 // Explorer-style folder names for the shared project categories
 const categories = projectFilters.map((f) => ({
@@ -127,7 +128,7 @@ const Projects: React.FC = () => {
                                 <div className="win95-sunken bg-white p-[2px] w-24 h-16 border-2 flex items-center justify-center flex-shrink-0">
                                     {showProperties.image ? (
                                         <img
-                                            src={showProperties.image}
+                                            src={withBasePath(showProperties.image)}
                                             alt={showProperties.title}
                                             className="w-full h-full object-cover"
                                         />

@@ -16,6 +16,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
       - uses: actions/checkout@v4
 
@@ -24,10 +27,19 @@ jobs:
           node-version-file: ".nvmrc"
           cache: "npm"
 
+      # Asks GitHub Pages where the site is served from: base_path is
+      # "/Portfolio" on youssefrajeh.github.io/Portfolio and "" once a custom
+      # domain is configured, so the build adapts with no code change.
+      - id: pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+
       - run: npm ci
       - run: npm run typecheck
       - run: npm run lint
       - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
       - uses: actions/upload-pages-artifact@v3
         if: github.event_name != 'pull_request'

@@ -2,6 +2,20 @@
 
 export const SITE_URL = 'https://youssefrajeh.com';
 
+/**
+ * URL prefix when the site is served from a sub-path, e.g. "/Portfolio" on
+ * youssefrajeh.github.io/Portfolio. Set at build time by the deploy workflow
+ * (from GitHub Pages' own config); empty when served from a root domain.
+ */
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
+/**
+ * Prefix a root-relative path with BASE_PATH. Use it for files in /public and
+ * for pages linked with a plain <a>; next/link and Next's own assets are
+ * prefixed automatically.
+ */
+export const withBasePath = (path: string): string => `${BASE_PATH}${path}`;
+
 export const CONTACT = {
   email: 'youssefrrajeh@gmail.com',
   phone: '+1 (548) 388-4360',

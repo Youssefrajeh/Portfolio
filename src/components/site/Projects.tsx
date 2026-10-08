@@ -6,6 +6,7 @@ import { m, AnimatePresence } from 'motion/react';
 import { projectsData, projectFilters } from '@/data/projectsData';
 import type { ProjectFilter } from '@/data/types';
 import { fadeInUp, scaleStaggerItem, viewportConfig } from '@/lib/motionVariants';
+import { withBasePath } from '@/lib/site';
 import ProjectImage from './ProjectImage';
 
 const Projects = () => {
@@ -206,7 +207,7 @@ const Projects = () => {
               <div className="project-image" style={{ height: '100%', width: '100%', position: 'relative' }}>
                 {project.image ? (
                   <m.img
-                    src={project.image}
+                    src={withBasePath(project.image)}
                     alt={project.title}
                     loading="lazy"
                     style={{

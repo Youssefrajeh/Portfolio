@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { fontVariables } from '@/lib/fonts';
-import { SITE_URL } from '@/lib/site';
+import { SITE_URL, withBasePath } from '@/lib/site';
 
 // Runs before hydration so the page never flashes the wrong theme.
 // Defaults to light for first-time visitors; a stored choice always wins.
@@ -60,9 +60,9 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/images/favicon.svg',
+    icon: withBasePath('/images/favicon.svg'),
   },
-  manifest: '/manifest.json',
+  manifest: withBasePath('/manifest.json'),
   other: {
     'geo.region': 'CA-ON',
     'geo.placename': 'London, Ontario, Canada',

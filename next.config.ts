@@ -6,6 +6,9 @@ import type { NextConfig } from 'next';
 // optimization are unavailable by design.
 const nextConfig: NextConfig = {
   output: 'export',
+  // Sub-path when served from youssefrajeh.github.io/Portfolio; empty on a
+  // custom domain. Provided by the deploy workflow (see src/lib/site.ts).
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || undefined,
   // Emit /portfolio/index.html instead of /portfolio.html so every route is a
   // directory - static hosts resolve these without any rewrite rules. This
   // also makes /3D/ (plain static app in public/3D) resolve to its index.html.

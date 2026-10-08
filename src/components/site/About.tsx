@@ -2,6 +2,7 @@
 
 import { m } from 'motion/react';
 import { fadeInUp, fadeInLeft, staggerContainer, staggerItem, viewportConfig } from '@/lib/motionVariants';
+import { CV_PATH, withBasePath } from '@/lib/site';
 
 const About = () => {
   return (
@@ -241,7 +242,7 @@ const About = () => {
         >
           <div className="about-photo-frame">
             <img
-              src="/images/youssef.jpeg"
+              src={withBasePath('/images/youssef.jpeg')}
               alt="Youssef Rajeh"
               className="about-photo-img"
               loading="lazy"
@@ -294,7 +295,7 @@ const About = () => {
             </m.div>
 
             <m.div className="cv-button" variants={staggerItem}>
-              <a href="/Youssef Rajeh.pdf" className="about-cv-btn" download>
+              <a href={withBasePath(CV_PATH)} className="about-cv-btn" download>
                 <i className="fas fa-download"></i> Download CV
               </a>
             </m.div>
