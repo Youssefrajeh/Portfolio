@@ -199,26 +199,29 @@ export const projectsData: Project[] = [
   },
   {
     id: 10,
-    title: 'Full Stack Application',
+    title: 'Full-Stack E-Commerce Platform',
     category: 'fullstack',
     image: '/images/v2/full_stack.png',
-    description: 'Complete full-stack web application featuring frontend and backend integration, database management, user authentication, and modern development practices.',
-    link: 'https://github.com/Youssefrajeh/Full_Satck',
+    description: 'An e-commerce store with product browsing by brand, a shopping cart, orders and order history, backed by an ASP.NET Core REST API and PostgreSQL.',
+    link: 'https://github.com/Youssefrajeh/FullStack',
+    demo: 'https://fullstack-lofy.onrender.com/',
     duration: 'Oct 2025',
     role: 'Full-Stack Developer',
-    detailedDescription: 'A secure full-stack platform built with ASP.NET Core Web API on the backend and React on the frontend. Uses Entity Framework Core to connect to SQL Server, supporting JWT token authentication and role-based client controls.',
+    detailedDescription: 'A full-stack e-commerce case study for INFO3181 (Full Stack Web Development). A Vue.js 3 + Quasar frontend talks to an ASP.NET Core 8 REST API, which uses Entity Framework Core to store products, customers, orders and branches in PostgreSQL. Customers register and log in with JWT authentication, browse products by brand, manage a cart, place orders and review their order history. The app is packaged with a multi-stage Docker build and deployed to Render.',
     techStack: [
-      { name: 'C# / .NET', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
-      { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-      { name: 'SQL Server', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-original.svg' }
+      { name: 'C# / ASP.NET Core 8', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
+      { name: 'Vue.js 3 + Quasar', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg' },
+      { name: 'PostgreSQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+      { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' }
     ],
     features: [
-      'RESTful API routing with secure JWT authorization filters',
-      'Dynamic React dashboard consuming APIs and rendering real-time metrics',
-      'Structured database seeding and migration pipeline handled via EF Core',
-      'Custom middleware layers handling validation errors and logging'
+      'User registration and login with salted password hashing and JWT-protected routes',
+      'Product catalogue filtered by brand, with images and pricing',
+      'Shopping cart and order placement with stock validation, plus itemized order history',
+      'Branch locator: enter an address to see the 3 closest stores on a TomTom map',
+      'RESTful controllers with Entity Framework Core data-access objects over PostgreSQL'
     ],
-    challenges: 'Securing user data and managing CORS issues during local and staging deployments. Resolved by writing custom middleware, utilizing secure password hashing (BCrypt), and storing JWT keys in encrypted environment configurations.'
+    challenges: 'Finding the nearest store branches for any address a customer types in. Solved by geocoding the address with the TomTom API and ranking branches by great-circle distance using the Haversine formula, returning the three closest from a single API endpoint.'
   },
   {
     id: 11,
@@ -337,8 +340,11 @@ export const projectsData: Project[] = [
     id: 17,
     title: 'Real-Time Chat App',
     category: 'fullstack',
+    image: '/images/v2/chatrooms.png',
+    imageType: 'screenshot',
     description: 'A full-stack real-time chat application with multiple rooms, authentication, and persistent history - built to practice WebSockets and database integration.',
     link: 'https://github.com/Youssefrajeh/Chatrooms',
+    demo: 'https://chatrooms-biax.onrender.com/',
     duration: 'May 2026',
     role: 'Solo Developer',
     detailedDescription: 'A Socket.IO-powered chat application supporting multiple rooms with real-time message delivery, secure authentication, and a persistent MongoDB-backed history so conversations survive reloads and reconnects.',
