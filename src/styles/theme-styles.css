@@ -1,0 +1,257 @@
+/* ─── Stylistic themes: Glass, Neon, Brutalist ───────────────────
+   Unlike the plain color themes in themes.css, these also restyle
+   component chrome (blur, glow, hard borders). Selectors are prefixed
+   with :root[data-theme=...] so they outrank per-component <style> blocks. */
+
+/* ===== GLASS (glassmorphism) ===== */
+:root[data-theme='glass'] {
+  --bg: #4f5bd5;
+  --surface: rgba(255, 255, 255, 0.14);
+  --surface-2: rgba(255, 255, 255, 0.2);
+  --surface-inset: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.28);
+  --border-strong: rgba(255, 255, 255, 0.45);
+  --text: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.82);
+  --text-faint: rgba(255, 255, 255, 0.62);
+  --glass: rgba(255, 255, 255, 0.16);
+  --accent: #ff9ad5;
+  --accent-strong: #ffb5e1;
+  --accent-soft: #ffd0ec;
+  --accent-rgb: 255 154 213;
+  --on-accent: #3a0f2c;
+  --shadow-card: 0 8px 32px rgba(20, 20, 70, 0.3);
+  --shadow-lg: 0 8px 32px rgba(20, 20, 70, 0.3);
+}
+
+:root[data-theme='glass'] body {
+  background: linear-gradient(135deg, #4f5bd5 0%, #962fbf 45%, #d62976 80%, #fa7e1e 100%) fixed;
+}
+
+/* Sections paint their own solid bg; make them see-through so the gradient shows */
+:root[data-theme='glass'] section,
+:root[data-theme='glass'] .about,
+:root[data-theme='glass'] .skills,
+:root[data-theme='glass'] .projects,
+:root[data-theme='glass'] .contact,
+:root[data-theme='glass'] .experience {
+  background: transparent !important;
+}
+
+:root[data-theme='glass'] .glass-card,
+:root[data-theme='glass'] .about-highlight-card,
+:root[data-theme='glass'] .skill-card-modern,
+:root[data-theme='glass'] .exp-card,
+:root[data-theme='glass'] .contact-info-card,
+:root[data-theme='glass'] .contact-form-card,
+:root[data-theme='glass'] .modal-card,
+:root[data-theme='glass'] .theme-menu {
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(20, 20, 70, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+:root[data-theme='glass'] .language-badge,
+:root[data-theme='glass'] .about-status-badge,
+:root[data-theme='glass'] .meta-badge,
+:root[data-theme='glass'] .ds-cell-tag,
+:root[data-theme='glass'] .tech-tag,
+:root[data-theme='glass'] .btn,
+:root[data-theme='glass'] .hero-btn-primary,
+:root[data-theme='glass'] .hero-btn-secondary,
+:root[data-theme='glass'] .about-cv-btn,
+:root[data-theme='glass'] .contact-submit-btn,
+:root[data-theme='glass'] .nav-feedback-btn,
+:root[data-theme='glass'] .ds-btn,
+:root[data-theme='glass'] .detail-btn,
+:root[data-theme='glass'] .category-filter,
+:root[data-theme='glass'] .filter-btn,
+:root[data-theme='glass'] .theme-toggle-btn,
+:root[data-theme='glass'] input,
+:root[data-theme='glass'] textarea,
+:root[data-theme='glass'] select {
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+:root[data-theme='glass'] .btn:hover,
+:root[data-theme='glass'] .hero-btn-primary:hover,
+:root[data-theme='glass'] .hero-btn-secondary:hover,
+:root[data-theme='glass'] .about-cv-btn:hover,
+:root[data-theme='glass'] .contact-submit-btn:hover,
+:root[data-theme='glass'] .ds-btn:hover,
+:root[data-theme='glass'] .category-filter:hover,
+:root[data-theme='glass'] .category-filter.active,
+:root[data-theme='glass'] .filter-btn.active {
+  background: rgba(255, 255, 255, 0.32);
+  color: #fff;
+}
+
+/* ===== NEON (cyberpunk) ===== */
+:root[data-theme='neon'] {
+  --bg: #0a0a14;
+  --surface: #11111f;
+  --surface-2: #181830;
+  --surface-inset: #07070f;
+  --border: rgba(0, 240, 255, 0.22);
+  --border-strong: rgba(0, 240, 255, 0.5);
+  --text: #e8faff;
+  --text-dim: #9fd8e6;
+  --text-faint: #5f9db0;
+  --glass: rgba(17, 17, 31, 0.85);
+  --accent: #00f0ff;
+  --accent-strong: #5cf6ff;
+  --accent-soft: #a3faff;
+  --accent-rgb: 0 240 255;
+  --on-accent: #00262a;
+  --shadow-card: 0 0 18px rgba(0, 240, 255, 0.18);
+  --shadow-lg: 0 0 18px rgba(0, 240, 255, 0.18);
+}
+
+:root[data-theme='neon'] .glass-card,
+:root[data-theme='neon'] .about-highlight-card,
+:root[data-theme='neon'] .skill-card-modern,
+:root[data-theme='neon'] .exp-card,
+:root[data-theme='neon'] .contact-info-card,
+:root[data-theme='neon'] .contact-form-card,
+:root[data-theme='neon'] .modal-card,
+:root[data-theme='neon'] .theme-menu {
+  background: var(--surface);
+  border: 1px solid rgba(0, 240, 255, 0.55);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.25), inset 0 0 14px rgba(0, 240, 255, 0.06);
+}
+
+:root[data-theme='neon'] .section-title::after {
+  background: #ff2bd6;
+  box-shadow: 0 0 10px #ff2bd6;
+}
+
+:root[data-theme='neon'] .hero-btn-primary,
+:root[data-theme='neon'] .about-cv-btn,
+:root[data-theme='neon'] .contact-submit-btn {
+  background: transparent;
+  color: #00f0ff;
+  border: 1px solid #00f0ff;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
+}
+
+:root[data-theme='neon'] .hero-btn-primary:hover,
+:root[data-theme='neon'] .about-cv-btn:hover,
+:root[data-theme='neon'] .contact-submit-btn:hover {
+  background: rgba(0, 240, 255, 0.15);
+  color: #00f0ff;
+  box-shadow: 0 0 22px rgba(0, 240, 255, 0.8);
+}
+
+:root[data-theme='neon'] .hero-btn-secondary {
+  background: transparent;
+  color: #ff2bd6;
+  border: 1px solid #ff2bd6;
+  box-shadow: 0 0 12px rgba(255, 43, 214, 0.45);
+}
+
+:root[data-theme='neon'] .hero-btn-secondary:hover {
+  background: rgba(255, 43, 214, 0.15);
+  color: #ff2bd6;
+  box-shadow: 0 0 22px rgba(255, 43, 214, 0.75);
+}
+
+/* ===== BRUTALIST ===== */
+:root[data-theme='brutal'] {
+  --bg: #fff7d6;
+  --surface: #ffffff;
+  --surface-2: #ffe14d;
+  --surface-inset: #fff0a8;
+  --border: #111111;
+  --border-strong: #111111;
+  --text: #111111;
+  --text-dim: #2b2b2b;
+  --text-faint: #4a4a4a;
+  --glass: #ffffff;
+  --accent: #ff5a36;
+  --accent-strong: #e0451f;
+  --accent-soft: #ff7a5c;
+  --accent-rgb: 255 90 54;
+  --on-accent: #111111;
+  --shadow-card: 6px 6px 0 #111;
+  --shadow-lg: 6px 6px 0 #111;
+}
+
+:root[data-theme='brutal'] .glass-card,
+:root[data-theme='brutal'] .about-highlight-card,
+:root[data-theme='brutal'] .skill-card-modern,
+:root[data-theme='brutal'] .exp-card,
+:root[data-theme='brutal'] .contact-info-card,
+:root[data-theme='brutal'] .contact-form-card,
+:root[data-theme='brutal'] .modal-card,
+:root[data-theme='brutal'] .theme-menu {
+  background: #fff;
+  border: 3px solid #111;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #111;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-theme='brutal'] .language-badge,
+:root[data-theme='brutal'] .about-status-badge,
+:root[data-theme='brutal'] .meta-badge,
+:root[data-theme='brutal'] .ds-cell-tag,
+:root[data-theme='brutal'] .tech-tag,
+:root[data-theme='brutal'] .btn,
+:root[data-theme='brutal'] .hero-btn-primary,
+:root[data-theme='brutal'] .hero-btn-secondary,
+:root[data-theme='brutal'] .about-cv-btn,
+:root[data-theme='brutal'] .contact-submit-btn,
+:root[data-theme='brutal'] .nav-feedback-btn,
+:root[data-theme='brutal'] .ds-btn,
+:root[data-theme='brutal'] .detail-btn,
+:root[data-theme='brutal'] .category-filter,
+:root[data-theme='brutal'] .filter-btn,
+:root[data-theme='brutal'] .theme-toggle-btn {
+  background: #ffe14d;
+  color: #111;
+  border: 3px solid #111;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #111;
+  font-weight: 700;
+}
+
+:root[data-theme='brutal'] .btn:hover,
+:root[data-theme='brutal'] .hero-btn-primary:hover,
+:root[data-theme='brutal'] .hero-btn-secondary:hover,
+:root[data-theme='brutal'] .about-cv-btn:hover,
+:root[data-theme='brutal'] .contact-submit-btn:hover,
+:root[data-theme='brutal'] .ds-btn:hover,
+:root[data-theme='brutal'] .category-filter:hover,
+:root[data-theme='brutal'] .category-filter.active,
+:root[data-theme='brutal'] .filter-btn.active,
+:root[data-theme='brutal'] .theme-toggle-btn:hover {
+  background: #ff5a36;
+  color: #111;
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 #111;
+}
+
+:root[data-theme='brutal'] input,
+:root[data-theme='brutal'] textarea,
+:root[data-theme='brutal'] select {
+  background: #fff;
+  color: #111;
+  border: 3px solid #111;
+  border-radius: 0;
+}
+
+:root[data-theme='brutal'] .section-title::after {
+  height: 5px;
+  width: 56px;
+  background: #111;
+  border-radius: 0;
+}

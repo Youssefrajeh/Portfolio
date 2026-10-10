@@ -48,6 +48,11 @@
 /* Main site stylesheet */
 @import './site.css';
 
+/* Extra themes (selected via data-theme on <html>) */
+@import './neumorphism.css';
+@import './themes.css';
+@import './theme-styles.css';
+
 /* Scroll to top button */
 .scroll-top {
   border: none;

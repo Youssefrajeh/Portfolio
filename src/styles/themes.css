@@ -1,0 +1,74 @@
+/* Extra color themes. Each only redefines the structural tokens declared in
+   globals.css, so every component picks them up automatically. */
+
+:root[data-theme='nord'] {
+  --bg: #2e3440;
+  --surface: #3b4252;
+  --surface-2: #434c5e;
+  --surface-inset: #272c36;
+  --border: rgba(216, 222, 233, 0.1);
+  --border-strong: rgba(216, 222, 233, 0.22);
+  --text: #eceff4;
+  --text-dim: #c0c8d6;
+  --text-faint: #8f9bb0;
+  --glass: rgba(59, 66, 82, 0.8);
+  --accent: #88c0d0;
+  --accent-strong: #a3d0dd;
+  --accent-soft: #b9dde6;
+  --accent-rgb: 136 192 208;
+  --on-accent: #1c2230;
+}
+
+:root[data-theme='dracula'] {
+  --bg: #282a36;
+  --surface: #323445;
+  --surface-2: #3b3e52;
+  --surface-inset: #21222c;
+  --border: rgba(248, 248, 242, 0.1);
+  --border-strong: rgba(248, 248, 242, 0.22);
+  --text: #f8f8f2;
+  --text-dim: #c9cadb;
+  --text-faint: #8a8fb0;
+  --glass: rgba(50, 52, 69, 0.8);
+  --accent: #bd93f9;
+  --accent-strong: #d0aefb;
+  --accent-soft: #e0c9fc;
+  --accent-rgb: 189 147 249;
+  --on-accent: #1f1830;
+}
+
+:root[data-theme='sepia'] {
+  --bg: #f4ecd8;
+  --surface: #fbf5e4;
+  --surface-2: #ebe1c6;
+  --surface-inset: #efe5cb;
+  --border: rgba(91, 70, 40, 0.14);
+  --border-strong: rgba(91, 70, 40, 0.28);
+  --text: #433422;
+  --text-dim: #6b5a42;
+  --text-faint: #8a7857;
+  --glass: rgba(251, 245, 228, 0.8);
+  --accent: #b5651d;
+  --accent-strong: #8f4e14;
+  --accent-soft: #c97a2e;
+  --accent-rgb: 181 101 29;
+  --on-accent: #ffffff;
+}
+
+:root[data-theme='forest'] {
+  --bg: #16211b;
+  --surface: #1d2b23;
+  --surface-2: #25362c;
+  --surface-inset: #111a15;
+  --border: rgba(200, 235, 205, 0.1);
+  --border-strong: rgba(200, 235, 205, 0.22);
+  --text: #e4f1e6;
+  --text-dim: #aec5b3;
+  --text-faint: #7b9482;
+  --glass: rgba(29, 43, 35, 0.8);
+  --accent: #7bc47f;
+  --accent-strong: #95d399;
+  --accent-soft: #b2e2b5;
+  --accent-rgb: 123 196 127;
+  --on-accent: #0d1a11;
+}

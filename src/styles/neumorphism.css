@@ -1,0 +1,169 @@
+/* ─── Neumorphism theme ──────────────────────────────────────────
+   Third theme (data-theme='neu'). Everything sits on one soft grey
+   base; depth comes from paired light/dark shadows instead of borders.
+   Raised = outer shadows, pressed/active = inset shadows.
+   Selectors are prefixed with :root[data-theme='neu'] so they outrank the
+   per-component <style> blocks without needing !important. */
+:root[data-theme='neu'] {
+  --bg: #e0e5ec;
+  --surface: #e0e5ec;
+  --surface-2: #e0e5ec;
+  --surface-inset: #d9dee6;
+  --border: transparent;
+  --border-strong: rgba(163, 177, 198, 0.4);
+  --text: #3d4455;
+  --text-dim: #5b6478;
+  --text-faint: #737d92;
+  --glass: #e0e5ec;
+
+  --neu-light: #ffffff;
+  --neu-dark: #a3b1c6;
+  --neu-raised: 9px 9px 18px var(--neu-dark), -9px -9px 18px var(--neu-light);
+  --neu-raised-sm: 5px 5px 10px var(--neu-dark), -5px -5px 10px var(--neu-light);
+  --neu-pressed: inset 5px 5px 10px var(--neu-dark), inset -5px -5px 10px var(--neu-light);
+  --neu-pressed-sm: inset 3px 3px 6px var(--neu-dark), inset -3px -3px 6px var(--neu-light);
+
+  --shadow-sm: var(--neu-raised-sm);
+  --shadow-md: var(--neu-raised-sm);
+  --shadow-lg: var(--neu-raised);
+  --shadow-card: var(--neu-raised);
+  --shadow-glow: var(--neu-raised-sm);
+  /* Slightly deeper indigo so it keeps contrast on the light base */
+  --accent: #5766e8;
+  --accent-strong: #4352d1;
+  --accent-soft: #6b79ee;
+  --accent-rgb: 87 102 232;
+  --on-accent: #ffffff;
+}
+
+:root[data-theme='neu'] body {
+  background-color: var(--bg);
+}
+
+/* Raised surfaces */
+:root[data-theme='neu'] .glass-card,
+:root[data-theme='neu'] .about-highlight-card,
+:root[data-theme='neu'] .skill-card-modern,
+:root[data-theme='neu'] .exp-card,
+:root[data-theme='neu'] .contact-info-card,
+:root[data-theme='neu'] .contact-form-card,
+:root[data-theme='neu'] .modal-card {
+  background: var(--bg);
+  border: none;
+  border-radius: 20px;
+  box-shadow: var(--neu-raised);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-theme='neu'] .exp-card:hover {
+  box-shadow: var(--neu-raised);
+  border-color: transparent;
+}
+
+/* Small pill-like elements: raised */
+:root[data-theme='neu'] .language-badge,
+:root[data-theme='neu'] .about-status-badge,
+:root[data-theme='neu'] .meta-badge,
+:root[data-theme='neu'] .ds-complexity-badge,
+:root[data-theme='neu'] .ds-cell-tag,
+:root[data-theme='neu'] .tech-tag {
+  background: var(--bg);
+  border: none;
+  box-shadow: var(--neu-raised-sm);
+  color: var(--text-dim);
+}
+
+:root[data-theme='neu'] .tech-tag:hover {
+  background: var(--bg) !important;
+  color: var(--accent) !important;
+  border-color: transparent !important;
+  box-shadow: var(--neu-pressed-sm);
+}
+
+/* Buttons: raised, pressed on hover/active */
+:root[data-theme='neu'] .btn,
+:root[data-theme='neu'] .hero-btn-primary,
+:root[data-theme='neu'] .hero-btn-secondary,
+:root[data-theme='neu'] .about-cv-btn,
+:root[data-theme='neu'] .contact-submit-btn,
+:root[data-theme='neu'] .nav-feedback-btn,
+:root[data-theme='neu'] .ds-btn,
+:root[data-theme='neu'] .detail-btn,
+:root[data-theme='neu'] .category-filter,
+:root[data-theme='neu'] .filter-btn,
+:root[data-theme='neu'] .theme-toggle-btn,
+:root[data-theme='neu'] .view-project-btn {
+  background: var(--bg);
+  border: none;
+  color: var(--text);
+  box-shadow: var(--neu-raised-sm);
+  transition: box-shadow 0.2s ease, color 0.2s ease;
+}
+
+:root[data-theme='neu'] .btn:hover,
+:root[data-theme='neu'] .hero-btn-primary:hover,
+:root[data-theme='neu'] .hero-btn-secondary:hover,
+:root[data-theme='neu'] .about-cv-btn:hover,
+:root[data-theme='neu'] .contact-submit-btn:hover,
+:root[data-theme='neu'] .nav-feedback-btn:hover,
+:root[data-theme='neu'] .ds-btn:hover,
+:root[data-theme='neu'] .detail-btn:hover,
+:root[data-theme='neu'] .view-project-btn:hover,
+:root[data-theme='neu'] .theme-toggle-btn:hover {
+  background: var(--bg);
+  color: var(--accent);
+  box-shadow: var(--neu-pressed-sm);
+  transform: none;
+}
+
+/* Active filters read as "pushed in" */
+:root[data-theme='neu'] .category-filter:hover,
+:root[data-theme='neu'] .category-filter.active,
+:root[data-theme='neu'] .filter-btn:hover,
+:root[data-theme='neu'] .filter-btn.active,
+:root[data-theme='neu'] .ds-btn-primary {
+  background: var(--bg);
+  color: var(--accent);
+  border: none;
+  box-shadow: var(--neu-pressed-sm);
+}
+
+/* Inputs: always inset */
+:root[data-theme='neu'] input,
+:root[data-theme='neu'] textarea,
+:root[data-theme='neu'] select {
+  background: var(--bg);
+  border: none;
+  color: var(--text);
+  box-shadow: var(--neu-pressed-sm);
+}
+
+:root[data-theme='neu'] input:focus,
+:root[data-theme='neu'] textarea:focus,
+:root[data-theme='neu'] select:focus {
+  outline: 2px solid rgba(87, 102, 232, 0.35);
+  outline-offset: 2px;
+  border: none;
+}
+
+/* Scrollbar */
+:root[data-theme='neu'] ::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+:root[data-theme='neu'] ::-webkit-scrollbar-thumb {
+  background: var(--neu-dark);
+  border-color: var(--bg);
+}
+
+/* Floating scroll-to-top */
+:root[data-theme='neu'] .scroll-top {
+  background: var(--bg);
+  color: var(--accent);
+  box-shadow: var(--neu-raised-sm);
+}
+:root[data-theme='neu'] .scroll-top:hover {
+  background: var(--bg);
+  box-shadow: var(--neu-pressed-sm);
+  transform: none;
+}
