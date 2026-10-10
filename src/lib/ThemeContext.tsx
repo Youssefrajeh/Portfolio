@@ -1,20 +1,22 @@
 'use client';
 
-import { createContext, useCallback, useContext, useSyncExternalStore, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useMemo, useSyncExternalStore, type ReactNode } from 'react';
+import { DEFAULT_THEME, isTheme, type Theme } from '@/lib/themes';
 
-export type Theme = 'light' | 'dark';
+export type { Theme };
 
 interface ThemeContextValue {
   theme: Theme;
-  toggleTheme: () => void;
+  setTheme: (theme: Theme) => void;
 }
 
-const ThemeContext = createContext<ThemeContextValue>({ theme: 'light', toggleTheme: () => {} });
+const ThemeContext = createContext<ThemeContextValue>({ theme: DEFAULT_THEME, setTheme: () => {} });
 
 // The inline script in the root layout sets data-theme on <html> before
 // hydration, so <html> is the single source of truth - React just mirrors it.
 function readTheme(): Theme {
-  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  const current = document.documentElement.getAttribute('data-theme');
+  return isTheme(current) ? current : DEFAULT_THEME;
 }
 
 function subscribe(onChange: () => void): () => void {
@@ -24,10 +26,9 @@ function subscribe(onChange: () => void): () => void {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const theme = useSyncExternalStore<Theme>(subscribe, readTheme, () => 'light');
+  const theme = useSyncExternalStore<Theme>(subscribe, readTheme, () => DEFAULT_THEME);
 
-  const toggleTheme = useCallback(() => {
-    const next: Theme = readTheme() === 'dark' ? 'light' : 'dark';
+  const setTheme = useCallback((next: Theme) => {
     document.documentElement.setAttribute('data-theme', next);
     try {
       localStorage.setItem('theme', next);
@@ -36,7 +37,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  const value = useMemo(() => ({ theme, setTheme }), [theme, setTheme]);
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme(): ThemeContextValue {

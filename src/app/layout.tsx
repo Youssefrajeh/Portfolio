@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { fontVariables } from '@/lib/fonts';
 import { SITE_URL, withBasePath } from '@/lib/site';
+import { THEME_IDS } from '@/lib/themes';
 
 // Runs before hydration so the page never flashes the wrong theme.
 // Defaults to light for first-time visitors; a stored choice always wins.
@@ -9,7 +10,7 @@ const themeInitScript = `
   (function () {
     try {
       var stored = localStorage.getItem('theme');
-      var theme = stored === 'light' || stored === 'dark' ? stored : 'light';
+      var theme = ${JSON.stringify(THEME_IDS)}.indexOf(stored) !== -1 ? stored : 'light';
       document.documentElement.setAttribute('data-theme', theme);
     } catch (e) {
       document.documentElement.setAttribute('data-theme', 'light');
