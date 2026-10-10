@@ -167,3 +167,72 @@
   box-shadow: var(--neu-pressed-sm);
   transform: none;
 }
+
+/* ─── Landing page (hub) ─────────────────────────────────────── */
+:root[data-theme='neu'] .hub-avatar-wrapper {
+  border: none;
+  padding: 4px;
+  background: var(--bg);
+  box-shadow: var(--neu-raised-sm);
+}
+
+:root[data-theme='neu'] .hub-status {
+  padding: 5px 16px;
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: var(--neu-pressed-sm);
+}
+
+:root[data-theme='neu'] .hub-cta,
+:root[data-theme='neu'] .hub-cta-secondary,
+:root[data-theme='neu'] .hub-social-btn {
+  background: var(--bg);
+  border: none;
+  box-shadow: var(--neu-raised-sm);
+  transition: box-shadow 0.2s ease, color 0.2s ease;
+}
+
+:root[data-theme='neu'] .hub-cta,
+:root[data-theme='neu'] .hub-cta-secondary {
+  border-radius: 14px;
+}
+
+:root[data-theme='neu'] .hub-social-btn {
+  border-radius: 50%;
+}
+
+:root[data-theme='neu'] .hub-cta {
+  color: var(--accent);
+}
+
+:root[data-theme='neu'] .hub-cta-secondary {
+  color: var(--text);
+}
+
+:root[data-theme='neu'] .hub-cta:hover,
+:root[data-theme='neu'] .hub-cta-secondary:hover,
+:root[data-theme='neu'] .hub-social-btn:hover {
+  background: var(--bg);
+  color: var(--accent);
+  box-shadow: var(--neu-pressed-sm);
+}
+
+/* Links row sits in a recessed tray */
+:root[data-theme='neu'] .hub-more-links {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 6px 10px;
+  gap: 6px;
+  border-radius: 16px;
+  background: var(--bg);
+  box-shadow: var(--neu-pressed-sm);
+}
+
+:root[data-theme='neu'] .hub-more {
+  margin-bottom: clamp(18px, 3vh, 28px);
+}
+
+:root[data-theme='neu'] .hub-more-sep {
+  color: var(--text-faint);
+}
