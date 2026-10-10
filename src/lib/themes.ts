@@ -17,7 +17,7 @@ export const THEMES = [
 export type Theme = (typeof THEMES)[number]['id'];
 
 export const THEME_IDS: readonly Theme[] = THEMES.map((t) => t.id);
-export const DEFAULT_THEME: Theme = 'light';
+export const DEFAULT_THEME: Theme = 'neu';
 
 export function isTheme(value: string | null): value is Theme {
   return value !== null && (THEME_IDS as readonly string[]).includes(value);
