@@ -236,3 +236,20 @@
 :root[data-theme='neu'] .hub-more-sep {
   color: var(--text-faint);
 }
+
+/* Floating "back to hub" button (mobile, portfolio pages) */
+:root[data-theme='neu'] .mobile-floating-hub-btn {
+  background: var(--bg);
+  border: none;
+  border-radius: 14px;
+  color: var(--accent);
+  box-shadow: var(--neu-raised-sm);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+:root[data-theme='neu'] .mobile-floating-hub-btn:hover {
+  background: var(--bg);
+  box-shadow: var(--neu-pressed-sm);
+  transform: none;
+}
