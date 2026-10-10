@@ -105,7 +105,7 @@
   bottom: 20px;
   left: 16px;
   z-index: 995;
-  background: rgba(12, 12, 14, 0.9);
+  background: var(--glass);
   border: 1px solid rgb(var(--accent-rgb) / 0.25);
   color: var(--accent);
   backdrop-filter: blur(12px);
@@ -127,6 +127,13 @@
   background: rgb(var(--accent-rgb) / 0.1);
   border-color: rgb(var(--accent-rgb) / 0.4);
   transform: translateY(-2px);
+}
+
+/* Leave room under the last content so the fixed Hub / scroll-to-top buttons never cover it */
+@media (max-width: 768px) {
+  body:has(.mobile-floating-hub-btn) {
+    padding-bottom: 76px;
+  }
 }
 
 @media (min-width: 769px) {
