@@ -30,6 +30,8 @@ const HEAD = '<svg viewBox="0 0 100 110" aria-hidden="true"><path class="neck" d
 const FEET = '<svg viewBox="0 0 64 12" aria-hidden="true"><g><path d="M2,1 C4,1 6,2 7,3 C13,4 22,5 28,7 C29,8 28,9 27,9 C20,10 12,11 7,10 C4,9 2,6 2,1 Z" fill="#f07c12"/><path d="M8,4 L26,8 M8,5 L22,10" stroke="#c45c06" stroke-width=".8" fill="none"/></g><g transform="translate(30,1)"><path d="M2,1 C4,1 6,2 7,3 C13,4 22,5 28,7 C29,8 28,9 27,9 C20,10 12,11 7,10 C4,9 2,6 2,1 Z" fill="#f07c12"/><path d="M8,4 L26,8 M8,5 L22,10" stroke="#c45c06" stroke-width=".8" fill="none"/></g></svg>';
 const DUR = 2800; // the dot's entrance
 const T = 13400; // whole sequence, before the camera settles
+const HOLD = 3000; // finished name stays on screen this long before looping
+const FADE = 500; // fade-out before the sequence starts again
 
 export default function IntroName() {
   const cameraRef = useRef<HTMLSpanElement>(null);
@@ -272,7 +274,10 @@ export default function IntroName() {
       });
     };
 
+    // The whole sequence loops: hold the finished name, fade out, play again.
+    let loop: ReturnType<typeof setTimeout> | undefined;
     const play = () => {
+      clearTimeout(loop);
       anims.forEach(a => a.cancel()); anims = [];
       layout();
       if (reduce) {
@@ -292,6 +297,10 @@ export default function IntroName() {
       geeseShow(4200);
       A(sig, [{ strokeDashoffset: 1 }, { offset: .15, strokeDashoffset: .9 }, { offset: .85, strokeDashoffset: .08 }, { strokeDashoffset: 0 }],
         { duration: 1700, delay: 11600, easing: "cubic-bezier(.4,0,.3,1)" });
+      loop = setTimeout(() => {
+        A(word, [{ opacity: 1 }, { opacity: 0 }], { duration: FADE, easing: "ease-in", fill: "forwards" })
+          .finished.then(play, () => {}); // rejected when cancelled by a click or unmount
+      }, T + HOLD);
     };
 
     let rt: ReturnType<typeof setTimeout> | undefined;
@@ -315,6 +324,7 @@ export default function IntroName() {
     return () => {
       cancelled = true;
       clearTimeout(rt);
+      clearTimeout(loop);
       removeEventListener("resize", onResize);
       word.removeEventListener("click", play);
       anims.forEach(a => a.cancel());
