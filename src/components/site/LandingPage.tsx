@@ -4,6 +4,7 @@ import { m } from "motion/react";
 import Link from "next/link";
 import { CONTACT, CV_PATH, RETRO_PATH, withBasePath } from "@/lib/site";
 import { staggerContainer, scaleIn } from "@/lib/motionVariants";
+import IntroName from "./IntroName";
 import ThemeToggle from "./ThemeToggle";
 
 const socialLinks = [
@@ -107,16 +108,6 @@ const LandingPage = () => {
           text-transform: uppercase;
           margin-bottom: clamp(8px, 1.4vh, 14px);
           font-weight: 500;
-        }
-
-        .hub-title {
-          font-family: var(--font-space), sans-serif;
-          font-size: clamp(2.1rem, 5.5vw, 3.6rem);
-          font-weight: 700;
-          color: var(--text);
-          line-height: 1.08;
-          margin: 0 0 clamp(10px, 2vh, 16px) 0;
-          letter-spacing: -0.03em;
         }
 
         .hub-tagline {
@@ -299,14 +290,7 @@ const LandingPage = () => {
           Personal Website
         </m.p>
 
-        <m.h1
-          className="hub-title"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-        >
-          Youssef Rajeh
-        </m.h1>
+        <IntroName />
 
         <m.p
           className="hub-tagline"
