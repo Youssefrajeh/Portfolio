@@ -1,320 +1,208 @@
 'use client';
 
 import { useEffect, useRef } from "react";
-import { Poppins } from "next/font/google";
+import { Manrope } from "next/font/google";
 
 // Declared here rather than in lib/fonts.ts (which the root layout imports) so
 // the font is only preloaded on the landing page.
-const poppins = Poppins({ subsets: ["latin"], weight: ["800"], display: "swap" });
+const manrope = Manrope({ subsets: ["latin"], weight: ["800"], display: "swap" });
 
 /**
- * Animated "Youssef Rajeh" for the landing page (ported from the standalone
- * youssef-rajeh-intro.html). The letters drop in, an amber ball bounces over
- * "h" and "e" and lands as the dot of the "j", the two "s" become geese, the
- * "Y" dances, the "u" breathes and a signature underline is drawn.
+ * Animated "Youssef Rajeh" signature for the landing page. A cursor appears,
+ * the name decodes in letter by letter with the cursor running ahead, then the
+ * cursor lifts off and lands as the dot of the "j", a live status light.
  *
- * The letters are built imperatively because every position is measured from
- * the rendered font (canvas ink bounds), then animated with the Web
+ * The letters are built imperatively because the dot's position is measured
+ * from the rendered font (canvas ink bounds), then animated with the Web
  * Animations API. Clicking the name replays it. The <h1> keeps the plain name
- * for SEO and screen readers; the animated letters are aria-hidden.
+ * for SEO and screen readers; the animated lockup is aria-hidden.
  */
 
-type Part = { w: HTMLSpanElement; g: HTMLSpanElement; ch: string; cls: "c" | "h" };
-type Goose = { p: Part; head: HTMLSpanElement; feet: HTMLSpanElement };
+type Part = { w: HTMLSpanElement; g: HTMLSpanElement; ch: string };
+type Geo = {
+  fs: number; baseline: number; cw: number; chh: number; startX: number; after: number[];
+  dot: { x: number; y: number; d: number };
+};
 
 const NAME = "Youssef Rajeh";
-
-// Goose head (neck, head, beak, eye) and webbed feet for the two "s". The neck
-// takes the letter's ink colour (.neck) so it follows the theme.
-const HEAD = '<svg viewBox="0 0 100 110" aria-hidden="true"><path class="neck" d="M21,112 C17,94 31,76 25,60 C22,52 20,47 22,40" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M8,44 C2,26 16,9 36,9 C51,9 61,17 65,25 L67,34 C57,39 45,45 30,47 C19,48 10,47 8,44 Z" fill="#ffd21f"/><path d="M14,42 C24,44 40,42 52,37 C46,44 30,48 18,47 Z" fill="#e0b000"/><path d="M60,21 C71,22 86,26 97,33 C99,35 97,38 93,38 C82,39 70,38 62,38 Z" fill="#f07c12"/><path d="M63,32 C74,33 84,35 93,36" stroke="#a84a00" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M91,32.5 C95,33 98,35 96,37.5 C94,38.5 91,38 90.5,36 Z" fill="#3a2a1a"/><circle cx="42" cy="23" r="4.2" fill="#141417"/><circle cx="43.4" cy="21.8" r="1.4" fill="#fff"/></svg>';
-const FEET = '<svg viewBox="0 0 64 12" aria-hidden="true"><g><path d="M2,1 C4,1 6,2 7,3 C13,4 22,5 28,7 C29,8 28,9 27,9 C20,10 12,11 7,10 C4,9 2,6 2,1 Z" fill="#f07c12"/><path d="M8,4 L26,8 M8,5 L22,10" stroke="#c45c06" stroke-width=".8" fill="none"/></g><g transform="translate(30,1)"><path d="M2,1 C4,1 6,2 7,3 C13,4 22,5 28,7 C29,8 28,9 27,9 C20,10 12,11 7,10 C4,9 2,6 2,1 Z" fill="#f07c12"/><path d="M8,4 L26,8 M8,5 L22,10" stroke="#c45c06" stroke-width=".8" fill="none"/></g></svg>';
-const DUR = 2800; // the dot's entrance
-const T = 13400; // whole sequence, before the camera settles
-const HOLD = 3000; // finished name stays on screen this long before looping
+const GLYPHS = "01<>/{}[]#$%&*+=?";
+const HOLD = 3000; // finished signature stays on screen this long before looping
 const FADE = 500; // fade-out before the sequence starts again
 
 export default function IntroName() {
-  const cameraRef = useRef<HTMLSpanElement>(null);
+  const rootRef = useRef<HTMLHeadingElement>(null);
+  const lockupRef = useRef<HTMLSpanElement>(null);
   const wordRef = useRef<HTMLSpanElement>(null);
-  const sigRef = useRef<SVGPathElement>(null);
+  const caretRef = useRef<HTMLSpanElement>(null);
+  const pingRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const camera = cameraRef.current, word = wordRef.current, sig = sigRef.current;
-    if (!camera || !word || !sig) return;
+    const root = rootRef.current, lockup = lockupRef.current, word = wordRef.current, caret = caretRef.current,
+      ping = pingRef.current;
+    if (!root || !lockup || !word || !caret || !ping) return;
 
-    const family = poppins.style.fontFamily;
+    const family = manrope.style.fontFamily;
     const parts: Part[] = [];
     const created: HTMLElement[] = [];
-    const add = (ch: string, cls: Part["cls"]) => {
+    const add = (ch: string, cls: "y" | "r") => {
       const w = document.createElement("span"); w.className = `ch ${cls}`;
       const g = document.createElement("span"); g.className = "g"; g.textContent = ch;
-      w.append(g); word.appendChild(w); created.push(w);
-      const p = { w, g, ch, cls }; parts.push(p); return p;
+      w.append(g); word.insertBefore(w, caret); created.push(w); parts.push({ w, g, ch });
     };
-    [..."Youssef"].forEach(c => add(c, "c"));
-    const gap = document.createElement("span"); gap.className = "gap"; word.appendChild(gap); created.push(gap);
-    [..."Rajeh"].forEach(c => add(c, "h"));
-
+    [..."Youssef"].forEach(c => add(c, "y"));
+    const gap = document.createElement("span"); gap.className = "gap"; word.insertBefore(gap, caret); created.push(gap);
+    [..."Rajeh"].forEach(c => add(c, "r"));
     const J = parts.find(p => p.ch === "j")!;
-    const E = parts.find(p => p.ch === "e" && p.cls === "h")!;
-    const H = parts.find(p => p.ch === "h" && p.cls === "h")!;
-    const dot = document.createElement("span"); dot.className = "dot"; J.w.appendChild(dot);
-    const geese: Goose[] = parts.filter(p => p.ch === "s").map(p => {
-      p.w.classList.add("goose");
-      const head = document.createElement("span"); head.className = "ghead"; head.innerHTML = HEAD;
-      const feet = document.createElement("span"); feet.className = "gfeet"; feet.innerHTML = FEET;
-      p.g.append(head, feet); return { p, head, feet };
-    });
-
-    // Measure a glyph's first ink blob (for "j", its dot) from the font itself, in em.
-    const S = 400;
-    const ink = (ch: string) => {
-      const cv = document.createElement("canvas"); cv.width = S * 2; cv.height = S * 2;
-      const x = cv.getContext("2d")!; x.font = `800 ${S}px ${family}`; x.fillStyle = "#000";
-      x.textBaseline = "alphabetic"; const ox = S / 2, oy = S * 1.4; x.fillText(ch, ox, oy);
-      const d = x.getImageData(0, 0, cv.width, cv.height).data;
-      const rowInk = (r: number): [number, number] | null => {
-        let mn = 1e9, mx = -1;
-        for (let c = 0; c < cv.width; c++) {
-          if (d[(r * cv.width + c) * 4 + 3] > 128) { if (c < mn) mn = c; if (c > mx) mx = c; }
-        }
-        return mx < 0 ? null : [mn, mx];
-      };
-      let top = -1;
-      for (let r = 0; r < cv.height; r++) { if (rowInk(r)) { top = r; break; } }
-      let bot = top, l = 1e9, rr = -1;
-      for (let r = top; r < cv.height; r++) {
-        const k = rowInk(r); if (!k) break;
-        bot = r; l = Math.min(l, k[0]); rr = Math.max(rr, k[1]);
-      }
-      return { top: (oy - top) / S, bottom: (oy - bot - 1) / S, left: (l - ox) / S, right: (rr + 1 - ox) / S };
-    };
-
-    let geo: { xe: number; xh: number; ye: number; yh: number } | null = null;
-    const layout = () => {
-      const jd = ink("j");
-      const et = ink("e").top, ht = ink("h").top;
-      // baseline of the j's box
-      const b = document.createElement("span"); b.className = "base"; J.g.appendChild(b);
-      const fs = parseFloat(getComputedStyle(word).fontSize);
-      const gr = J.g.getBoundingClientRect(), br = b.getBoundingClientRect(); b.remove();
-      const baseY = (br.top - gr.top) / fs;
-      const dia = Math.max(jd.right - jd.left, jd.top - jd.bottom) + 0.012;
-      // hide the j's own dot; the amber ball replaces it
-      const cut = baseY - (jd.bottom - 0.045);
-      J.g.style.clipPath = `inset(${cut.toFixed(3)}em -1em -1em -1em)`;
-      dot.style.width = dot.style.height = `${dia}em`;
-      dot.style.left = `${jd.left + (jd.right - jd.left) / 2 - dia / 2}em`;
-      dot.style.top = `${baseY - jd.top - 0.006}em`;
-      const sb = ink("s");
-      geese.forEach(({ head, feet }) => {
-        head.style.left = `${sb.right - 0.17}em`;
-        head.style.top = `${baseY - sb.top - 0.39}em`;
-        feet.style.left = `${(sb.left + sb.right) / 2 - 0.1}em`;
-        feet.style.top = `${baseY - 0.005}em`;
-      });
-      const jx = J.w.getBoundingClientRect(), ex = E.w.getBoundingClientRect(), hx = H.w.getBoundingClientRect();
-      const cx = (r: DOMRect) => (r.left + r.width / 2) / fs;
-      geo = {
-        xe: cx(ex) - cx(jx), xh: cx(hx) - cx(jx),
-        ye: jd.bottom - et, yh: jd.bottom - ht, // positive = lower than final rest
-      };
-    };
+    const split = 7; // index of the first letter of the surname
 
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let anims: Animation[] = [];
+    let timers: ReturnType<typeof setTimeout>[] = [], anims: Animation[] = [], amb: Animation[] = [];
+    let geo: Geo | null = null, done = false;
+    const later = (fn: () => void, t: number) => { timers.push(setTimeout(fn, t)); };
     const A = (el: Element, kf: Keyframe[], opt: KeyframeAnimationOptions) => {
       const a = el.animate(kf, { fill: "both", ...opt }); anims.push(a); return a;
     };
+    const px = (v: number) => `${v}px`;
 
-    const dropLetter = (p: Part, delay: number) => {
-      A(p.g, [
-        { transform: "translateY(-5em) scale(.88,1.18)", opacity: 0, easing: "cubic-bezier(.55,0,1,.45)" },
-        { offset: .5, transform: "translateY(0) scale(1.28,.68)", opacity: 1, easing: "cubic-bezier(.2,.7,.4,1)" },
-        { offset: .7, transform: "translateY(-.38em) scale(.93,1.09)", easing: "cubic-bezier(.55,0,1,.45)" },
-        { offset: .84, transform: "translateY(0) scale(1.09,.92)", easing: "ease-out" },
-        { offset: .93, transform: "translateY(0) scale(.98,1.02)" },
-        { transform: "translateY(0) scale(1,1)", opacity: 1 },
-      ], { duration: 1000, delay });
-    };
-    const squish = (p: Part, delay: number, amt: number) => {
-      A(p.g, [
-        { transform: "scale(1,1)" },
-        { offset: .3, transform: `scale(${1 + amt},${1 - amt * 1.4})` },
-        { offset: .65, transform: `scale(${1 - amt * .4},${1 + amt * .5})` },
-        { transform: "scale(1,1)" },
-      ], { duration: 460, delay, easing: "ease-out", fill: "forwards" });
-    };
-
-    const dotEntrance = (delay: number) => {
-      const { xe, xh, ye, yh } = geo!;
-      // [offset, x, y, sx, sy]
-      const pts: [number, number, number, number, number][] = [
-        [0, xh + 3.2, -3.4, .85, 1.2],
-        [.17, xh, yh, 1.4, .62],
-        [.30, (xh + xe) / 2, -1.1, .88, 1.14],
-        [.43, xe, ye, 1.4, .62],
-        [.58, xe * .45, -1.45, .88, 1.14],
-        [.72, 0, 0, 1.45, .6],
-        [.80, 0, -.42, .9, 1.12],
-        [.88, 0, 0, 1.2, .8],
-        [.94, 0, 0, .96, 1.04],
-        [1, 0, 0, 1, 1],
-      ];
-      A(dot, pts.map(([o, x, y, sx, sy], i) => ({
-        offset: o,
-        transform: `translate(${x.toFixed(3)}em,${y.toFixed(3)}em) scale(${sx},${sy})`,
-        opacity: i === 0 ? 0 : 1,
-        easing: (i % 2 === 0 && i < 6) || i === 6 ? "cubic-bezier(.15,.6,.45,1)" : "cubic-bezier(.45,0,.9,.5)",
-      })), { duration: DUR, delay });
-      squish(H, delay + Math.round(.17 * DUR) - 40, .08);
-      squish(E, delay + Math.round(.43 * DUR) - 40, .1);
-      squish(J, delay + Math.round(.72 * DUR) - 40, .12);
-      squish(J, delay + Math.round(.88 * DUR) - 40, .06);
-    };
-    const celebrate = (delay: number) => {
-      A(dot, [
-        { transform: "translate(0,0) scale(1,1)" },
-        { offset: .12, transform: "translate(0,0) scale(1.25,.75)" },
-        { offset: .3, transform: "translate(0,-.5em) scale(.9,1.12)" },
-        { offset: .45, transform: "translate(0,0) scale(1.2,.8)" },
-        { offset: .55, transform: "translate(0,-.28em) scale(.95,1.06)" },
-        { offset: .68, transform: "translate(0,0) scale(1.1,.9)" },
-        { offset: .8, transform: "translate(0,0) scale(.98,1.02)" },
-        { transform: "translate(0,0) scale(1,1)" },
-      ], { duration: 1300, delay, easing: "ease-in-out", fill: "forwards" });
-      squish(J, delay + Math.round(.45 * 1300) - 40, .06);
-      A(dot, [
-        { boxShadow: "0 .02em 0 #b97803,0 .032em 0 #b97803,0 0 0 rgba(242,165,22,0)" },
-        { offset: .5, boxShadow: "0 .02em 0 #b97803,0 .032em 0 #b97803,0 0 .35em rgba(242,165,22,.85)" },
-        { boxShadow: "0 .02em 0 #b97803,0 .032em 0 #b97803,0 0 .1em rgba(242,165,22,.25)" },
-      ], { duration: 1400, delay: delay + 1300, easing: "ease-in-out", fill: "forwards" });
-    };
-
-    // The "Y" dances a short ballet: plié, relevé, double pirouette, leap, arabesque, bow.
-    const ballet = (p: Part, delay: number) => {
-      const io = "cubic-bezier(.45,0,.55,1)", out = "cubic-bezier(.2,.7,.3,1)", inn = "cubic-bezier(.55,0,.9,.45)";
-      // [offset, x, y, rotate, rotateY, skewX, sx, sy, easing]
-      const k: [number, number, number, number, number, number, number, number, string][] = [
-        [0, 0, 0, 0, 0, 0, 1, 1, io],
-        [.07, 0, 0, 0, 0, 0, 1.1, .86, io], // plié
-        [.14, 0, -.05, 0, 0, 0, .93, 1.12, io], // relevé, up on pointe
-        [.17, 0, -.05, 0, 0, 0, .93, 1.12, "cubic-bezier(.3,0,.7,1)"],
-        [.36, 0, -.05, 0, 720, 0, .93, 1.12, io], // double pirouette
-        [.41, 0, 0, 0, 720, 0, 1.12, .84, out], // plié to prepare
-        [.49, 0, -.75, -8, 720, -10, .9, 1.16, inn], // grand jeté
-        [.57, 0, 0, 0, 720, 0, 1.16, .82, out], // land
-        [.62, 0, -.04, 0, 720, 0, .95, 1.08, io],
-        [.68, 0, -.05, 16, 720, -8, .94, 1.1, io], // arabesque
-        [.78, 0, -.05, 16, 720, -8, .94, 1.1, io], // hold
-        [.84, 0, 0, 0, 720, 0, 1, 1, io],
-        [.91, 0, 0, -20, 720, 0, 1, .9, io], // bow
-        [.95, 0, 0, -20, 720, 0, 1, .9, io],
-        [1, 0, 0, 0, 720, 0, 1, 1, io],
-      ];
-      k.forEach(r => { r[0] = +(r[0] * .76).toFixed(3); });
-      k.push([1, 0, 0, 0, 720, 0, 1, 1, io]); // rest, then dance again
-      A(p.g, k.map(([o, x, y, r, ry, sk, sx, sy, e]) => ({
-        offset: o, easing: e,
-        transform: `perspective(6em) translate(${x}em,${y}em) rotate(${r}deg) rotateY(${ry}deg) skewX(${sk}deg) scale(${sx},${sy})`,
-      })), { duration: 5600, delay, fill: "forwards", iterations: Infinity });
-      // the neighbours lean in to watch, then react to the bow
-      const i = parts.indexOf(p), nb = parts[i + 1] || parts[i - 1], d = parts[i + 1] ? -1 : 1;
-      A(nb.g, [
-        { transform: "rotate(0deg)" }, { offset: .06, transform: `rotate(${6 * d}deg)` }, { offset: .65, transform: `rotate(${6 * d}deg)` },
-        { offset: .71, transform: `rotate(${-3 * d}deg) scale(1.04,.96)` }, { offset: .78, transform: "rotate(0deg)" }, { transform: "rotate(0deg)" },
-      ], { duration: 5600, delay, easing: "ease-in-out", fill: "forwards", iterations: Infinity });
-    };
-
-    // The "u" breathes slowly in and out, for as long as the page is open.
-    const breathe = (p: Part, delay: number) => {
-      A(p.g, [
-        { transform: "translateY(0) scale(1,1)", easing: "cubic-bezier(.45,0,.55,1)" },
-        { offset: .45, transform: "translateY(-.015em) scale(.965,1.055)", easing: "cubic-bezier(.45,0,.55,1)" },
-        { offset: .55, transform: "translateY(-.015em) scale(.965,1.055)", easing: "cubic-bezier(.45,0,.55,1)" },
-        { transform: "translateY(0) scale(1,1)" },
-      ], { duration: 3400, delay, iterations: Infinity, fill: "none" });
-    };
-
-    // The two "s" become geese: yellow heads pop out, feet appear, then they waddle and peck.
-    const geeseShow = (delay: number) => {
-      geese.forEach(({ p, head, feet }, i) => {
-        const d = delay + i * 260;
-        A(head, [
-          { transform: "scale(0) rotate(-30deg)", opacity: 0 },
-          { offset: .55, transform: "scale(1.3) rotate(10deg)", opacity: 1 },
-          { offset: .8, transform: "scale(.9) rotate(-4deg)", opacity: 1 },
-          { transform: "scale(1) rotate(0deg)", opacity: 1 },
-        ], { duration: 600, delay: d, easing: "cubic-bezier(.2,.7,.3,1)" });
-        A(feet, [{ transform: "scaleY(0)", opacity: 0 }, { offset: .6, transform: "scaleY(1.4)", opacity: 1 }, { transform: "scaleY(1)", opacity: 1 }],
-          { duration: 450, delay: d + 150, easing: "ease-out" });
-        // pop-up surprise on the body
-        A(p.g, [{ transform: "translateY(0) rotate(0) scale(1,1)" }, { offset: .35, transform: "translateY(-.12em) rotate(0) scale(.94,1.08)" },
-          { offset: .7, transform: "translateY(0) rotate(0) scale(1.06,.94)" }, { transform: "translateY(0) rotate(0) scale(1,1)" }],
-          { duration: 600, delay: d, easing: "ease-out", fill: "forwards" });
-        // waddle forever
-        A(p.g, [
-          { transform: "translateY(0) rotate(-4deg) scale(1,1)" },
-          { offset: .25, transform: "translateY(-.02em) rotate(0deg) scale(1,1)" },
-          { offset: .5, transform: "translateY(0) rotate(4deg) scale(1,1)" },
-          { offset: .75, transform: "translateY(-.02em) rotate(0deg) scale(1,1)" },
-          { transform: "translateY(0) rotate(-4deg) scale(1,1)" },
-        ], { duration: 1100, delay: d + 700 + i * 180, iterations: Infinity, easing: "ease-in-out", fill: "none" });
-        // peck / look around forever, out of step with each other
-        A(head, [
-          { transform: "rotate(0deg)" },
-          { offset: .12, transform: "rotate(28deg) translateY(.02em)" },
-          { offset: .2, transform: "rotate(0deg)" },
-          { offset: .3, transform: "rotate(26deg) translateY(.02em)" },
-          { offset: .38, transform: "rotate(0deg)" },
-          { offset: .6, transform: "rotate(-12deg)" },
-          { offset: .75, transform: "rotate(-12deg)" },
-          { transform: "rotate(0deg)" },
-        ], { duration: 2600, delay: d + 900 + i * 700, iterations: Infinity, easing: "ease-in-out", fill: "none" });
-      });
-    };
-
-    // The whole sequence loops: hold the finished name, fade out, play again.
-    let loop: ReturnType<typeof setTimeout> | undefined;
-    const play = () => {
-      clearTimeout(loop);
-      anims.forEach(a => a.cancel()); anims = [];
-      layout();
-      if (reduce) {
-        sig.style.strokeDashoffset = "0"; dot.style.opacity = "1";
-        geese.forEach(g => { g.head.style.opacity = "1"; g.feet.style.opacity = "1"; });
-        return;
+    // Ink blobs of a glyph, top to bottom, in em relative to its origin and baseline (heights are positive above baseline).
+    const blobs = (ch: string) => {
+      const S = 400, cv = document.createElement("canvas"); cv.width = S * 2; cv.height = S * 2;
+      const x = cv.getContext("2d")!; x.font = `800 ${S}px ${family}`; x.textBaseline = "alphabetic";
+      const ox = S / 2, oy = S * 1.4; x.fillText(ch, ox, oy);
+      const d = x.getImageData(0, 0, cv.width, cv.height).data, W = cv.width;
+      const row = (r: number): [number, number] | null => {
+        let mn = -1, mx = -1;
+        for (let c = 0; c < W; c++) { if (d[(r * W + c) * 4 + 3] > 110) { if (mn < 0) mn = c; mx = c; } }
+        return mn < 0 ? null : [mn, mx];
+      };
+      const out: { t: number; b: number; l: number; r: number }[] = [];
+      let cur: (typeof out)[number] | null = null;
+      for (let r = 0; r < cv.height; r++) {
+        const k = row(r);
+        if (k) { if (!cur) cur = { t: r, b: r, l: k[0], r: k[1] }; cur.b = r; cur.l = Math.min(cur.l, k[0]); cur.r = Math.max(cur.r, k[1]); }
+        else if (cur) { out.push(cur); cur = null; }
       }
-      A(camera, [{ transform: "scale(1.06)" }, { offset: .85, transform: "scale(1)" }, { transform: "scale(1.02)" }],
-        { duration: T + 900, easing: "cubic-bezier(.33,0,.25,1)" });
-      const c = parts.filter(p => p.cls === "c"), h = parts.filter(p => p.cls === "h");
-      c.forEach((p, i) => dropLetter(p, 600 + i * 100));
-      h.forEach((p, i) => dropLetter(p, 1450 + i * 115));
-      dotEntrance(2800);
-      celebrate(2800 + DUR + 250);
-      ballet(c[0], 7200);
-      breathe(c[2], 1900);
-      geeseShow(4200);
-      A(sig, [{ strokeDashoffset: 1 }, { offset: .15, strokeDashoffset: .9 }, { offset: .85, strokeDashoffset: .08 }, { strokeDashoffset: 0 }],
-        { duration: 1700, delay: 11600, easing: "cubic-bezier(.4,0,.3,1)" });
-      loop = setTimeout(() => {
-        A(word, [{ opacity: 1 }, { opacity: 0 }], { duration: FADE, easing: "ease-in", fill: "forwards" })
+      if (cur) out.push(cur);
+      return out.map(o => ({ top: (oy - o.t) / S, bottom: (oy - o.b - 1) / S, left: (o.l - ox) / S, right: (o.r + 1 - ox) / S }));
+    };
+
+    const layout = () => {
+      const fs = parseFloat(getComputedStyle(word).fontSize);
+      parts.forEach(p => { p.w.style.width = ""; });
+      parts.forEach(p => { p.w.style.width = `${(p.w.getBoundingClientRect().width / fs).toFixed(4)}em`; });
+      const wr = word.getBoundingClientRect();
+      const b = document.createElement("span"); b.className = "base"; J.g.appendChild(b);
+      const br = b.getBoundingClientRect(), gr = J.g.getBoundingClientRect(); b.remove();
+      const baseline = br.top - wr.top, gx = gr.left - wr.left, gTop = gr.top - wr.top;
+      const bl = blobs("j"), dot = bl[0], stem = bl[1] || { top: dot.bottom - .06 };
+      // hide the j's own dot; the caret will become it
+      const cutY = baseline - ((dot.bottom + stem.top) / 2) * fs;
+      J.g.style.clipPath = `inset(${((cutY - gTop) / fs).toFixed(4)}em -1em -1em -1em)`;
+      const d = Math.max(dot.right - dot.left, dot.top - dot.bottom) * fs;
+      const cx = gx + (dot.left + dot.right) / 2 * fs, cy = baseline - (dot.top + dot.bottom) / 2 * fs;
+      geo = {
+        fs, baseline, cw: Math.max(2, .06 * fs), chh: .72 * fs,
+        startX: parts[0].w.getBoundingClientRect().left - wr.left,
+        after: parts.map(p => p.w.getBoundingClientRect().right - wr.left + .02 * fs),
+        dot: { x: cx - d / 2, y: cy - d / 2, d },
+      };
+      ping.style.left = px(geo.dot.x); ping.style.top = px(geo.dot.y);
+      ping.style.width = ping.style.height = px(d); ping.style.borderRadius = px(d * .22);
+    };
+    const caretAt = (x: number) => {
+      const g = geo!;
+      caret.style.left = px(x); caret.style.top = px(g.baseline - g.chh); caret.style.width = px(g.cw); caret.style.height = px(g.chh);
+    };
+    const caretAsDot = () => {
+      const d = geo!.dot; caret.className = "caret dot";
+      caret.style.left = px(d.x); caret.style.top = px(d.y); caret.style.width = caret.style.height = px(d.d); caret.style.borderRadius = px(d.d * .22);
+    };
+    // the status light pulses for as long as the signature is on screen
+    const ambient = () => {
+      amb.push(ping.animate([{ transform: "scale(1)", opacity: .75 }, { offset: .5, transform: "scale(3.4)", opacity: 0 }, { transform: "scale(3.4)", opacity: 0 }],
+        { duration: 2800, iterations: Infinity, easing: "cubic-bezier(.2,.6,.3,1)" }));
+      amb.push(caret.animate([{ boxShadow: "0 0 0 0 currentColor" }, { offset: .25, boxShadow: "0 0 .14em 0 currentColor" }, { offset: .6, boxShadow: "0 0 0 0 currentColor" }, { boxShadow: "0 0 0 0 currentColor" }],
+        { duration: 2800, iterations: Infinity, easing: "ease-in-out" }));
+    };
+
+    const reset = () => {
+      timers.forEach(clearTimeout); timers = []; anims.forEach(a => a.cancel()); anims = []; amb.forEach(a => a.cancel()); amb = []; done = false;
+      parts.forEach(p => { p.g.textContent = p.ch; p.g.classList.remove("scr"); p.g.style.opacity = ""; });
+      caret.className = "caret"; caret.style.cssText = "";
+    };
+    const settle = () => {
+      parts.forEach(p => { p.g.style.opacity = "1"; });
+      caretAsDot();
+      done = true;
+    };
+
+    const play = () => {
+      reset(); layout();
+      if (reduce) { settle(); return; }
+      const g = geo!;
+
+      // 1. a cursor appears and waits
+      caretAt(g.startX - .06 * g.fs);
+      later(() => { caret.style.opacity = "1"; caret.classList.add("blink"); }, 250);
+
+      // 2. the name decodes in, letter by letter, with the cursor running ahead
+      let t = 1250;
+      parts.forEach((p, i) => {
+        if (i === split) t += 140;
+        later(() => {
+          caret.classList.remove("blink"); caret.style.opacity = "1";
+          p.g.classList.add("scr");
+          A(p.g, [{ opacity: 0, transform: "translateY(.16em)" }, { offset: .3, opacity: 1 }, { opacity: 1, transform: "translateY(0)" }],
+            { duration: 460, easing: "cubic-bezier(.2,.8,.25,1.12)" });
+          [0, 45, 90].forEach(dt => later(() => { p.g.textContent = GLYPHS[Math.floor(Math.random() * GLYPHS.length)]; }, dt));
+          later(() => { p.g.textContent = p.ch; p.g.classList.remove("scr"); }, 140);
+          later(() => caretAt(g.after[i]), 40);
+        }, t);
+        t += 88;
+      });
+      const Tend = t + 260;
+      later(() => caret.classList.add("blink"), Tend);
+
+      // 3. the cursor lifts off and becomes the dot of the j
+      const Tf = Tend + 800, FLY = 820;
+      later(() => {
+        caret.classList.remove("blink"); caret.style.opacity = "1"; caret.style.transition = "none";
+        const st = getComputedStyle(root);
+        const acc = st.getPropertyValue("--in-accent").trim(), sig = st.getPropertyValue("--in-signal").trim();
+        const x0 = parseFloat(caret.style.left), y0 = parseFloat(caret.style.top), D = g.dot;
+        const fly = A(caret, [
+          { left: px(x0), top: px(y0), width: px(g.cw), height: px(g.chh), borderRadius: "1px", backgroundColor: acc },
+          { offset: .18, left: px(x0), top: px(y0 + g.chh * .25), width: px(g.cw * 1.6), height: px(g.chh * .75), backgroundColor: acc },
+          { offset: .6, left: px((x0 + D.x) / 2), top: px(Math.min(y0, D.y) - .42 * g.fs), width: px(D.d * .8), height: px(D.d * 1.3), borderRadius: px(D.d * .3), backgroundColor: sig },
+          { offset: .86, left: px(D.x - D.d * .08), top: px(D.y + D.d * .12), width: px(D.d * 1.16), height: px(D.d * .86), borderRadius: px(D.d * .22), backgroundColor: sig },
+          { left: px(D.x), top: px(D.y), width: px(D.d), height: px(D.d), borderRadius: px(D.d * .22), backgroundColor: sig },
+        ], { duration: FLY, easing: "cubic-bezier(.55,0,.3,1)" });
+        fly.finished.then(() => { caretAsDot(); fly.cancel(); ambient(); }, () => {}); // rejected when cancelled by a replay
+        // the j takes the weight of the landing
+        A(J.g, [{ transform: "translateY(0) scaleY(1)" }, { offset: .4, transform: "translateY(.025em) scaleY(.96)" }, { transform: "translateY(0) scaleY(1)" }],
+          { duration: 380, delay: Math.round(FLY * .84), easing: "ease-out", fill: "none" });
+      }, Tf);
+
+      const Tdone = Tf + FLY + 300;
+      later(() => { done = true; }, Tdone);
+
+      // hold the finished signature, fade out, play again
+      later(() => {
+        A(lockup, [{ opacity: 1 }, { opacity: 0 }], { duration: FADE, easing: "ease-in", fill: "forwards" })
           .finished.then(play, () => {}); // rejected when cancelled by a click or unmount
-      }, T + HOLD);
+      }, Tdone + HOLD);
     };
 
     let rt: ReturnType<typeof setTimeout> | undefined;
     const onResize = () => {
       clearTimeout(rt);
       rt = setTimeout(() => {
-        if (!geo) return;
-        const keep = anims.every(a => a.playState === "finished" || a.effect?.getTiming().iterations === Infinity);
-        layout();
-        if (keep) dot.style.opacity = "1";
+        if (!done) return;
+        amb.forEach(a => a.cancel()); amb = []; layout(); caretAsDot(); if (!reduce) ambient();
       }, 150);
     };
     addEventListener("resize", onResize);
-    word.addEventListener("click", play);
+    lockup.addEventListener("click", play);
 
     let cancelled = false;
     const start = () => { if (!cancelled) play(); };
@@ -324,22 +212,22 @@ export default function IntroName() {
     return () => {
       cancelled = true;
       clearTimeout(rt);
-      clearTimeout(loop);
+      timers.forEach(clearTimeout);
       removeEventListener("resize", onResize);
-      word.removeEventListener("click", play);
+      lockup.removeEventListener("click", play);
       anims.forEach(a => a.cancel());
+      amb.forEach(a => a.cancel());
       created.forEach(el => el.remove());
     };
   }, []);
 
   return (
-    <h1 className="intro-name">
+    <h1 className="intro-name" ref={rootRef}>
       <style>{`
         .intro-name {
           --in-ink: var(--text);
-          --in-ink-deep: color-mix(in srgb, var(--text) 55%, #000);
-          --in-cobalt: #2f5bea; --in-cobalt-deep: #1a3796;
-          --in-amber: #f2a516; --in-amber-deep: #b97803;
+          --in-accent: #2f5bea; --in-signal: #f2a516;
+          --in-muted: var(--text-dim);
           margin: 0 0 clamp(10px, 2vh, 16px) 0;
           font-size: clamp(2.4rem, 8vw, 4.6rem);
           font-weight: 800;
@@ -348,33 +236,29 @@ export default function IntroName() {
         }
         /* dark-background themes (everything except the four light ones) */
         :root:not([data-theme='light']):not([data-theme='neu']):not([data-theme='brutal']):not([data-theme='sepia']) .intro-name {
-          --in-ink-deep: color-mix(in srgb, var(--text) 45%, var(--bg));
-          --in-cobalt: #5b82ff; --in-cobalt-deep: #2f5bea;
+          --in-accent: #7593ff; --in-signal: #ffb52e;
         }
         .intro-name .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-        .intro-name .camera { display: inline-block; transform-origin: 50% 56%; }
-        .intro-name .word { position: relative; display: flex; align-items: flex-end; letter-spacing: -.025em; padding-bottom: .18em; cursor: pointer; user-select: none; }
-        .intro-name .ch { position: relative; display: inline-block; }
-        .intro-name .g { display: inline-block; transform-origin: 50% 100%; will-change: transform; }
-        .intro-name .gap { width: .26em; }
-        .intro-name .c .g { color: var(--in-ink); text-shadow: 0 .008em 0 var(--in-ink-deep), 0 .016em 0 var(--in-ink-deep), 0 .024em 0 var(--in-ink-deep), 0 .032em 0 var(--in-ink-deep); }
-        .intro-name .h .g { color: var(--in-cobalt); text-shadow: 0 .008em 0 var(--in-cobalt-deep), 0 .016em 0 var(--in-cobalt-deep), 0 .024em 0 var(--in-cobalt-deep), 0 .032em 0 var(--in-cobalt-deep); }
+        .intro-name .lockup { display: inline-flex; flex-direction: column; align-items: stretch; max-width: 100%; cursor: pointer; user-select: none; }
+        .intro-name .word { position: relative; display: flex; align-items: flex-end; line-height: 1; letter-spacing: -.035em; white-space: nowrap; }
+        .intro-name .ch { position: relative; display: inline-block; text-align: center; }
+        .intro-name .g { display: inline-block; opacity: 0; }
+        .intro-name .y .g { color: var(--in-ink); }
+        .intro-name .r .g { color: var(--in-accent); }
+        .intro-name .g.scr { color: var(--in-muted); }
+        .intro-name .gap { width: .24em; flex: none; }
         .intro-name .base { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
-        .intro-name .dot { position: absolute; border-radius: 50%; background: var(--in-amber); box-shadow: 0 .02em 0 var(--in-amber-deep), 0 .032em 0 var(--in-amber-deep); transform-origin: 50% 100%; opacity: 0; will-change: transform; }
-        .intro-name .goose .g { position: relative; }
-        .intro-name .ghead { position: absolute; width: .38em; height: .42em; transform-origin: 21% 100%; opacity: 0; }
-        .intro-name .ghead svg, .intro-name .gfeet svg { display: block; width: 100%; height: 100%; overflow: visible; }
-        .intro-name .ghead .neck { stroke: var(--in-ink); }
-        .intro-name .gfeet { position: absolute; width: .24em; height: .06em; opacity: 0; transform-origin: 50% 0; }
-        .intro-name .sig { position: absolute; left: -3%; width: 106%; bottom: -.12em; height: .42em; overflow: visible; pointer-events: none; }
-        .intro-name .sig path { fill: none; stroke: var(--in-cobalt); stroke-width: .05em; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .intro-name .caret { position: absolute; left: 0; top: 0; width: 0; height: 0; background: var(--in-accent); opacity: 0; transition: left .09s ease-out; }
+        .intro-name .caret.blink { animation: intro-blink 1s steps(1) infinite; }
+        .intro-name .caret.dot { background: var(--in-signal); color: var(--in-signal); opacity: 1; transition: none; }
+        @keyframes intro-blink { 50% { opacity: 0; } }
+        .intro-name .ping { position: absolute; box-sizing: border-box; border: 2px solid var(--in-signal); opacity: 0; pointer-events: none; }
       `}</style>
       <span className="sr">{NAME}</span>
-      <span className="camera" ref={cameraRef} aria-hidden="true">
-        <span className={`word ${poppins.className}`} ref={wordRef} title="Replay">
-          <svg className="sig" viewBox="0 0 1000 80" preserveAspectRatio="none">
-            <path ref={sigRef} pathLength={1} d="M18,46 C60,14 96,62 58,64 C24,66 40,30 120,36 C300,52 520,58 700,40 C800,30 880,26 930,36 C960,42 975,34 992,14" />
-          </svg>
+      <span className="lockup" ref={lockupRef} title="Replay" aria-hidden="true">
+        <span className={`word ${manrope.className}`} ref={wordRef}>
+          <span className="caret" ref={caretRef} />
+          <span className="ping" ref={pingRef} />
         </span>
       </span>
     </h1>

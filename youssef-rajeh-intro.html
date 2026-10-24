@@ -1,0 +1,289 @@
+<title>Youssef Rajeh Intro</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap">
+<style>
+/* Layout: plain white stage, the name centred; the dot of the j is the hero */
+:root{
+  --ink:#2a2a2e; --ink-deep:#141417;
+  --cobalt:#2f5bea; --cobalt-deep:#1a3796;
+  --amber:#f2a516; --amber-deep:#b97803;
+  --sun:#ffd21f; --sun-deep:#d9a800; --beak:#f07c12;
+  --display:"Poppins","Arial Rounded MT Bold","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:#fff;overflow:hidden;font-family:var(--display)}
+.frame{position:relative;height:100%;overflow:hidden;background:#fff;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.camera{position:absolute;inset:0;display:grid;place-items:center;transform-origin:50% 56%}
+.word{position:relative;display:flex;align-items:flex-end;font-size:clamp(30px,10vw,170px);font-weight:800;line-height:1;letter-spacing:-.025em;padding-bottom:.18em;max-width:100%}
+.ch{position:relative;display:inline-block}
+.g{display:inline-block;transform-origin:50% 100%;will-change:transform}
+.gap{width:.26em}
+.c .g{color:var(--ink);text-shadow:0 .008em 0 var(--ink-deep),0 .016em 0 var(--ink-deep),0 .024em 0 var(--ink-deep),0 .032em 0 var(--ink-deep)}
+.h .g{color:var(--cobalt);text-shadow:0 .008em 0 var(--cobalt-deep),0 .016em 0 var(--cobalt-deep),0 .024em 0 var(--cobalt-deep),0 .032em 0 var(--cobalt-deep)}
+.base{display:inline-block;width:0;height:0;vertical-align:baseline}
+.dot{position:absolute;border-radius:50%;background:var(--amber);box-shadow:0 .02em 0 var(--amber-deep),0 .032em 0 var(--amber-deep);
+  transform-origin:50% 100%;opacity:0;will-change:transform}
+.goose .g{position:relative}
+.ghead{position:absolute;width:.21em;height:.19em;border-radius:50% 55% 45% 50%;background:var(--sun);
+  box-shadow:inset -.012em -.02em 0 var(--sun-deep);transform-origin:20% 90%;opacity:0}
+.ghead::before{content:"";position:absolute;width:.032em;height:.032em;border-radius:50%;background:var(--ink-deep);left:58%;top:30%}
+.ghead::after{content:"";position:absolute;left:88%;top:38%;border-style:solid;border-width:.035em 0 .035em .09em;border-color:transparent transparent transparent var(--beak)}
+.gfeet{position:absolute;display:flex;gap:.05em;opacity:0;transform-origin:50% 0}
+.gfeet i{display:block;width:.09em;height:.035em;border-radius:50% 50% 40% 40%;background:var(--beak)}
+.sig{position:absolute;left:-3%;width:106%;bottom:-.12em;height:.42em;overflow:visible;pointer-events:none}
+.sig path{fill:none;stroke:var(--cobalt);stroke-width:.05em;stroke-linecap:round;stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1}
+.replay{position:absolute;z-index:6;right:max(16px,calc(env(safe-area-inset-right,0px) + 16px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);
+  font:600 13px/1 system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#2a2a2e;
+  background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.18);border-radius:999px;padding:10px 16px;cursor:pointer;opacity:0;transition:opacity .4s}
+.replay.show{opacity:1}
+.replay:hover{background:rgba(0,0,0,.08)}
+.replay:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+</style>
+
+<div class="frame">
+  <div class="camera" id="camera">
+    <div class="word" id="word" aria-label="Youssef Rajeh" role="img"><svg class="sig" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true"><path id="sig" pathLength="1" d="M18,46 C60,14 96,62 58,64 C24,66 40,30 120,36 C300,52 520,58 700,40 C800,30 880,26 930,36 C960,42 975,34 992,14"/></svg></div>
+  </div>
+  <button class="replay" id="replay" type="button">Replay</button>
+</div>
+
+<script>
+(function(){
+  const word=document.getElementById('word');
+  const parts=[];
+  function add(ch,cls){
+    const w=document.createElement('span');w.className='ch '+cls;w.setAttribute('aria-hidden','true');
+    const g=document.createElement('span');g.className='g';g.textContent=ch;
+    w.append(g);word.appendChild(w);const p={w,g,ch,cls};parts.push(p);return p;
+  }
+  [...'Youssef'].forEach(c=>add(c,'c'));
+  const gap=document.createElement('span');gap.className='gap';word.appendChild(gap);
+  [...'Rajeh'].forEach(c=>add(c,'h'));
+  const J=parts.find(p=>p.ch==='j'), E=parts.find(p=>p.ch==='e'&&p.cls==='h'), H=parts.find(p=>p.ch==='h'&&p.cls==='h');
+  const dot=document.createElement('span');dot.className='dot';J.w.appendChild(dot);
+  const geese=parts.filter(p=>p.ch==='s').map(p=>{
+    p.w.classList.add('goose');
+    const head=document.createElement('span');head.className='ghead';
+    const feet=document.createElement('span');feet.className='gfeet';feet.innerHTML='<i></i><i></i>';
+    p.g.append(head,feet);return {p,head,feet};
+  });
+
+  // Measure the real j dot (and letter tops) from the font itself, in em.
+  const S=400;
+  function ink(ch){
+    const cv=document.createElement('canvas');cv.width=S*2;cv.height=S*2;
+    const x=cv.getContext('2d');x.font=`800 ${S}px Poppins, Arial, sans-serif`;x.fillStyle='#000';
+    x.textBaseline='alphabetic';const ox=S/2, oy=S*1.4;x.fillText(ch,ox,oy);
+    const d=x.getImageData(0,0,cv.width,cv.height).data;
+    const rowInk=r=>{let mn=1e9,mx=-1;for(let c=0;c<cv.width;c++){if(d[(r*cv.width+c)*4+3]>128){if(c<mn)mn=c;if(c>mx)mx=c;}}return mx<0?null:[mn,mx];};
+    let top=-1;for(let r=0;r<cv.height;r++){if(rowInk(r)){top=r;break;}}
+    let bot=top,l=1e9,rr=-1;for(let r=top;r<cv.height;r++){const k=rowInk(r);if(!k)break;bot=r;l=Math.min(l,k[0]);rr=Math.max(rr,k[1]);}
+    return {top:(oy-top)/S, bottom:(oy-bot-1)/S, left:(l-ox)/S, right:(rr+1-ox)/S};
+  }
+  let geo=null;
+  function layout(){
+    const jd=ink('j'); // first ink blob of j = its dot
+    const et=ink('e').top, ht=ink('h').top;
+    // baseline of the j's box
+    const b=document.createElement('span');b.className='base';J.g.appendChild(b);
+    const fs=parseFloat(getComputedStyle(word).fontSize);
+    const gr=J.g.getBoundingClientRect(), br=b.getBoundingClientRect();b.remove();
+    const baseY=(br.top-gr.top)/fs;
+    const dia=Math.max(jd.right-jd.left,jd.top-jd.bottom)+.012;
+    // hide the j's own dot
+    const cut=baseY-(jd.bottom-.045);
+    J.g.style.clipPath=`inset(${(cut).toFixed(3)}em -1em -1em -1em)`;
+    dot.style.width=dot.style.height=dia+'em';
+    dot.style.left=(jd.left+(jd.right-jd.left)/2-dia/2)+'em';
+    dot.style.top=(baseY-jd.top-.006)+'em';
+    const sb=ink('s');
+    geese.forEach(({head,feet})=>{
+      head.style.left=(sb.right-.13)+'em';
+      head.style.top=(baseY-sb.top-.13)+'em';
+      feet.style.left=((sb.left+sb.right)/2-.115)+'em';
+      feet.style.top=(baseY-.005)+'em';
+    });
+    const jx=J.w.getBoundingClientRect(), ex=E.w.getBoundingClientRect(), hx=H.w.getBoundingClientRect();
+    const cx=r=>(r.left+r.width/2)/fs;
+    geo={
+      xe:cx(ex)-cx(jx), xh:cx(hx)-cx(jx),
+      ye:(jd.bottom)-et, yh:(jd.bottom)-ht   // positive = lower than final rest
+    };
+  }
+
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let anims=[];
+  const A=(el,kf,opt)=>{const a=el.animate(kf,Object.assign({fill:'both'},opt));anims.push(a);return a;};
+
+  function dropLetter(p,delay){
+    A(p.g,[
+      {transform:'translateY(-5em) scale(.88,1.18)',opacity:0,easing:'cubic-bezier(.55,0,1,.45)'},
+      {offset:.5,transform:'translateY(0) scale(1.28,.68)',opacity:1,easing:'cubic-bezier(.2,.7,.4,1)'},
+      {offset:.7,transform:'translateY(-.38em) scale(.93,1.09)',easing:'cubic-bezier(.55,0,1,.45)'},
+      {offset:.84,transform:'translateY(0) scale(1.09,.92)',easing:'ease-out'},
+      {offset:.93,transform:'translateY(0) scale(.98,1.02)'},
+      {transform:'translateY(0) scale(1,1)',opacity:1}
+    ],{duration:1000,delay});
+  }
+  function squish(p,delay,amt){
+    A(p.g,[
+      {transform:'scale(1,1)'},
+      {offset:.3,transform:`scale(${1+amt},${1-amt*1.4})`},
+      {offset:.65,transform:`scale(${1-amt*.4},${1+amt*.5})`},
+      {transform:'scale(1,1)'}
+    ],{duration:460,delay,easing:'ease-out',fill:'forwards'});
+  }
+
+  const DUR=2800;
+  function dotEntrance(delay){
+    const {xe,xh,ye,yh}=geo;
+    // [offset, x, y, sx, sy]
+    const pts=[
+      [0,   xh+3.2, -3.4, .85,1.2],
+      [.17, xh,      yh,  1.4,.62],
+      [.30, (xh+xe)/2,-1.1,.88,1.14],
+      [.43, xe,      ye,  1.4,.62],
+      [.58, xe*.45, -1.45,.88,1.14],
+      [.72, 0,       0,   1.45,.6],
+      [.80, 0,     -.42,  .9,1.12],
+      [.88, 0,       0,   1.2,.8],
+      [.94, 0,       0,   .96,1.04],
+      [1,   0,       0,   1,1]
+    ];
+    A(dot,pts.map(([o,x,y,sx,sy],i)=>({offset:o,transform:`translate(${x.toFixed(3)}em,${y.toFixed(3)}em) scale(${sx},${sy})`,
+      opacity:i===0?0:1,easing:(i%2===0&&i<6)||i===6?'cubic-bezier(.15,.6,.45,1)':'cubic-bezier(.45,0,.9,.5)'})),{duration:DUR,delay});
+    squish(H,delay+Math.round(.17*DUR)-40,.08);
+    squish(E,delay+Math.round(.43*DUR)-40,.1);
+    squish(J,delay+Math.round(.72*DUR)-40,.12);
+    squish(J,delay+Math.round(.88*DUR)-40,.06);
+  }
+  function celebrate(delay){
+    A(dot,[
+      {transform:'translate(0,0) scale(1,1)'},
+      {offset:.12,transform:'translate(0,0) scale(1.25,.75)'},
+      {offset:.3,transform:'translate(0,-.5em) scale(.9,1.12)'},
+      {offset:.45,transform:'translate(0,0) scale(1.2,.8)'},
+      {offset:.55,transform:'translate(0,-.28em) scale(.95,1.06)'},
+      {offset:.68,transform:'translate(0,0) scale(1.1,.9)'},
+      {offset:.8,transform:'translate(0,0) scale(.98,1.02)'},
+      {transform:'translate(0,0) scale(1,1)'}
+    ],{duration:1300,delay,easing:'ease-in-out',fill:'forwards'});
+    squish(J,delay+Math.round(.45*1300)-40,.06);
+    A(dot,[
+      {boxShadow:'0 .02em 0 #b97803,0 .032em 0 #b97803,0 0 0 rgba(242,165,22,0)'},
+      {offset:.5,boxShadow:'0 .02em 0 #b97803,0 .032em 0 #b97803,0 0 .35em rgba(242,165,22,.85)'},
+      {boxShadow:'0 .02em 0 #b97803,0 .032em 0 #b97803,0 0 .1em rgba(242,165,22,.25)'}
+    ],{duration:1400,delay:delay+1300,easing:'ease-in-out',fill:'forwards'});
+  }
+
+  // The "Y" dances a short ballet: plié, relevé, double pirouette, leap, arabesque, bow.
+  function ballet(p,delay){
+    // [offset, x, y, rotate, rotateY, skewX, sx, sy, easing]
+    const io='cubic-bezier(.45,0,.55,1)', out='cubic-bezier(.2,.7,.3,1)', inn='cubic-bezier(.55,0,.9,.45)';
+    const k=[
+      [0,    0,0,     0,   0,  0, 1,1,    io],
+      [.07,  0,0,     0,   0,  0, 1.1,.86,io],   // plié
+      [.14,  0,-.05,  0,   0,  0, .93,1.12,io],  // relevé, up on pointe
+      [.17,  0,-.05,  0,   0,  0, .93,1.12,'cubic-bezier(.3,0,.7,1)'],
+      [.36,  0,-.05,  0, 720,  0, .93,1.12,io],  // double pirouette
+      [.41,  0,0,     0, 720,  0, 1.12,.84,out], // plié to prepare
+      [.49,  0,-.75, -8, 720,-10, .9,1.16,inn],  // grand jeté
+      [.57,  0,0,     0, 720,  0, 1.16,.82,out], // land
+      [.62,  0,-.04,  0, 720,  0, .95,1.08,io],
+      [.68,  0,-.05, 16, 720, -8, .94,1.1,io],   // arabesque
+      [.78,  0,-.05, 16, 720, -8, .94,1.1,io],   // hold
+      [.84,  0,0,     0, 720,  0, 1,1,    io],
+      [.91,  0,0,   -20, 720,  0, 1,.9,   io],   // bow
+      [.95,  0,0,   -20, 720,  0, 1,.9,   io],
+      [1,    0,0,     0, 720,  0, 1,1,    io]
+    ];
+    k.forEach(r=>r[0]=+(r[0]*.76).toFixed(3));
+    k.push([1,0,0,0,720,0,1,1,io]); // rest, then dance again
+    A(p.g,k.map(([o,x,y,r,ry,sk,sx,sy,e])=>({offset:o,easing:e,
+      transform:`perspective(6em) translate(${x}em,${y}em) rotate(${r}deg) rotateY(${ry}deg) skewX(${sk}deg) scale(${sx},${sy})`
+    })),{duration:5600,delay,fill:'forwards',iterations:Infinity});
+    // the neighbours lean in to watch, then react to the bow
+    const i=parts.indexOf(p), nb=parts[i+1]||parts[i-1], d=parts[i+1]?-1:1;
+    A(nb.g,[
+      {transform:'rotate(0deg)'},{offset:.06,transform:`rotate(${6*d}deg)`},{offset:.65,transform:`rotate(${6*d}deg)`},
+      {offset:.71,transform:`rotate(${-3*d}deg) scale(1.04,.96)`},{offset:.78,transform:'rotate(0deg)'},{transform:'rotate(0deg)'}
+    ],{duration:5600,delay,easing:'ease-in-out',fill:'forwards',iterations:Infinity});
+  }
+
+  // The "u" breathes slowly in and out, for as long as the page is open.
+  function breathe(p,delay){
+    const a=p.g.animate([
+      {transform:'translateY(0) scale(1,1)',easing:'cubic-bezier(.45,0,.55,1)'},
+      {offset:.45,transform:'translateY(-.015em) scale(.965,1.055)',easing:'cubic-bezier(.45,0,.55,1)'},
+      {offset:.55,transform:'translateY(-.015em) scale(.965,1.055)',easing:'cubic-bezier(.45,0,.55,1)'},
+      {transform:'translateY(0) scale(1,1)'}
+    ],{duration:3400,delay,iterations:Infinity});
+    anims.push(a);
+  }
+
+  // The two s letters become geese: yellow heads pop out, feet appear, then they waddle and peck.
+  function geeseShow(delay){
+    geese.forEach(({p,head,feet},i)=>{
+      const d=delay+i*260;
+      A(head,[
+        {transform:'scale(0) rotate(-30deg)',opacity:0},
+        {offset:.55,transform:'scale(1.3) rotate(10deg)',opacity:1},
+        {offset:.8,transform:'scale(.9) rotate(-4deg)',opacity:1},
+        {transform:'scale(1) rotate(0deg)',opacity:1}
+      ],{duration:600,delay:d,easing:'cubic-bezier(.2,.7,.3,1)'});
+      A(feet,[{transform:'scaleY(0)',opacity:0},{offset:.6,transform:'scaleY(1.4)',opacity:1},{transform:'scaleY(1)',opacity:1}],
+        {duration:450,delay:d+150,easing:'ease-out'});
+      // pop-up surprise on the body
+      A(p.g,[{transform:'translateY(0) rotate(0) scale(1,1)'},{offset:.35,transform:'translateY(-.12em) rotate(0) scale(.94,1.08)'},
+        {offset:.7,transform:'translateY(0) rotate(0) scale(1.06,.94)'},{transform:'translateY(0) rotate(0) scale(1,1)'}],
+        {duration:600,delay:d,easing:'ease-out',fill:'forwards'});
+      // waddle forever
+      const w=p.g.animate([
+        {transform:'translateY(0) rotate(-4deg) scale(1,1)'},
+        {offset:.25,transform:'translateY(-.02em) rotate(0deg) scale(1,1)'},
+        {offset:.5,transform:'translateY(0) rotate(4deg) scale(1,1)'},
+        {offset:.75,transform:'translateY(-.02em) rotate(0deg) scale(1,1)'},
+        {transform:'translateY(0) rotate(-4deg) scale(1,1)'}
+      ],{duration:1100,delay:d+700+i*180,iterations:Infinity,easing:'ease-in-out'});anims.push(w);
+      // peck / look around forever, out of step with each other
+      const h=head.animate([
+        {transform:'rotate(0deg)'},
+        {offset:.12,transform:'rotate(28deg) translateY(.02em)'},
+        {offset:.2,transform:'rotate(0deg)'},
+        {offset:.3,transform:'rotate(26deg) translateY(.02em)'},
+        {offset:.38,transform:'rotate(0deg)'},
+        {offset:.6,transform:'rotate(-12deg)'},
+        {offset:.75,transform:'rotate(-12deg)'},
+        {transform:'rotate(0deg)'}
+      ],{duration:2600,delay:d+900+i*700,iterations:Infinity,easing:'ease-in-out'});anims.push(h);
+    });
+  }
+
+  function play(){
+    anims.forEach(a=>a.cancel());anims=[];
+    layout();
+    const btn=document.getElementById('replay');btn.classList.remove('show');
+    if(reduce){document.getElementById('sig').style.strokeDashoffset=0;dot.style.opacity=1;geese.forEach(g=>{g.head.style.opacity=1;g.feet.style.opacity=1;});btn.classList.add('show');return;}
+    const T=13400;
+    A(document.getElementById('camera'),[{transform:'scale(1.06)'},{offset:.85,transform:'scale(1)'},{transform:'scale(1.02)'}],{duration:T+900,easing:'cubic-bezier(.33,0,.25,1)'});
+    const c=parts.filter(p=>p.cls==='c'), h=parts.filter(p=>p.cls==='h');
+    c.forEach((p,i)=>dropLetter(p,600+i*100));
+    h.forEach((p,i)=>dropLetter(p,1450+i*115));
+    dotEntrance(2800);
+    celebrate(2800+DUR+250);
+    ballet(c[0],7200);
+    breathe(c[2],1900);
+    geeseShow(4200);
+    A(document.getElementById('sig'),[{strokeDashoffset:1},{offset:.15,strokeDashoffset:.9},{offset:.85,strokeDashoffset:.08},{strokeDashoffset:0}],
+      {duration:1700,delay:11600,easing:'cubic-bezier(.4,0,.3,1)'});
+    setTimeout(()=>btn.classList.add('show'),T+800);
+  }
+  document.getElementById('replay').addEventListener('click',play);
+  let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(!geo)return;const keep=anims.every(a=>a.playState==='finished'||a.effect.getTiming().iterations===Infinity);layout();if(keep)dot.style.opacity=1;},150);});
+  (document.fonts&&document.fonts.load?document.fonts.load('800 100px Poppins').then(()=>document.fonts.ready):Promise.resolve()).then(play,play);
+})();
+</script>
