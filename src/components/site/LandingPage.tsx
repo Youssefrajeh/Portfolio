@@ -110,15 +110,6 @@ const LandingPage = () => {
           font-weight: 500;
         }
 
-        .hub-tagline {
-          font-family: var(--font-hanken), sans-serif;
-          font-size: clamp(0.9rem, 1.6vw, 1.02rem);
-          color: var(--text-dim);
-          max-width: 460px;
-          line-height: 1.65;
-          margin: 0 auto clamp(28px, 4.5vh, 40px) auto;
-        }
-
         .hub-cta {
           display: inline-flex;
           align-items: center;
@@ -291,15 +282,6 @@ const LandingPage = () => {
         </m.p>
 
         <IntroName />
-
-        <m.p
-          className="hub-tagline"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-        >
-          Computer Programming & Analysis student building practical web, database, and software projects.
-        </m.p>
 
         <m.p
           className="hub-status"

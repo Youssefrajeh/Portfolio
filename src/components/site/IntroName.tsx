@@ -10,7 +10,8 @@ const manrope = Manrope({ subsets: ["latin"], weight: ["800"], display: "swap" }
 /**
  * Animated "Youssef Rajeh" signature for the landing page. A cursor appears,
  * the name decodes in letter by letter with the cursor running ahead, then the
- * cursor lifts off and lands as the dot of the "j", a live status light.
+ * cursor lifts off and lands as the dot of the "j" (a live status light), a
+ * circuit trace draws under the name and "Software Developer" types out below.
  *
  * The letters are built imperatively because the dot's position is measured
  * from the rendered font (canvas ink bounds), then animated with the Web
@@ -25,6 +26,7 @@ type Geo = {
 };
 
 const NAME = "Youssef Rajeh";
+const ROLE = "Software Developer";
 const GLYPHS = "01<>/{}[]#$%&*+=?";
 const HOLD = 3000; // finished signature stays on screen this long before looping
 const FADE = 500; // fade-out before the sequence starts again
@@ -35,11 +37,18 @@ export default function IntroName() {
   const wordRef = useRef<HTMLSpanElement>(null);
   const caretRef = useRef<HTMLSpanElement>(null);
   const pingRef = useRef<HTMLSpanElement>(null);
+  const traceRef = useRef<SVGPathElement>(null);
+  const n1Ref = useRef<HTMLSpanElement>(null);
+  const n2Ref = useRef<HTMLSpanElement>(null);
+  const prRef = useRef<HTMLSpanElement>(null);
+  const roleRef = useRef<HTMLSpanElement>(null);
+  const scRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const root = rootRef.current, lockup = lockupRef.current, word = wordRef.current, caret = caretRef.current,
-      ping = pingRef.current;
-    if (!root || !lockup || !word || !caret || !ping) return;
+      ping = pingRef.current, trace = traceRef.current, n1 = n1Ref.current, n2 = n2Ref.current,
+      pr = prRef.current, role = roleRef.current, sc = scRef.current;
+    if (!root || !lockup || !word || !caret || !ping || !trace || !n1 || !n2 || !pr || !role || !sc) return;
 
     const family = manrope.style.fontFamily;
     const parts: Part[] = [];
@@ -63,6 +72,7 @@ export default function IntroName() {
       const a = el.animate(kf, { fill: "both", ...opt }); anims.push(a); return a;
     };
     const px = (v: number) => `${v}px`;
+    const node = (s: number) => `translate(-50%,-50%) scale(${s})`;
 
     // Ink blobs of a glyph, top to bottom, in em relative to its origin and baseline (heights are positive above baseline).
     const blobs = (ch: string) => {
@@ -129,10 +139,14 @@ export default function IntroName() {
       timers.forEach(clearTimeout); timers = []; anims.forEach(a => a.cancel()); anims = []; amb.forEach(a => a.cancel()); amb = []; done = false;
       parts.forEach(p => { p.g.textContent = p.ch; p.g.classList.remove("scr"); p.g.style.opacity = ""; });
       caret.className = "caret"; caret.style.cssText = "";
+      trace.style.strokeDashoffset = ""; n1.style.transform = ""; n2.style.transform = "";
+      role.textContent = ""; pr.style.opacity = ""; sc.className = "sc"; sc.style.opacity = "";
     };
     const settle = () => {
       parts.forEach(p => { p.g.style.opacity = "1"; });
       caretAsDot();
+      trace.style.strokeDashoffset = "0"; n1.style.transform = n2.style.transform = node(1);
+      pr.style.opacity = "1"; role.textContent = ROLE; sc.style.opacity = "1";
       done = true;
     };
 
@@ -183,8 +197,20 @@ export default function IntroName() {
           { duration: 380, delay: Math.round(FLY * .84), easing: "ease-out", fill: "none" });
       }, Tf);
 
-      const Tdone = Tf + FLY + 300;
-      later(() => { done = true; }, Tdone);
+      // 4. a circuit trace draws under the name
+      const Tt = Tf + FLY + 250, DRAW = 1050;
+      const pop = [{ transform: node(0) }, { offset: .6, transform: node(1.4) }, { transform: node(1) }];
+      later(() => {
+        A(n1, pop, { duration: 320, easing: "ease-out" });
+        A(trace, [{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: DRAW, delay: 120, easing: "cubic-bezier(.6,0,.2,1)" });
+        A(n2, pop, { duration: 320, delay: DRAW + 60, easing: "ease-out" });
+      }, Tt);
+
+      // 5. the role types out on the line below
+      const Ts = Tt + DRAW + 300, Tdone = Ts + 180 + ROLE.length * 42 + 200;
+      later(() => { pr.style.opacity = "1"; sc.style.opacity = "1"; }, Ts);
+      [...ROLE].forEach((_, i) => later(() => { role.textContent = ROLE.slice(0, i + 1); }, Ts + 180 + i * 42));
+      later(() => { sc.style.opacity = ""; sc.className = "sc blink"; done = true; }, Tdone);
 
       // hold the finished signature, fade out, play again
       later(() => {
@@ -227,8 +253,8 @@ export default function IntroName() {
         .intro-name {
           --in-ink: var(--text);
           --in-accent: #2f5bea; --in-signal: #f2a516;
-          --in-muted: var(--text-dim);
-          margin: 0 0 clamp(10px, 2vh, 16px) 0;
+          --in-muted: var(--text-dim); --in-line: var(--border-strong);
+          margin: 0 0 clamp(20px, 3.5vh, 32px) 0;
           font-size: clamp(2.4rem, 8vw, 4.6rem);
           font-weight: 800;
           line-height: 1;
@@ -253,6 +279,14 @@ export default function IntroName() {
         .intro-name .caret.dot { background: var(--in-signal); color: var(--in-signal); opacity: 1; transition: none; }
         @keyframes intro-blink { 50% { opacity: 0; } }
         .intro-name .ping { position: absolute; box-sizing: border-box; border: 2px solid var(--in-signal); opacity: 0; pointer-events: none; }
+        .intro-name .trace { position: relative; display: block; height: .26em; margin-top: .16em; }
+        .intro-name .trace svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+        .intro-name .trace path { fill: none; stroke: var(--in-accent); stroke-width: 2.5px; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+        .intro-name .node { position: absolute; width: .07em; height: .07em; min-width: 7px; min-height: 7px; border-radius: 50%; box-sizing: border-box; background: var(--bg); border: 2.5px solid var(--in-accent); transform: translate(-50%,-50%) scale(0); }
+        .intro-name .sub { display: block; font: 500 max(13px, .18em)/1.3 var(--font-jetbrains), ui-monospace, Menlo, Consolas, monospace; color: var(--in-muted); letter-spacing: .02em; margin-top: .55rem; min-height: 1.3em; white-space: nowrap; text-align: left; }
+        .intro-name .sub .pr { color: var(--in-accent); opacity: 0; }
+        .intro-name .sub .sc { display: inline-block; width: .6em; height: 1.05em; vertical-align: -.2em; margin-left: .08em; background: var(--in-signal); opacity: 0; }
+        .intro-name .sub .sc.blink { opacity: 1; animation: intro-blink 1.1s steps(1) infinite; }
       `}</style>
       <span className="sr">{NAME}</span>
       <span className="lockup" ref={lockupRef} title="Replay" aria-hidden="true">
@@ -260,6 +294,14 @@ export default function IntroName() {
           <span className="caret" ref={caretRef} />
           <span className="ping" ref={pingRef} />
         </span>
+        <span className="trace">
+          <svg viewBox="0 0 1000 40" preserveAspectRatio="none">
+            <path ref={traceRef} pathLength={1} d="M6,10 H880 L910,30 H994" />
+          </svg>
+          <span className="node" ref={n1Ref} style={{ left: ".6%", top: "25%" }} />
+          <span className="node" ref={n2Ref} style={{ left: "99.4%", top: "75%" }} />
+        </span>
+        <span className="sub"><span className="pr" ref={prRef}>&gt;&nbsp;</span><span ref={roleRef} /><span className="sc" ref={scRef} /></span>
       </span>
     </h1>
   );
