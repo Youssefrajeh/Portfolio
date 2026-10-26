@@ -307,6 +307,15 @@ const LandingPage = () => {
             <i className="fas fa-file-arrow-down" aria-hidden="true"></i>
             <span>Download CV</span>
           </a>
+          <a
+            href="https://iptv-two-silk.vercel.app/"
+            className="hub-cta-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <i className="fas fa-tv" aria-hidden="true"></i>
+            <span>IPTV App</span>
+          </a>
         </m.div>
 
         <m.div
