@@ -173,6 +173,16 @@ const Projects: React.FC = () => {
                                         🌐 Live Demo
                                     </a>
                                 )}
+                                {showProperties.video && (
+                                    <a
+                                        href={showProperties.video}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="win95-button text-xs font-semibold py-1 px-4 text-black border-2 flex items-center justify-center gap-1.5 hover:no-underline"
+                                    >
+                                        🎬 Demo Video
+                                    </a>
+                                )}
                                 <a 
                                     href={showProperties.link}
                                     target="_blank"

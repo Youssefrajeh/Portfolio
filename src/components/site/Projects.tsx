@@ -283,6 +283,16 @@ const Projects = () => {
                         Live demo ↗
                       </a>
                     )}
+                    {project.video && (
+                      <a
+                        href={project.video}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-demo-link"
+                      >
+                        Demo video ↗
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

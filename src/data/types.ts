@@ -25,6 +25,8 @@ export interface Project {
   link: string;
   /** Live, publicly reachable deployment, when one exists. */
   demo?: string;
+  /** Recorded demo video (a Google Drive share link). Embedded on the project page. */
+  video?: string;
   /** Shown first, with a "Featured" label. Keep to two or three projects. */
   featured?: boolean;
   duration: string;

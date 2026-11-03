@@ -312,8 +312,8 @@ export default function IntroName() {
             --in-ink: var(--text);
             --in-accent: #2f5bea; --in-signal: #f2a516; --in-spark: #12b5ff;
             --in-muted: var(--text-dim);
-            margin: 0 0 clamp(20px, 3.5vh, 32px) 0;
-            font-size: clamp(2.4rem, 8vw, 4.6rem);
+            margin: 0 0 clamp(12px, 2.6vh, 28px) 0;
+            font-size: clamp(2rem, min(6.5vw, 7.5vh), 3.4rem);
             font-weight: 800;
             line-height: 1;
             max-width: 100%;

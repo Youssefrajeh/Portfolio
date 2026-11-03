@@ -34,13 +34,17 @@ const socialLinks = [
  * - route:    a page of this app, navigated client-side with <Link>
  * - document: a standalone page (static app in /public, or a route with its
  *             own global stylesheet like /retro) that needs a full page load
+ * - external: a site hosted elsewhere, opened in a new tab
  */
-type HubLinkKind = "route" | "document";
+type HubLinkKind = "route" | "document" | "external";
 
 const otherProjects: { label: string; href: string; kind: HubLinkKind }[] = [
   { label: "Retro Desktop (Win95)", href: RETRO_PATH, kind: "document" },
   { label: "SQL 3D Odyssey", href: "/3D/", kind: "document" },
   { label: "Data Structures Reference", href: "/data-structures/", kind: "route" },
+  { label: "IPTV App", href: "https://iptv-two-silk.vercel.app/", kind: "external" },
+  { label: "Millionaire Game", href: "https://millionaire-bice-one.vercel.app/", kind: "external" },
+  { label: "Nagham", href: "https://nagham-theta.vercel.app/", kind: "external" },
 ];
 
 const LandingPage = () => {
@@ -84,12 +88,12 @@ const LandingPage = () => {
         }
 
         .hub-avatar-wrapper {
-          width: clamp(96px, 16vw, 128px);
-          height: clamp(96px, 16vw, 128px);
+          width: clamp(72px, min(16vw, 15vh), 120px);
+          height: clamp(72px, min(16vw, 15vh), 120px);
           border-radius: 50%;
           overflow: hidden;
           border: 1px solid var(--border-strong);
-          margin-bottom: clamp(16px, 3vh, 28px);
+          margin-bottom: clamp(10px, 2.4vh, 24px);
         }
 
         .hub-avatar-img {
@@ -131,7 +135,7 @@ const LandingPage = () => {
           justify-content: center;
           gap: 12px;
           flex-wrap: wrap;
-          margin-bottom: clamp(24px, 4vh, 36px);
+          margin-bottom: clamp(14px, 3vh, 32px);
         }
         .hub-cta-secondary {
           display: inline-flex;
@@ -155,7 +159,7 @@ const LandingPage = () => {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          margin: 0 0 clamp(20px, 3vh, 28px);
+          margin: 0 0 clamp(12px, 2.4vh, 24px);
           font-family: var(--font-jetbrains), monospace;
           font-size: 0.78rem;
           color: var(--text-dim);
@@ -182,7 +186,7 @@ const LandingPage = () => {
         }
 
         .hub-more {
-          margin-bottom: clamp(28px, 4.5vh, 40px);
+          margin-bottom: clamp(14px, 3vh, 32px);
         }
 
         .hub-more-label {
@@ -206,20 +210,22 @@ const LandingPage = () => {
         }
 
         .hub-more-link {
+          display: inline-flex;
+          align-items: center;
+          padding: 5px 12px;
+          border: 1px solid var(--border-strong);
+          border-radius: 999px;
+          font-size: 0.76rem;
           color: var(--text-dim);
           text-decoration: none;
-          padding-bottom: 1px;
-          border-bottom: 1px solid transparent;
-          transition: color 0.15s ease, border-color 0.15s ease;
+          white-space: nowrap;
+          transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
         }
 
         .hub-more-link:hover {
           color: var(--accent);
-          border-bottom-color: var(--accent);
-        }
-
-        .hub-more-sep {
-          color: var(--border-strong);
+          border-color: var(--accent);
+          background: var(--surface);
         }
 
         .hub-socials {
@@ -307,15 +313,6 @@ const LandingPage = () => {
             <i className="fas fa-file-arrow-down" aria-hidden="true"></i>
             <span>Download CV</span>
           </a>
-          <a
-            href="https://iptv-two-silk.vercel.app/"
-            className="hub-cta-secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i className="fas fa-tv" aria-hidden="true"></i>
-            <span>IPTV App</span>
-          </a>
         </m.div>
 
         <m.div
@@ -326,16 +323,15 @@ const LandingPage = () => {
         >
           <span className="hub-more-label">Also on this site</span>
           <div className="hub-more-links">
-            {otherProjects.map((p, i) => (
-              <span key={p.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                {p.kind === "route" ? (
-                  <Link href={p.href} className="hub-more-link">{p.label}</Link>
-                ) : (
-                  <a href={withBasePath(p.href)} className="hub-more-link">{p.label}</a>
-                )}
-                {i < otherProjects.length - 1 && <span className="hub-more-sep">/</span>}
-              </span>
-            ))}
+            {otherProjects.map((p) =>
+              p.kind === "route" ? (
+                <Link key={p.label} href={p.href} className="hub-more-link">{p.label}</Link>
+              ) : p.kind === "external" ? (
+                <a key={p.label} href={p.href} className="hub-more-link" target="_blank" rel="noopener noreferrer">{p.label}</a>
+              ) : (
+                <a key={p.label} href={withBasePath(p.href)} className="hub-more-link">{p.label}</a>
+              )
+            )}
           </div>
         </m.div>
 

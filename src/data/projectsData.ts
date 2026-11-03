@@ -177,6 +177,32 @@ export const projectsData: Project[] = [
     challenges: 'Preventing memory leaks when rotating the device and managing layout configurations. Solved by structuring the application using the Model-View-ViewModel (MVVM) pattern and managing data state inside ViewModel holders.'
   },
   {
+    id: 21,
+    title: 'ApplyMate',
+    category: 'android',
+    image: '/images/v2/applymate.png',
+    imageType: 'screenshot',
+    description: 'A Kotlin Android job application tracker that reads job postings for you: scan or paste a posting and on-device ML Kit pulls out the deadline, contacts, and required skills.',
+    link: 'https://github.com/Youssefrajeh/ApplyMate',
+    video: 'https://drive.google.com/file/d/1218Q37yS12PV7Nht-EfsHS-CLifBTt_y/view?usp=sharing',
+    duration: 'Oct 2026',
+    role: 'Team Project (3 developers)',
+    detailedDescription: 'A native Android app built in Kotlin with MVVM. Photograph or paste a job posting and ApplyMate reads it with on-device Google ML Kit, extracts the deadline, contact details and required skills, scores the posting against your own skills, and saves it as an application you can track from Saved to Offer. Built as a group project for Mobile Development Advanced at Fanshawe College.',
+    techStack: [
+      { name: 'Kotlin', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg' },
+      { name: 'Android SDK', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/android/android-original.svg' },
+      { name: 'Google ML Kit', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg' }
+    ],
+    features: [
+      'Scan a posting from a photo or screenshot (Text Recognition v2) or paste its text',
+      'Entity Extraction finds the email, phone number, website, address, and deadline automatically',
+      'Skill match score comparing the posting against your skills, listing the ones you are missing',
+      'Application tracking from Saved to Applied, Interview, Offer, or Rejected, with notes and a stats dashboard',
+      'Detects non-English postings and translates them on the device; Smart Reply suggests responses to recruiters'
+    ],
+    challenges: 'Matching skills accurately in free-form posting text, so "Java" does not match "JavaScript" while "REST APIs" still matches "REST API". Solved with a plain-Kotlin SkillMatcher using whole-word matching against about 45 common skills plus the user\'s own, covered by unit tests. All ML runs on the device, so after a one-time model download the app works offline.'
+  },
+  {
     id: 9,
     title: 'Grades Tracking System',
     category: 'csharp',
@@ -275,6 +301,7 @@ export const projectsData: Project[] = [
     image: '/images/v2/wordle_game.png',
     description: 'A distributed Wordle clone built with C#, ASP.NET Core, and gRPC. Features a multi-service architecture including a game server, word provider, and a console-based UI.',
     link: 'https://github.com/Youssefrajeh/WordleGame',
+    video: 'https://drive.google.com/file/d/1miNb5oR6wud_Ob3oO7CZ5cqoaF2tLMx0/view?usp=sharing',
     duration: 'Jan 2026',
     role: 'Microservices Architect',
     detailedDescription: 'A high-throughput distributed implementation of the popular Wordle game. Built using ASP.NET Core microservices communicating via gRPC. Includes a centralized game logic engine, dictionary services, and a CLI client.',
@@ -290,6 +317,29 @@ export const projectsData: Project[] = [
       'Robust error-handling middle layers recovering sessions from server drops'
     ],
     challenges: 'Maintaining synchronized game state across stateless microservice boundaries. Solved by designing a lightweight gRPC session token framework that routes state payloads in header contexts, avoiding db bottlenecks.'
+  },
+  {
+    id: 22,
+    title: 'Arithmetic Expression Evaluator',
+    category: 'csharp',
+    description: 'A C# console application that converts arithmetic expressions between infix, prefix, and postfix notation and evaluates them with compiled LINQ Expression Trees.',
+    link: 'https://github.com/Youssefrajeh/ArithmeticExpressionEvaluator',
+    video: 'https://drive.google.com/file/d/1ImSWxFvl3bT8En0a_FRiqrxYRIITuxOb/view?usp=sharing',
+    duration: 'Mar 2026',
+    role: 'Solo Developer',
+    detailedDescription: 'A .NET 9 console application that reads infix expressions from an XML file, converts each one to prefix and postfix notation, and evaluates both forms by building and compiling LINQ Expression Trees. It checks that the prefix and postfix results match, prints a summary table to the console, and generates a styled HTML report.',
+    techStack: [
+      { name: 'C# / .NET 9', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg' },
+      { name: 'LINQ Expression Trees', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg' }
+    ],
+    features: [
+      'Deserializes the input expressions from an XML file with System.Xml.Serialization',
+      'Infix to postfix conversion with Dijkstra\'s shunting-yard algorithm',
+      'Infix to prefix conversion using the reverse-then-shunting-yard technique',
+      'Builds and compiles LINQ Expression Trees to evaluate both prefix and postfix forms',
+      'Compares the two results and writes a console summary table plus an HTML report via StreamWriter extension methods'
+    ],
+    challenges: 'Getting prefix and postfix evaluation to agree on every expression, including nested brackets like (7-3)*9+6. Solved by evaluating both notations independently through expression trees and comparing the results with a custom IComparer, so any conversion bug shows up as a mismatch in the report.'
   },
   {
     id: 14,

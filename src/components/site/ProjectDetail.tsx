@@ -7,6 +7,7 @@ import { m } from 'motion/react';
 import type { Project } from '@/data/types';
 import { fadeInUp, fadeInLeft } from '@/lib/motionVariants';
 import { DEMO_WAKE_NOTE, demoMaySleep } from '@/data/demoHosting';
+import { videoEmbedUrl } from '@/data/videoEmbed';
 import ProjectImage from './ProjectImage';
 
 interface ProjectDetailProps {
@@ -244,6 +245,24 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
           font-weight: bold;
         }
 
+        .detail-video {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 1px solid var(--border);
+          background: #000;
+        }
+
+        .detail-video iframe {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+        }
+
         .detail-actions {
           margin-top: 40px;
           display: flex;
@@ -457,6 +476,28 @@ const ProjectDetail = ({ project }: ProjectDetailProps) => {
             {/* Overview */}
             <h2 className="detail-section-title">Project Overview</h2>
             <p>{project.detailedDescription}</p>
+
+            {/* Demo video */}
+            {project.video && (
+              <>
+                <h2 className="detail-section-title">Demo Video</h2>
+                {videoEmbedUrl(project.video) ? (
+                  <div className="detail-video">
+                    <iframe
+                      src={videoEmbedUrl(project.video)}
+                      title={`${project.title} demo video`}
+                      allow="autoplay; fullscreen"
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  </div>
+                ) : (
+                  <p>
+                    <a href={project.video} target="_blank" rel="noopener noreferrer">Watch the demo video ↗</a>
+                  </p>
+                )}
+              </>
+            )}
 
             {/* Features */}
             <h2 className="detail-section-title">Key Features</h2>
