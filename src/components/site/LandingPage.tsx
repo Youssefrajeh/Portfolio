@@ -262,6 +262,22 @@ const LandingPage = () => {
           letter-spacing: 0.02em;
           z-index: 2;
         }
+
+        /* phones: bigger photo, smaller buttons below the logo */
+        @media (max-width: 600px) {
+          .hub-avatar-wrapper {
+            width: clamp(96px, min(28vw, 16vh), 128px);
+            height: clamp(96px, min(28vw, 16vh), 128px);
+          }
+          .hub-actions { gap: 10px; }
+          .hub-cta { padding: 10px 20px; font-size: 0.84rem; }
+          .hub-cta-secondary { padding: 9px 16px; font-size: 0.84rem; }
+          .hub-status { font-size: 0.72rem; }
+          .hub-more-links { gap: 6px; }
+          .hub-more-link { padding: 4px 10px; font-size: 0.7rem; }
+          .hub-socials { gap: 8px; }
+          .hub-social-btn { width: 32px; height: 32px; font-size: 0.82rem; }
+        }
       `}</style>
 
       <div className="hub-hero-container">

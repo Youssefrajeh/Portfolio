@@ -36,6 +36,7 @@ type Geo = {
 const NAME = "Youssef Rajeh";
 const ROLE = "Software developer · Web · Databases · Software";
 const NS = "http://www.w3.org/2000/svg";
+const HOLD = 6000; // booted logo runs this long before powering down and booting again
 
 export default function IntroName() {
   const unitRef = useRef<HTMLSpanElement>(null);
@@ -52,13 +53,14 @@ export default function IntroName() {
   const prRef = useRef<HTMLSpanElement>(null);
   const roleRef = useRef<HTMLSpanElement>(null);
   const scRef = useRef<HTMLSpanElement>(null);
+  const subRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const unit = unitRef.current, word = wordRef.current, caret = caretRef.current, ping = pingRef.current,
       beam = beamRef.current, tagL = tagLRef.current, tagR = tagRRef.current, tagRt = tagRtRef.current,
       gCap = gCapRef.current, gX = gXRef.current, gBase = gBaseRef.current,
-      pr = prRef.current, role = roleRef.current, sc = scRef.current;
-    if (!unit || !word || !caret || !ping || !beam || !tagL || !tagR || !tagRt || !gCap || !gX || !gBase || !pr || !role || !sc) return;
+      pr = prRef.current, role = roleRef.current, sc = scRef.current, sub = subRef.current;
+    if (!unit || !word || !caret || !ping || !beam || !tagL || !tagR || !tagRt || !gCap || !gX || !gBase || !pr || !role || !sc || !sub) return;
     const corners = [...unit.querySelectorAll<HTMLElement>(".corner")];
     const guides = [gCap, gX, gBase];
 
@@ -313,7 +315,28 @@ export default function IntroName() {
       const Ts = E0 + 700, K = 34;
       later(() => { pr.style.opacity = "1"; sc.style.opacity = "1"; }, Ts);
       typeInto(role, ROLE, Ts + 150, K);
-      later(() => { sc.style.opacity = ""; sc.className = "sc blink"; done = true; startLife(); }, Ts + 150 + ROLE.length * K + 200);
+      const Tdone = Ts + 150 + ROLE.length * K + 200;
+      later(() => { sc.style.opacity = ""; sc.className = "sc blink"; done = true; startLife(); }, Tdone);
+
+      // 7. hold, then power down and boot again, forever
+      later(powerDown, Tdone + HOLD);
+    };
+
+    // the eye shuts, a laser wipes the face away, the frame retracts, then the boot starts over
+    const powerDown = () => {
+      stopLife(); amb.forEach(a => a.cancel()); amb = [];
+      tagRt.textContent = "SHUTDOWN"; tagR.classList.remove("on");
+      A(caret, [{ transform: "scaleY(1)", opacity: 1 }, { offset: .6, transform: "scaleY(.08)", opacity: 1 }, { transform: "scaleY(.08)", opacity: 0 }],
+        { duration: 320, easing: "ease-in" });
+      const W0 = 360, WD = 900, ease = "cubic-bezier(.45,0,.55,1)";
+      A(beam, [{ left: "0%", opacity: 0 }, { offset: .05, opacity: 1 }, { offset: .95, opacity: 1 }, { left: "100%", opacity: 0 }], { duration: WD, delay: W0, easing: ease });
+      A(word, [{ clipPath: "inset(-80% -20% -80% 0%)" }, { clipPath: "inset(-80% -20% -80% 100%)" }], { duration: WD, delay: W0, easing: ease });
+      A(sub, [{ opacity: 1 }, { opacity: 0 }], { duration: 400, delay: W0 + WD - 300 });
+      const T1 = W0 + WD;
+      corners.forEach((c, i) => A(c, [{ opacity: 1, transform: "scale(1)" }, { opacity: 0, transform: "scale(1.8)" }],
+        { duration: 300, delay: T1 + i * 50, easing: "ease-in" }));
+      [tagL, tagR].forEach(t => A(t, [{ opacity: 1 }, { opacity: 0 }], { duration: 250, delay: T1 + 100 }));
+      later(play, T1 + 700);
     };
 
     const onClick = () => { if (done) play(); };
@@ -366,6 +389,10 @@ export default function IntroName() {
           :root:not([data-theme='light']):not([data-theme='neu']):not([data-theme='brutal']):not([data-theme='sepia']) .intro-name {
             --in-accent: #7593ff; --in-signal: #ffb52e; --in-spark: #5fd2ff;
             --in-guide: color-mix(in srgb, var(--in-accent) 30%, transparent);
+          }
+          /* phones: a bigger logo, still clear of the screen edges */
+          @media (max-width: 600px) {
+            .intro-name { font-size: clamp(2.2rem, min(11vw, 7vh), 3rem); }
           }
           .intro-name-sr { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
           .intro-name .lockup { display: inline-flex; flex-direction: column; align-items: stretch; max-width: 100%; }
@@ -437,7 +464,7 @@ export default function IntroName() {
             </span>
             <span className="beam" ref={beamRef} />
           </span>
-          <span className="sub">
+          <span className="sub" ref={subRef}>
             <span className="ghost">&gt;&nbsp;{ROLE}<span className="sc" /></span>
             <span><span className="pr" ref={prRef}>&gt;&nbsp;</span><span ref={roleRef} /><span className="sc" ref={scRef} /></span>
           </span>
