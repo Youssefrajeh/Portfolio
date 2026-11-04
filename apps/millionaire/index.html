@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>من سيربح المليون</title>
+  <meta name="theme-color" content="#0b0b3b">
+  <meta name="description" content="لعبة أسئلة مثل من سيربح المليون">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- شاشة البداية -->
+  <section id="startScreen" class="screen active">
+    <div class="card start-card">
+      <div class="emblem" aria-hidden="true">$1M</div>
+      <h1>من سيربح المليون</h1>
+      <p class="sub">15 سؤالاً تفصلك عن المليون</p>
+
+      <div class="actions">
+        <button id="startBtn" class="btn primary" disabled>ابدأ اللعب</button>
+        <button id="installBtn" class="btn secondary" hidden>ثبّت التطبيق</button>
+      </div>
+      <p id="countInfo" class="muted">جارٍ تحميل الأسئلة…</p>
+      <p id="loadError" class="error" hidden>
+        تعذّر تحميل ملف الأسئلة. شغّل اللعبة من خادم (مثلاً Live Server في VS Code) وليس بفتح الملف مباشرة.
+      </p>
+
+      <dl class="rules">
+        <div><dt>المبالغ المضمونة</dt><dd>1,000$ و 32,000$</dd></div>
+        <div><dt>الوقت</dt><dd>30 ثانية للأسئلة 1–5، و45 ثانية للأسئلة 6–10، وبلا وقت بعدها</dd></div>
+        <div><dt>وسائل المساعدة</dt><dd>حذف إجابتين، رأي الجمهور، اتصال بصديق</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- شاشة اللعب -->
+  <section id="gameScreen" class="screen">
+    <header class="topbar">
+      <div class="lifelines">
+        <button id="llFifty" class="ll" title="حذف إجابتين">50:50</button>
+        <button id="llAudience" class="ll" title="اسأل الجمهور">الجمهور</button>
+        <button id="llPhone" class="ll" title="اتصل بصديق">صديق</button>
+      </div>
+      <button id="ladderToggle" class="btn small secondary">السلّم</button>
+      <button id="walkBtn" class="btn small danger">انسحب</button>
+    </header>
+
+    <div class="game-body">
+      <main class="stage">
+        <div class="status">
+          <span id="qNumber">السؤال 1</span>
+          <span id="timer" class="timer"><span id="timerText"></span></span>
+          <span id="qPrize" class="prize-tag">100$</span>
+        </div>
+
+        <div class="question-box"><p id="questionText"></p></div>
+
+        <div id="answers" class="answers"></div>
+
+        <p id="message" class="message"></p>
+        <button id="nextBtn" class="btn primary" hidden>السؤال التالي</button>
+      </main>
+
+      <aside id="ladder" class="ladder"></aside>
+    </div>
+  </section>
+
+  <!-- شاشة النهاية -->
+  <section id="endScreen" class="screen">
+    <div class="card end-card">
+      <p id="endEyebrow" class="eyebrow">النتيجة النهائية</p>
+      <h2 id="endTitle"></h2>
+      <p class="win-label">المبلغ الذي ربحته</p>
+      <p id="endAmount" class="win-amount"></p>
+      <p id="endNote" class="muted"></p>
+      <button id="againBtn" class="btn primary">العب مرة أخرى</button>
+    </div>
+  </section>
+
+  <!-- نافذة وسائل المساعدة -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-card">
+      <h3 id="modalTitle"></h3>
+      <div id="modalBody"></div>
+      <button id="modalClose" class="btn primary small">حسناً</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
