@@ -43,8 +43,8 @@ const otherProjects: { label: string; href: string; kind: HubLinkKind }[] = [
   { label: "SQL 3D Odyssey", href: "/3D/", kind: "document" },
   { label: "Data Structures Reference", href: "/data-structures/", kind: "route" },
   { label: "IPTV App", href: "https://iptv-two-silk.vercel.app/", kind: "external" },
-  { label: "Millionaire Game", href: "https://millionaire-bice-one.vercel.app/", kind: "external" },
-  { label: "Nagham", href: "https://nagham-theta.vercel.app/", kind: "external" },
+  { label: "Millionaire Game", href: "/millionaire/", kind: "document" },
+  { label: "Nagham", href: "/nagham/", kind: "document" },
 ];
 
 const LandingPage = () => {

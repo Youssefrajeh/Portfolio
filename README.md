@@ -14,7 +14,7 @@ Live: https://youssefrajeh.com
 |---|---|
 | Framework | Next.js 16 (App Router), React 19 |
 | Language | TypeScript (strict) |
-| Output | Static export (`output: 'export'`) - no server, hosted on GitHub Pages |
+| Output | Static export (`output: 'export'`) - no server, hosted on Vercel |
 | Animation | `motion` (Framer Motion) with `LazyMotion` |
 | Styling | Plain CSS for the modern site; Tailwind v4 scoped to the retro desktop |
 | Fonts | `next/font` (self-hosted at build time) |
@@ -52,8 +52,18 @@ src/
   data/                   Single source of truth for all content (typed, see data/types.ts)
   lib/                    Site constants, fonts, theme context, hooks, motion variants
   styles/                 globals.css + site.css (modern), retro.css (retro)
-public/                   Static assets, CV, /3D demo, CNAME
+public/                   Static assets, CV, /3D demo
+apps/                     Standalone apps served on this domain (no shared code)
+  millionaire/            /millionaire/ - Arabic trivia game (PWA)
+  nagham/                 /nagham/      - Arabic music player (PWA)
+scripts/sync-apps.mjs     Copies apps/<name> to public/<name> before dev/build
 ```
+
+## Standalone apps
+
+Each folder in `apps/` is a self-contained static app with its own HTML, JS, service worker and manifest. It shares nothing with the portfolio code and still runs on its own (`python -m http.server` inside the folder). Before `npm run dev` and `npm run build`, `scripts/sync-apps.mjs` copies each app into `public/<name>/` (gitignored), so it is deployed with the portfolio at `youssefrajeh.com/<name>/`. READMEs and `tools/` are not published.
+
+To add another app: put it in `apps/<name>/` using only relative paths, add `<name>` to `APPS` in the sync script, and add `/public/<name>/` to `.gitignore`.
 
 ## Editing content
 
@@ -74,9 +84,6 @@ All content lives in `src/data` and is rendered by **both** editions:
 
 ## Deployment
 
-Pushing to `main` runs `.github/workflows/deploy.yml`: typecheck, lint, build, then publish `./out` to GitHub Pages. Pull requests run the same checks without deploying.
+The site is hosted on **Vercel** (Next.js preset, which picks up the static export in `./out`). Pushing to `main` deploys to production at `youssefrajeh.com`, and pull requests get preview URLs. `.github/workflows/ci.yml` runs typecheck, lint and build on every push and PR. It doesn't deploy.
 
-One-time setup:
-
-1. Repository **Settings → Pages → Source: GitHub Actions**.
-2. Custom domain: `public/CNAME` contains `youssefrajeh.com`. At the DNS provider, point the apex `A` records to GitHub Pages (`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`) and `www` as a `CNAME` to `<username>.github.io`, then enable **Enforce HTTPS**.
+The custom domain `youssefrajeh.com` (and `www`) is set under the Vercel project's **Settings → Domains**, with DNS records pointing to Vercel.

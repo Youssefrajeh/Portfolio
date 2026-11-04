@@ -8,7 +8,9 @@
     "node": ">=22"
   },
   "scripts": {
+    "predev": "node scripts/sync-apps.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/sync-apps.mjs",
     "build": "next build",
     "start": "serve out",
     "lint": "eslint .",

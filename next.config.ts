@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 
 // Fully static site: `next build` writes plain HTML/CSS/JS to ./out, which is
-// deployed to GitHub Pages (see .github/workflows/deploy.yml). There is no
+// deployed to Vercel as static files. There is no
 // server runtime, so API routes, rewrites, middleware and on-demand image
 // optimization are unavailable by design.
 const nextConfig: NextConfig = {
