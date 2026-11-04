@@ -57,11 +57,14 @@ apps/                     Standalone apps served on this domain (no shared code)
   millionaire/            /millionaire/ - Arabic trivia game (PWA)
   nagham/                 /nagham/      - Arabic music player (PWA)
 scripts/sync-apps.mjs     Copies apps/<name> to public/<name> before dev/build
+api/                      Vercel Functions entry points (re-export apps/nagham/api/*)
 ```
 
 ## Standalone apps
 
-Each folder in `apps/` is a self-contained static app with its own HTML, JS, service worker and manifest. It shares nothing with the portfolio code and still runs on its own (`python -m http.server` inside the folder). Before `npm run dev` and `npm run build`, `scripts/sync-apps.mjs` copies each app into `public/<name>/` (gitignored), so it is deployed with the portfolio at `youssefrajeh.com/<name>/`. READMEs and `tools/` are not published.
+Each folder in `apps/` is a self-contained static app with its own HTML, JS, service worker and manifest. It shares nothing with the portfolio code and still runs on its own (`python -m http.server` inside the folder). Before `npm run dev` and `npm run build`, `scripts/sync-apps.mjs` copies each app into `public/<name>/` (gitignored), so it is deployed with the portfolio at `youssefrajeh.com/<name>/`. READMEs, `tools/` and `api/` are not published as static files.
+
+Nagham's server functions live in `apps/nagham/api/`. Vercel only deploys functions from the repository's root `api/` folder, so `api/radio.mjs` and `api/youtube.mjs` re-export them at `/api/radio` and `/api/youtube`. `/api/youtube` needs the `YT_KEY` environment variable (a YouTube Data API key) in the Vercel project. The functions don't run under `npm run dev`. Use `vercel dev` to test them locally.
 
 To add another app: put it in `apps/<name>/` using only relative paths, add `<name>` to `APPS` in the sync script, and add `/public/<name>/` to `.gitignore`.
 
@@ -84,6 +87,6 @@ All content lives in `src/data` and is rendered by **both** editions:
 
 ## Deployment
 
-The site is hosted on **Vercel** (Next.js preset, which picks up the static export in `./out`). Pushing to `main` deploys to production at `youssefrajeh.com`, and pull requests get preview URLs. `.github/workflows/ci.yml` runs typecheck, lint and build on every push and PR. It doesn't deploy.
+The site is hosted on **Vercel**. `vercel.json` sets no framework preset, so Vercel runs `npm run build`, serves the static export in `./out` and deploys the functions in `api/`. Pushing to `main` deploys to production at `youssefrajeh.com`, and pull requests get preview URLs. `.github/workflows/ci.yml` runs typecheck, lint and build on every push and PR. It doesn't deploy.
 
 The custom domain `youssefrajeh.com` (and `www`) is set under the Vercel project's **Settings → Domains**, with DNS records pointing to Vercel.

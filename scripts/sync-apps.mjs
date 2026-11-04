@@ -12,7 +12,7 @@ const root = join(import.meta.dirname, "..");
 const APPS = ["millionaire", "nagham"];
 
 // Source-only files that should not be published with the app.
-const EXCLUDE = new Set(["README.md", "README.txt", "tools", ".git"]);
+const EXCLUDE = new Set(["README.md", "README.txt", "tools", "api", ".git"]);
 
 for (const name of APPS) {
   const src = join(root, "apps", name);
