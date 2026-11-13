@@ -62,6 +62,8 @@ export interface Education {
   highlights: string[];
   /** Notable coursework or transferable skills. */
   details: string[];
+  /** Root-relative path of a transcript PDF in /public, if there is one. */
+  transcript?: string;
 }
 
 export type SkillCategory = 'programming' | 'web' | 'database' | 'tools';

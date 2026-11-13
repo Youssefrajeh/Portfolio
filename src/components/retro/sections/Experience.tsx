@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { educationData } from '@/data/educationData';
+import { withBasePath } from '@/lib/site';
 import { experienceData } from '@/data/experienceData';
 
 const Experience: React.FC = () => {
@@ -175,6 +176,17 @@ const Experience: React.FC = () => {
                                             </span>
                                         ))}
                                     </div>
+                                )}
+
+                                {edu.transcript && (
+                                    <a
+                                        href={withBasePath(edu.transcript)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-block mt-3 text-xs text-[#000080] underline"
+                                    >
+                                        📄 View transcript (PDF)
+                                    </a>
                                 )}
                             </div>
                         ))}

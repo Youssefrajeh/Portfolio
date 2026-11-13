@@ -2,6 +2,7 @@
 
 import { m } from 'motion/react';
 import { educationData } from '@/data/educationData';
+import { withBasePath } from '@/lib/site';
 import { fadeInUp, staggerContainer, staggerItem, viewportConfig } from '@/lib/motionVariants';
 
 // Same card language as Experience (styles in globals.css: .exp-*).
@@ -15,6 +16,20 @@ const Education = () => {
         .edu-highlight {
           color: var(--accent);
           border-color: rgb(var(--accent-rgb) / 0.3);
+        }
+        .edu-transcript {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          text-decoration: none;
+          background: rgb(var(--accent-rgb) / 0.14);
+          transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        .edu-transcript:hover,
+        .edu-transcript:focus-visible {
+          color: var(--accent);
+          background: rgb(var(--accent-rgb) / 0.24);
+          border-color: var(--accent);
         }
       `}</style>
 
@@ -55,13 +70,23 @@ const Education = () => {
               ))}
             </ul>
 
-            {edu.highlights.length > 0 && (
+            {(edu.highlights.length > 0 || edu.transcript) && (
               <div className="exp-tech-stack">
                 {edu.highlights.map((highlight) => (
                   <span key={highlight} className="tech-tag edu-highlight">
                     {highlight}
                   </span>
                 ))}
+                {edu.transcript && (
+                  <a
+                    href={withBasePath(edu.transcript)}
+                    className="tech-tag edu-highlight edu-transcript"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <i className="fas fa-file-lines" aria-hidden="true"></i> View transcript
+                  </a>
+                )}
               </div>
             )}
           </m.article>

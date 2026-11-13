@@ -26,6 +26,15 @@ export const CONTACT = {
 
 export const CV_PATH = '/Youssef Rajeh.pdf';
 
+/** IT support version of the resume, offered alongside the developer CV. */
+export const IT_RESUME_PATH = '/Youssef Rajeh - IT Support Resume.pdf';
+
+/**
+ * Unofficial Fanshawe transcript. This is a redacted copy: the home address
+ * and student ID are removed. Never publish the registrar's original.
+ */
+export const TRANSCRIPT_PATH = '/Youssef Rajeh - Transcript.pdf';
+
 /** Formspree endpoint used by both contact forms (no backend required). */
 export const CONTACT_FORM_ENDPOINT = 'https://formspree.io/f/mvgrongo';
 

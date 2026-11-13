@@ -20,6 +20,12 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 
+# registrar's original transcript (has home address + student ID); the site
+# serves the redacted copy in /public instead
+/Rajeh_Youssef_*.pdf
+# employer-specific resume drafts; the site serves a neutrally named copy
+/Youssef_Rajeh_Resume_*.pdf
+
 # standalone apps, generated from apps/ by scripts/sync-apps.mjs
 /public/millionaire/
 /public/nagham/

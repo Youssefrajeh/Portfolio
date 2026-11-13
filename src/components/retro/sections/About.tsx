@@ -4,7 +4,7 @@ import { CONTACT, CV_PATH, withBasePath } from '@/lib/site';
 const About: React.FC = () => {
     const initialText = `ABOUT ME
 =========
-I am a dedicated software developer with a unique background in Applied Chemistry and extensive experience in quality control, production management, and team leadership. Currently pursuing an Advanced Diploma in Computer Programming and Analysis at Fanshawe College with an impressive 3.9 GPA.
+I am a dedicated software developer with a unique background in Applied Chemistry and extensive experience in quality control, production management, and team leadership. Currently pursuing an Advanced Diploma in Computer Programming and Analysis at Fanshawe College with a 3.97 GPA and a place on the Dean's Honour Roll.
 
 PROFESSIONAL JOURNEY
 --------------------
@@ -12,8 +12,8 @@ My diverse professional journey spans over 15 years in the chemical and manufact
 
 LANGUAGES SPOKEN
 ----------------
-* English: Fluent (C2)
-* French: Conversational (B1)
+* English: Advanced
+* French: Beginner
 * Arabic: Native
 
 CONTACT INFO

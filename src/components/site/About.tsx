@@ -2,7 +2,7 @@
 
 import { m } from 'motion/react';
 import { fadeInUp, fadeInLeft, staggerContainer, staggerItem, viewportConfig } from '@/lib/motionVariants';
-import { CV_PATH, withBasePath } from '@/lib/site';
+import { CV_PATH, IT_RESUME_PATH, withBasePath } from '@/lib/site';
 
 const About = () => {
   return (
@@ -149,6 +149,24 @@ const About = () => {
           box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
         }
 
+        .cv-button {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 12px;
+        }
+
+        .about-cv-btn-alt {
+          background: transparent;
+          color: var(--accent);
+          box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.5);
+        }
+
+        .about-cv-btn-alt:hover {
+          background: rgb(var(--accent-rgb) / 0.1);
+          box-shadow: inset 0 0 0 1px var(--accent);
+        }
+
         @media (max-width: 768px) {
           .about-layout {
             flex-direction: column;
@@ -256,24 +274,24 @@ const About = () => {
             </m.div>
 
             <m.p variants={staggerItem}>
-              I’m a Computer Programming & Analysis co-op student at Fanshawe College with hands-on experience developing full-stack web applications using C#, .NET Core, React, SQL Server, and modern development tools.
+              I’m a full-stack software developer who builds applications end to end, from database design to cloud deployment, using C#, ASP.NET Core, React, Vue.js, Node.js, TypeScript, PostgreSQL and MongoDB. I’m completing the Computer Programming and Analysis advanced diploma (co-op) at Fanshawe College in December 2026.
             </m.p>
             <m.p variants={staggerItem}>
-              I have a strong understanding of software development principles, databases, debugging, and structured workflows gained through academic projects and prior experience in quality-driven technical environments. I’m a detail-oriented problem solver with strong analytical, documentation, and process improvement skills.
+              Before software, I spent over a decade in quality assurance and production management in regulated manufacturing. That background shapes how I work: I test carefully, trace problems to their root cause, document what I change, and explain technical findings clearly to non-technical people.
             </m.p>
 
             <m.div className="about-highlights" variants={staggerContainer(0.08, 0.1)}>
               <m.article className="about-highlight-card" variants={staggerItem}>
-                <p className="highlight-value">Full-Stack Dev</p>
-                <p className="highlight-label">C#, .NET Core & React applications</p>
+                <p className="highlight-value">3.97 GPA</p>
+                <p className="highlight-label">Dean’s Honour Roll, Fanshawe College</p>
               </m.article>
               <m.article className="about-highlight-card" variants={staggerItem}>
-                <p className="highlight-value">Systems Specialist</p>
-                <p className="highlight-label">Database query tuning & OS configs</p>
+                <p className="highlight-value">Dec 2026</p>
+                <p className="highlight-label">Graduating, advanced diploma (co-op)</p>
               </m.article>
               <m.article className="about-highlight-card" variants={staggerItem}>
-                <p className="highlight-value">Co-op Experience</p>
-                <p className="highlight-label">Hands-on corporate & technical support</p>
+                <p className="highlight-value">10+ years</p>
+                <p className="highlight-label">Quality assurance & production management</p>
               </m.article>
             </m.div>
 
@@ -281,14 +299,21 @@ const About = () => {
               className="language-badges"
               variants={staggerContainer(0.08, 0)}
             >
-              <m.span className="language-badge" variants={staggerItem}>English (C2)</m.span>
-              <m.span className="language-badge" variants={staggerItem}>French (B1)</m.span>
               <m.span className="language-badge" variants={staggerItem}>Arabic (Native)</m.span>
+              <m.span className="language-badge" variants={staggerItem}>English (Advanced)</m.span>
+              <m.span className="language-badge" variants={staggerItem}>French (Beginner)</m.span>
             </m.div>
 
             <m.div className="cv-button" variants={staggerItem}>
               <a href={withBasePath(CV_PATH)} className="about-cv-btn" download>
-                <i className="fas fa-download"></i> Download CV
+                <i className="fas fa-download" aria-hidden="true"></i> Download CV
+              </a>
+              <a
+                href={withBasePath(IT_RESUME_PATH)}
+                className="about-cv-btn about-cv-btn-alt"
+                download
+              >
+                <i className="fas fa-download" aria-hidden="true"></i> IT Support resume
               </a>
             </m.div>
           </div>

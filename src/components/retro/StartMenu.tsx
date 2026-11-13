@@ -10,7 +10,7 @@ import {
   RunIcon,
   ShutDownIcon
 } from './RetroIcons';
-import { CV_PATH, withBasePath } from '@/lib/site';
+import { CV_PATH, IT_RESUME_PATH, withBasePath } from '@/lib/site';
 
 interface StartMenuProps {
   isOpen: boolean;
@@ -142,6 +142,17 @@ const StartMenu: React.FC<StartMenuProps> = ({
         >
           <WordPadIcon size={20} />
           <span className="font-semibold">Documents (CV.pdf)</span>
+        </a>
+
+        <a
+          href={withBasePath(IT_RESUME_PATH)}
+          download
+          onClick={onClose}
+          className="flex items-center gap-3 px-3 py-2 cursor-default hover:bg-[#000080] hover:text-white text-[#000] hover:no-underline"
+          onMouseEnter={() => setActiveSubmenu(null)}
+        >
+          <WordPadIcon size={20} />
+          <span className="font-semibold">Documents (IT Resume.pdf)</span>
         </a>
 
         {/* Divider */}

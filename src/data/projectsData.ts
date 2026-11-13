@@ -224,6 +224,35 @@ export const projectsData: Project[] = [
     challenges: 'Validating nested evaluation categories to verify total weights add up to exactly 100%. Solved by building a validation filter that runs recursive checksum audits on imported JSON files before loading them into active memory.'
   },
   {
+    id: 23,
+    title: 'CampusHub',
+    category: 'fullstack',
+    image: '/images/v2/campushub.png',
+    imageType: 'screenshot',
+    description: 'A campus platform for Fanshawe students, built as a team capstone: marketplace, lost & found, events, study groups and real-time messaging behind verified college email sign-up.',
+    link: 'https://github.com/Youssefrajeh/Campus_hub',
+    demo: 'https://campus-hub-229x.onrender.com',
+    featured: true,
+    duration: 'Sep 2026 – Present',
+    role: 'Front-end Lead (team of 3)',
+    detailedDescription: 'CampusHub is a capstone project (INFO-5103, Fall 2026) by team Binary Minds. It gives Fanshawe College students one verified place to buy and sell, find lost items, join events, form study groups and share course notes. Every member signs up with a Fanshawe email and confirms it with an emailed one-time code, so students know they are dealing with other students. The front end is React and TypeScript; the API is Node.js and Express with Prisma over MongoDB, and Socket.IO powers real-time chat.',
+    techStack: [
+      { name: 'React / TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+      { name: 'Node.js / Express', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+      { name: 'MongoDB / Prisma', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+      { name: 'Socket.IO', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg' }
+    ],
+    features: [
+      'Registration with a Fanshawe email, emailed one-time verification codes and password reset',
+      'Marketplace listings with photos, search and filters, plus lost & found posts',
+      'Real-time messaging with message requests, read tracking, typing indicators and blocking',
+      'Events with RSVP, and study groups by course with their own group chat and shared files',
+      'Content reporting and an administrator review flow',
+      'API and UI test suites that run in a GitHub Actions CI pipeline before changes are merged'
+    ],
+    challenges: 'Student marketplaces and group chats are hard to trust because anyone can join. CampusHub solves this by putting every feature behind college email verification: sign-up requires a Fanshawe address and a one-time code sent to it, and JWT-protected routes keep unverified accounts out.'
+  },
+  {
     id: 10,
     title: 'Full-Stack E-Commerce Platform',
     category: 'fullstack',
@@ -231,6 +260,7 @@ export const projectsData: Project[] = [
     description: 'An e-commerce store with product browsing by brand, a shopping cart, orders and order history, backed by an ASP.NET Core REST API and PostgreSQL.',
     link: 'https://github.com/Youssefrajeh/FullStack',
     demo: 'https://fullstack-lofy.onrender.com/',
+    featured: true,
     duration: 'Oct 2025',
     role: 'Full-Stack Developer',
     detailedDescription: 'A full-stack e-commerce case study for INFO3181 (Full Stack Web Development). A Vue.js 3 + Quasar frontend talks to an ASP.NET Core 8 REST API, which uses Entity Framework Core to store products, customers, orders and branches in PostgreSQL. Customers register and log in with JWT authentication, browse products by brand, manage a cart, place orders and review their order history. The app is packaged with a multi-stage Docker build and deployed to Render.',
@@ -368,7 +398,6 @@ export const projectsData: Project[] = [
     category: 'fullstack',
     description: 'A real-time computer vision system for webcams, RTSP cameras, and video files that detects, tracks, and counts people through an interactive web dashboard.',
     link: 'https://github.com/Youssefrajeh/CamCounter',
-    featured: true,
     duration: 'Aug 2026',
     role: 'Solo Developer',
     detailedDescription: 'An AI-powered people counter and surveillance analytics platform. A FastAPI backend runs YOLO person detection with ByteTrack for persistent multi-camera tracking, streamed live over WebSockets to a browser dashboard where tripwires and polygon zones can be drawn directly on the video feed for entrance/exit counts and occupancy monitoring.',
@@ -448,7 +477,6 @@ export const projectsData: Project[] = [
     description: 'A private, intentional matchmaking platform for serious, marriage-focused connections - built around compatibility, trust, and privacy rather than swiping.',
     link: 'https://github.com/Youssefrajeh/Mithaq',
     demo: 'https://mithaq-delta.vercel.app/',
-    featured: true,
     duration: 'Aug 2026',
     role: 'Solo Developer',
     detailedDescription: 'A product-focused matchmaking platform designed for intentional marriage-minded connections instead of casual dating - no swipe decks or superficial ratings. Includes a 7-step onboarding wizard, compatibility-ranked discovery, tiered photo privacy, mutual matches, and direct messaging, plus an admin operations hub for identity verification and trust & safety review.',

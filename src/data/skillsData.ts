@@ -3,7 +3,7 @@ import type { Skill, SkillCategoryFilter } from './types';
 export const skillsData: Skill[] = [
   {
     id: 1,
-    name: 'C# & .NET Core',
+    name: 'C#, .NET & ASP.NET Core',
     category: 'programming',
     level: 'Advanced',
 
@@ -39,12 +39,12 @@ export const skillsData: Skill[] = [
   },
   {
     id: 5,
-    name: 'Angular',
-    category: 'web',
-    level: 'Beginner',
+    name: 'TypeScript',
+    category: 'programming',
+    level: 'Intermediate',
 
-    description: 'Building component-based web applications with TypeScript.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg'
+    description: 'Writing typed React and Node.js code for front-end and API projects.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg'
   },
   {
     id: 6,
@@ -75,7 +75,7 @@ export const skillsData: Skill[] = [
   },
   {
     id: 9,
-    name: 'Git, GitHub & GitLab',
+    name: 'Git & GitHub',
     category: 'tools',
     level: 'Intermediate',
 
@@ -99,13 +99,58 @@ export const skillsData: Skill[] = [
 
     description: 'Creating automation scripts and efficiently managing Windows OS environments and configurations.',
     icon: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/PowerShell_5.0_icon.png'
+  },
+  {
+    id: 12,
+    name: 'Vue.js',
+    category: 'web',
+    level: 'Intermediate',
+
+    description: 'Building single-page front ends that consume REST APIs.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg'
+  },
+  {
+    id: 13,
+    name: 'Node.js & Express',
+    category: 'web',
+    level: 'Intermediate',
+
+    description: 'Building REST APIs and real-time services with Socket.IO.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
+  },
+  {
+    id: 14,
+    name: 'PostgreSQL',
+    category: 'database',
+    level: 'Intermediate',
+
+    description: 'Relational data modelling accessed through Entity Framework Core.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg'
+  },
+  {
+    id: 15,
+    name: 'MongoDB',
+    category: 'database',
+    level: 'Intermediate',
+
+    description: 'Document databases for Node.js applications, via Mongoose and Prisma.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'
+  },
+  {
+    id: 16,
+    name: 'Docker',
+    category: 'tools',
+    level: 'Intermediate',
+
+    description: 'Packaging applications with multi-stage builds for cloud deployment.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'
   }
 ];
 
 export const skillCategories: SkillCategoryFilter[] = [
   { id: 'all', name: 'All Skills' },
-  { id: 'programming', name: 'Programming' },
-  { id: 'web', name: 'Web Dev' },
-  { id: 'database', name: 'Database' },
+  { id: 'programming', name: 'Languages' },
+  { id: 'web', name: 'Web & Frameworks' },
+  { id: 'database', name: 'Databases' },
   { id: 'tools', name: 'Tools & DevOps' }
 ];

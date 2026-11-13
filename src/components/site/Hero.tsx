@@ -1,21 +1,16 @@
 'use client';
 
-import { useEffect, useState } from "react";
 import { m } from "motion/react";
 import { staggerContainer, staggerItem } from "@/lib/motionVariants";
+import { CONTACT } from "@/lib/site";
 
-const roles = ["Software Developer", "Full-Stack Engineer", "Systems Analyst"];
+const socialLinks = [
+  { icon: "fab fa-github", url: CONTACT.github, label: "GitHub" },
+  { icon: "fab fa-linkedin-in", url: CONTACT.linkedin, label: "LinkedIn" },
+  { icon: "fas fa-envelope", url: `mailto:${CONTACT.email}`, label: "Email" },
+];
 
 const Hero = () => {
-  const [roleIndex, setRoleIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section id="home">
       <style>{`
@@ -61,18 +56,17 @@ const Hero = () => {
           color: var(--text-dim);
           font-weight: 500;
           letter-spacing: 0.02em;
-          margin: 0 0 12px 0;
-          min-height: 1.6em;
+          margin: 0 0 16px 0;
         }
-        .hero-role-text {
-          display: inline-block;
-          transition: opacity 0.4s ease;
+        .hero-role-sep {
+          color: var(--accent);
+          margin: 0 0.5em;
         }
         .hero-tagline {
           font-family: var(--font-hanken), sans-serif;
           font-size: clamp(0.95rem, 1.6vw, 1.05rem);
           color: var(--text-faint);
-          max-width: 520px;
+          max-width: 600px;
           line-height: 1.7;
           margin: 0 0 36px 0;
         }
@@ -124,11 +118,44 @@ const Hero = () => {
           color: var(--text);
           transform: translateY(-2px);
         }
+        .hero-social {
+          display: flex;
+          gap: 12px;
+          justify-content: center;
+          margin-top: 32px;
+        }
+        .hero-social a {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 42px;
+          height: 42px;
+          border: 1px solid var(--border);
+          border-radius: 50%;
+          color: var(--text-dim);
+          font-size: 1rem;
+          text-decoration: none;
+          transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+        .hero-social a:hover,
+        .hero-social a:focus-visible {
+          color: var(--accent);
+          border-color: var(--accent);
+          transform: translateY(-2px);
+        }
         @media (max-width: 768px) {
           #home {
             height: auto;
             padding-top: 112px;
             padding-bottom: 0;
+          }
+          /* site.css enlarges every hero paragraph on phones; keep these two readable */
+          .hero-content p.hero-tagline {
+            font-size: 1rem !important;
+            margin-bottom: 28px;
+          }
+          .hero-content p.hero-greeting {
+            font-size: 0.85rem !important;
           }
           .hero-buttons {
             flex-direction: row;
@@ -181,9 +208,11 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.5 }}
         >
-          <span className="hero-role-text" key={roleIndex}>
-            {roles[roleIndex]}
-          </span>
+          Software Developer
+          <span className="hero-role-sep" aria-hidden="true">/</span>
+          Full-Stack
+          <span className="hero-role-sep" aria-hidden="true">/</span>
+          London, ON
         </m.div>
 
         <m.p
@@ -192,7 +221,9 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.5 }}
         >
-          Building practical web, database, and software solutions with modern development tools.
+          I build full-stack web applications with C#, ASP.NET Core, React and SQL, from database design
+          to cloud deployment. Graduating from Fanshawe College in December 2026, with over a decade of
+          quality assurance experience behind me.
         </m.p>
 
         <m.div
@@ -207,6 +238,25 @@ const Hero = () => {
           <m.a href="#contact" className="hero-btn-secondary" variants={staggerItem}>
             Contact Me
           </m.a>
+        </m.div>
+
+        <m.div
+          className="hero-social"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 0.5 }}
+        >
+          {socialLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.url}
+              aria-label={link.label}
+              title={link.label}
+              {...(link.url.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            >
+              <i className={link.icon} aria-hidden="true"></i>
+            </a>
+          ))}
         </m.div>
       </div>
     </section>
