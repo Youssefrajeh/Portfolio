@@ -274,10 +274,10 @@ const About = () => {
             </m.div>
 
             <m.p variants={staggerItem}>
-              I’m a full-stack software developer who builds applications end to end, from database design to cloud deployment, using C#, ASP.NET Core, React, Vue.js, Node.js, TypeScript, PostgreSQL and MongoDB. I’m completing the Computer Programming and Analysis advanced diploma (co-op) at Fanshawe College in December 2026.
+              I’m a full-stack software developer and IT support specialist who builds applications end to end—from database design to cloud deployment and DNS management in AWS—using C#, ASP.NET Core, React, Vue.js, Node.js, TypeScript, Python, PHP, SQL Server, PostgreSQL, MySQL, MongoDB, and Docker. I’m completing the Computer Programming and Analysis advanced diploma (co-op) at Fanshawe College in December 2026.
             </m.p>
             <m.p variants={staggerItem}>
-              Before software, I spent over a decade in quality assurance and production management in regulated manufacturing. That background shapes how I work: I test carefully, trace problems to their root cause, document what I change, and explain technical findings clearly to non-technical people.
+              Alongside software development, I bring 5 years of hands-on computer sales and service experience diagnosing hardware and OS problems, setting up Windows and drivers, and upgrading RAM and drives, plus 15+ years in manufacturing quality assurance and production leadership as a calm first responder who traces problems to their root cause, documents fixes, and explains them clearly in plain language.
             </m.p>
 
             <m.div className="about-highlights" variants={staggerContainer(0.08, 0.1)}>
@@ -290,8 +290,8 @@ const About = () => {
                 <p className="highlight-label">Graduating, advanced diploma (co-op)</p>
               </m.article>
               <m.article className="about-highlight-card" variants={staggerItem}>
-                <p className="highlight-value">10+ years</p>
-                <p className="highlight-label">Quality assurance & production management</p>
+                <p className="highlight-value">15+ years</p>
+                <p className="highlight-label">IT support, QA & production leadership</p>
               </m.article>
             </m.div>
 
@@ -299,7 +299,7 @@ const About = () => {
               className="language-badges"
               variants={staggerContainer(0.08, 0)}
             >
-              <m.span className="language-badge" variants={staggerItem}>Arabic (Native)</m.span>
+              <m.span className="language-badge" variants={staggerItem}>Arabic (Native / Fluent)</m.span>
               <m.span className="language-badge" variants={staggerItem}>English (Advanced)</m.span>
               <m.span className="language-badge" variants={staggerItem}>French (Beginner)</m.span>
             </m.div>

@@ -4,17 +4,17 @@ import { CONTACT, CV_PATH, withBasePath } from '@/lib/site';
 const About: React.FC = () => {
     const initialText = `ABOUT ME
 =========
-I am a dedicated software developer with a unique background in Applied Chemistry and extensive experience in quality control, production management, and team leadership. Currently pursuing an Advanced Diploma in Computer Programming and Analysis at Fanshawe College with a 3.97 GPA and a place on the Dean's Honour Roll.
+I am a full-stack software developer and IT support specialist with a background in Applied Chemistry, 5 years of hands-on computer sales and service experience, and 15+ years in manufacturing quality control and production leadership. Completing the Computer Programming and Analysis Advanced Diploma (Co-op) at Fanshawe College in December 2026 (3.97 GPA, Dean's Honour Roll).
 
 PROFESSIONAL JOURNEY
 --------------------
-My diverse professional journey spans over 15 years in the chemical and manufacturing industries across Syria and Cameroon, where I developed strong analytical thinking, problem-solving skills, and attention to detail. These transferable skills now drive my passion for creating efficient, scalable software solutions.
+From diagnosing hardware/OS issues, installing Windows and drivers, and upgrading RAM/drives to deploying containerized full-stack web apps with Docker and managing DNS in AWS, I combine hands-on technical troubleshooting with calm root-cause analysis and clear documentation.
 
 LANGUAGES SPOKEN
 ----------------
+* Arabic: Native / Fluent
 * English: Advanced
 * French: Beginner
-* Arabic: Native
 
 CONTACT INFO
 ------------

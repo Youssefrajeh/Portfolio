@@ -9,9 +9,10 @@ The project is expanding from a single portfolio into a broader digital platform
 ## Core Entity
 
 - Name: Youssef Rajeh
-- Role: Software Developer
+- Role: Software Developer & IT Support Specialist
 - Location: London, Ontario, Canada
-- Focus areas: C#, .NET Core, React, SQL Server, REST APIs, C++, Java, JavaScript, full-stack development, systems troubleshooting
+- Languages: Arabic (Native/Fluent), English (Advanced), French (Beginner)
+- Focus areas: C#, .NET Core, React, Vue.js, Node.js, TypeScript, Python, PHP, Java, C++, SQL Server, PostgreSQL, MySQL, MongoDB, Docker, AWS (DNS), Windows 10/11, hardware troubleshooting, TCP/IP networking, full-stack development, systems support
 - Portfolio path: /portfolio
 - Contact email: youssefrrajeh@gmail.com
 - GitHub: https://github.com/Youssefrajeh

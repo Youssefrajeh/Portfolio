@@ -17,9 +17,9 @@ export const educationData: Education[] = [
       'Full-Stack Web Development and Client/Server Applications',
       'Relational and Advanced Databases (SQL)',
       'Data Structures & Algorithms and Software Design Patterns',
-      'Mobile Development (Android)',
+      'Network Fundamentals for Programmers and Secure Computing (PHP)',
+      'Emerging Technologies (Python & AI) and Mobile Development (Android)',
       'Systems Analysis, OO Modeling and Managing Software Projects',
-      'Network Fundamentals and Secure Computing',
     ],
   },
   {

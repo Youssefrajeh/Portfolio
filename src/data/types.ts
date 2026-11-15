@@ -66,7 +66,13 @@ export interface Education {
   transcript?: string;
 }
 
-export type SkillCategory = 'programming' | 'web' | 'database' | 'tools';
+export type SkillCategory =
+  | 'programming'
+  | 'web'
+  | 'database'
+  | 'tools'
+  | 'support'
+  | 'languages';
 export type SkillLevel = 'Beginner' | 'Intermediate' | 'Advanced';
 
 export interface Skill {

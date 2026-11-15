@@ -9,12 +9,12 @@ export const experienceData: Experience[] = [
     company: 'Hoka Industrie | Douala, Cameroon',
     duration: 'May 2020 – Sep 2022',
     responsibilities: [
-      'Acted as first responder to equipment and process breakdowns on the line, finding the fault and restoring production quickly to minimize downtime',
+      'Acted as first responder to equipment and process breakdowns on the line, staying calm under pressure, finding the fault and restoring production quickly to minimize downtime',
       'Diagnosed root causes of operational and quality defects, implemented corrective actions, and updated quality control documentation to prevent repeat issues',
       'Monitored production output against quality specifications, inspecting product and documenting nonconformances',
       'Supervised daily production operations and coordinated workflow in a fast-paced manufacturing environment'
     ],
-    technologies: ['Root Cause Analysis', 'Quality Control', 'Documentation', 'Team Leadership']
+    technologies: ['Root Cause Analysis', 'Quality Control', 'Technical Documentation', 'Team Leadership']
   },
   {
     id: 3,
@@ -47,11 +47,20 @@ export const experienceData: Experience[] = [
     company: 'Computer Service Shop | Syria',
     duration: '2001 – 2006',
     responsibilities: [
-      'Served as the first point of contact for walk-in customers, diagnosing and resolving hardware, software and operating system problems',
-      'Installed and configured Windows, applications and device drivers, and upgraded RAM and hard drives',
-      'Advised customers on parts and compatibility, explaining problems and fixes in plain language'
+      'Served as the first point of contact for walk-in customers, diagnosing hardware, software and operating system problems and resolving them',
+      'Installed and configured Windows, applications and device drivers, and updated drivers and software to fix compatibility and performance issues',
+      'Upgraded customer computers by installing and replacing RAM and hard drives to expand memory and storage capacity',
+      'Advised customers on computer parts, checked component compatibility and sold parts to fit each customer’s needs and budget',
+      'Explained problems and fixes in plain language so non-technical customers understood what was done and why'
     ],
-    technologies: ['Hardware Troubleshooting', 'Windows', 'Customer Support']
+    technologies: [
+      'Windows 10/11 & OS Setup',
+      'Hardware Troubleshooting & Repair',
+      'RAM & Hard Drive Upgrades',
+      'Driver & Software Installation',
+      'PC Parts & Compatibility',
+      'Customer Support'
+    ]
   },
   {
     id: 1,

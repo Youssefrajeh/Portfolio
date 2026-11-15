@@ -1,156 +1,295 @@
 import type { Skill, SkillCategoryFilter } from './types';
 
+// Inline SVG badge helper for IT support, networking, process and spoken-language items
+const svgBadge = (bg: string, fg: string, label: string) =>
+  `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="${bg}"/><text x="16" y="21" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="12" fill="${fg}">${label}</text></svg>`,
+  )}`;
+
 export const skillsData: Skill[] = [
+  // Programming Languages
   {
     id: 1,
-    name: 'C#, .NET & ASP.NET Core',
+    name: 'C#',
     category: 'programming',
     level: 'Advanced',
-
-    description: 'Developing full-stack web applications and RESTful APIs using modern .NET Core architecture.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg'
+    description: 'Developing full-stack web applications, RESTful APIs, gRPC services, and desktop apps in .NET.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
   },
   {
     id: 2,
-    name: 'SQL Server',
-    category: 'database',
+    name: 'JavaScript',
+    category: 'programming',
     level: 'Advanced',
-
-    description: 'Designing and managing relational databases with enforced validation rules and complex query optimization.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-original.svg'
+    description: 'Developing interactive frontend logic and cross-platform web applications.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
   },
   {
     id: 3,
-    name: 'Java',
-    category: 'programming',
-    level: 'Intermediate',
-
-    description: 'Building robust, object-oriented applications, managing dependencies, and implementing interfaces.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg'
-  },
-  {
-    id: 4,
-    name: 'React',
-    category: 'web',
-    level: 'Intermediate',
-
-    description: 'Building dynamic and responsive user interfaces that seamlessly consume backend REST APIs.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
-  },
-  {
-    id: 5,
     name: 'TypeScript',
     category: 'programming',
     level: 'Intermediate',
-
-    description: 'Writing typed React and Node.js code for front-end and API projects.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg'
+    description: 'Writing strongly typed React, Next.js, and Node.js applications.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
   },
   {
-    id: 6,
-    name: 'JavaScript',
-    category: 'web',
-    level: 'Advanced',
-
-    description: 'Developing interactive frontend logic and cross-platform web applications.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg'
-  },
-  {
-    id: 7,
-    name: 'HTML5 & CSS3',
-    category: 'web',
-    level: 'Advanced',
-
-    description: 'Crafting semantically structured, accessible, and highly responsive web layouts.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg'
-  },
-  {
-    id: 8,
+    id: 4,
     name: 'Python',
     category: 'programming',
     level: 'Intermediate',
-
-    description: 'Scripting, automation, and data processing tasks.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'
+    description: 'Scripting, automation, FastAPI backends, and AI/data processing tasks.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
   },
   {
-    id: 9,
-    name: 'Git & GitHub',
-    category: 'tools',
+    id: 5,
+    name: 'SQL',
+    category: 'programming',
+    level: 'Advanced',
+    description: 'Writing complex queries, joins, stored procedures, and schema definitions across relational databases.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-original.svg',
+  },
+  {
+    id: 6,
+    name: 'PHP',
+    category: 'programming',
     level: 'Intermediate',
+    description: 'Server-side web scripting and secure computing practices.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg',
+  },
+  {
+    id: 7,
+    name: 'Java',
+    category: 'programming',
+    level: 'Intermediate',
+    description: 'Building object-oriented applications, Android mobile apps, and modular architectures.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
+  },
+  {
+    id: 8,
+    name: 'C++',
+    category: 'programming',
+    level: 'Intermediate',
+    description: 'Systems programming, data structures, CLI utilities, and algorithmic problem solving.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg',
+  },
 
-    description: 'Managing source code, branching strategies, and collaborative development in Agile/Scrum environments.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg'
+  // Web & Frameworks
+  {
+    id: 9,
+    name: '.NET & ASP.NET Core',
+    category: 'web',
+    level: 'Advanced',
+    description: 'Building production-grade REST APIs, Entity Framework Core data layers, JWT auth, and gRPC services.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg',
   },
   {
     id: 10,
-    name: 'CI/CD Pipelines',
-    category: 'tools',
+    name: 'React & Next.js',
+    category: 'web',
     level: 'Intermediate',
-
-    description: 'Automating build and deployment processes to streamline delivery and maintain code reliability.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg'
+    description: 'Building dynamic, responsive user interfaces and static/SSR web applications.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
   },
   {
     id: 11,
-    name: 'PowerShell',
-    category: 'tools',
-    level: 'Intermediate',
-
-    description: 'Creating automation scripts and efficiently managing Windows OS environments and configurations.',
-    icon: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/PowerShell_5.0_icon.png'
-  },
-  {
-    id: 12,
     name: 'Vue.js',
     category: 'web',
     level: 'Intermediate',
-
-    description: 'Building single-page front ends that consume REST APIs.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg'
+    description: 'Building single-page front ends with Vue 3 and Quasar that consume REST APIs.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',
   },
   {
-    id: 13,
+    id: 12,
     name: 'Node.js & Express',
     category: 'web',
     level: 'Intermediate',
-
-    description: 'Building REST APIs and real-time services with Socket.IO.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg'
+    description: 'Building REST APIs, authentication flows, and real-time services with Socket.IO.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
   },
   {
-    id: 14,
-    name: 'PostgreSQL',
-    category: 'database',
-    level: 'Intermediate',
+    id: 13,
+    name: 'HTML5 & CSS3',
+    category: 'web',
+    level: 'Advanced',
+    description: 'Crafting semantically structured, accessible, and responsive web layouts.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+  },
 
-    description: 'Relational data modelling accessed through Entity Framework Core.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg'
+  // Databases
+  {
+    id: 14,
+    name: 'SQL Server',
+    category: 'database',
+    level: 'Advanced',
+    description: 'Designing and managing relational databases with enforced validation rules and query optimization.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-original.svg',
   },
   {
     id: 15,
-    name: 'MongoDB',
+    name: 'PostgreSQL',
     category: 'database',
     level: 'Intermediate',
-
-    description: 'Document databases for Node.js applications, via Mongoose and Prisma.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg'
+    description: 'Relational data modelling accessed through Entity Framework Core and Prisma.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
   },
   {
     id: 16,
+    name: 'MySQL',
+    category: 'database',
+    level: 'Intermediate',
+    description: 'Relational database administration and querying for PHP/Apache and client-server applications.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+  },
+  {
+    id: 17,
+    name: 'MongoDB',
+    category: 'database',
+    level: 'Intermediate',
+    description: 'Document databases for Node.js applications via Mongoose and Prisma.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+  },
+
+  // Cloud, DevOps & Tools
+  {
+    id: 18,
+    name: 'AWS (DNS)',
+    category: 'tools',
+    level: 'Intermediate',
+    description: 'Managing custom domains, DNS records, and cloud routing in AWS.',
+    icon: svgBadge('#232f3e', '#ff9900', 'AWS'),
+  },
+  {
+    id: 19,
     name: 'Docker',
     category: 'tools',
     level: 'Intermediate',
+    description: 'Packaging applications with multi-stage Dockerfiles for cloud deployment.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
+  },
+  {
+    id: 20,
+    name: 'Git & GitHub',
+    category: 'tools',
+    level: 'Advanced',
+    description: 'Managing source code, branching strategies, pull requests, and collaborative Agile workflows.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+  },
+  {
+    id: 21,
+    name: 'GitHub Actions CI/CD',
+    category: 'tools',
+    level: 'Intermediate',
+    description: 'Automating build, test, and deployment pipelines on every commit and pull request.',
+    icon: svgBadge('#1f2937', '#60a5fa', 'CI'),
+  },
+  {
+    id: 22,
+    name: 'PowerShell',
+    category: 'tools',
+    level: 'Intermediate',
+    description: 'Writing automation scripts and managing Windows OS environments and configurations.',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/PowerShell_5.0_icon.png',
+  },
+  {
+    id: 23,
+    name: 'Render & XAMPP (Apache)',
+    category: 'tools',
+    level: 'Intermediate',
+    description: 'Deploying containerized web services on Render and running local Apache/PHP/MySQL stacks with XAMPP.',
+    icon: svgBadge('#0f766e', '#ffffff', 'SRV'),
+  },
+  {
+    id: 24,
+    name: 'Visual Studio & VS Code',
+    category: 'tools',
+    level: 'Advanced',
+    description: 'Primary IDEs for .NET, C++, web, and full-stack debugging, profiling, and development.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/visualstudio/visualstudio-plain.svg',
+  },
 
-    description: 'Packaging applications with multi-stage builds for cloud deployment.',
-    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg'
-  }
+  // IT Support, Systems & Networking
+  {
+    id: 25,
+    name: 'Windows 10/11 Setup & Troubleshooting',
+    category: 'support',
+    level: 'Advanced',
+    description: 'Installing, configuring, updating, and troubleshooting Windows operating systems, drivers, and software.',
+    icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg',
+  },
+  {
+    id: 26,
+    name: 'Hardware Repair & Upgrades (RAM & Drives)',
+    category: 'support',
+    level: 'Advanced',
+    description: 'Diagnosing hardware faults, checking PC part compatibility, and upgrading RAM, hard drives, and SSDs.',
+    icon: svgBadge('#1e3a8a', '#93c5fd', 'HW'),
+  },
+  {
+    id: 27,
+    name: 'Application & End-User Support',
+    category: 'support',
+    level: 'Advanced',
+    description: 'First point of contact for walk-in and remote users, explaining fixes in clear, plain language.',
+    icon: svgBadge('#065f46', '#6ee7b7', 'IT'),
+  },
+  {
+    id: 28,
+    name: 'TCP/IP, DNS & Client-Server Networking',
+    category: 'support',
+    level: 'Intermediate',
+    description: 'Network fundamentals, DNS resolution, client-server architecture, and authentication & access control.',
+    icon: svgBadge('#312e81', '#a5b4fc', 'NET'),
+  },
+  {
+    id: 29,
+    name: 'Microsoft Office & Google Workspace',
+    category: 'support',
+    level: 'Advanced',
+    description: 'Word, Excel, Outlook, PowerPoint, Gmail, and Google Drive for documentation, reporting, and collaboration.',
+    icon: svgBadge('#7c2d12', '#fdba74', 'DOC'),
+  },
+  {
+    id: 30,
+    name: 'Root Cause Analysis, SOPs & Agile/Scrum',
+    category: 'support',
+    level: 'Advanced',
+    description: 'Diagnosing operational defects, writing technical documentation and SOPs, and working in Agile teams.',
+    icon: svgBadge('#4c1d95', '#c4b5fd', 'QA'),
+  },
+
+  // Spoken Languages
+  {
+    id: 31,
+    name: 'Arabic — Native / Fluent',
+    category: 'languages',
+    level: 'Advanced',
+    description: 'Native speaker; full professional and technical fluency.',
+    icon: svgBadge('#14532d', '#86efac', 'AR'),
+  },
+  {
+    id: 32,
+    name: 'English — Advanced',
+    category: 'languages',
+    level: 'Advanced',
+    description: 'Advanced professional proficiency in technical writing, documentation, and customer communication.',
+    icon: svgBadge('#1e3a8a', '#93c5fd', 'EN'),
+  },
+  {
+    id: 33,
+    name: 'French — Beginner',
+    category: 'languages',
+    level: 'Beginner',
+    description: 'Foundational conversational and workplace familiarity.',
+    icon: svgBadge('#3b0764', '#d8b4fe', 'FR'),
+  },
 ];
 
 export const skillCategories: SkillCategoryFilter[] = [
   { id: 'all', name: 'All Skills' },
-  { id: 'programming', name: 'Languages' },
+  { id: 'programming', name: 'Programming Languages' },
   { id: 'web', name: 'Web & Frameworks' },
   { id: 'database', name: 'Databases' },
-  { id: 'tools', name: 'Tools & DevOps' }
+  { id: 'tools', name: 'Cloud & Tools' },
+  { id: 'support', name: 'IT Support, Networking & Process' },
+  { id: 'languages', name: 'Spoken Languages' },
 ];
