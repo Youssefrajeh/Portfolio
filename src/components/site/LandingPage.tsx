@@ -55,20 +55,35 @@ const LandingPage = () => {
       </div>
 
       <style>{`
-        .hub-hero {
-          height: 100vh;
-          height: 100dvh;
-          width: 100%;
+        /* The landing page is one fixed screen: the document itself never scrolls.
+           (body's min-height: 100vh is taller than the visible area on phones while
+           the browser toolbar shows, which used to leave a short scroll.) */
+        html:has(.hub-hero),
+        body:has(.hub-hero) {
+          height: 100%;
+          min-height: 0;
           overflow: hidden;
+          overscroll-behavior: none;
+        }
+
+        .hub-hero {
+          position: fixed;
+          inset: 0;
+          /* Never scrolls when the content fits (every normal screen). Only if a
+             tiny screen can't fit it, the hero scrolls so nothing is unreachable. */
+          overflow-x: hidden;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          scrollbar-width: none;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: space-between;
           padding: clamp(20px, 4vh, 40px) 20px clamp(16px, 3vh, 24px);
           text-align: center;
-          position: relative;
           box-sizing: border-box;
         }
+        .hub-hero::-webkit-scrollbar { display: none; }
 
         .hub-theme-toggle {
           position: absolute;
@@ -277,6 +292,37 @@ const LandingPage = () => {
           .hub-more-link { padding: 4px 10px; font-size: 0.7rem; }
           .hub-socials { gap: 8px; }
           .hub-social-btn { width: 32px; height: 32px; font-size: 0.82rem; }
+        }
+
+        /* short screens (small phones, short laptop windows): tighten the
+           vertical spacing so everything still fits on one screen */
+        @media (max-height: 700px) {
+          .hub-hero { padding-top: 16px; padding-bottom: 12px; }
+          .hub-avatar-wrapper {
+            width: clamp(56px, 13vh, 96px);
+            height: clamp(56px, 13vh, 96px);
+            margin-bottom: 8px;
+          }
+          .hub-eyebrow { margin-bottom: 6px; }
+          .hub-status { margin-bottom: 10px; }
+          .hub-actions { margin-bottom: 12px; }
+          .hub-more { margin-bottom: 12px; }
+          .hub-more-label { margin-bottom: 6px; }
+        }
+
+        /* very short screens (old small phones, phones in landscape): drop the decorative extras */
+        @media (max-height: 600px) {
+          .hub-eyebrow, .hub-more-label { display: none; }
+        }
+        @media (max-height: 600px) and (max-width: 600px) {
+          .hub-avatar-wrapper { width: 44px; height: 44px; }
+          .hub-status { margin-bottom: 6px; }
+        }
+        @media (max-height: 480px) {
+          .hub-hero { padding-top: 8px; padding-bottom: 6px; }
+          .hub-avatar-wrapper { display: none; }
+          .hub-status { margin-bottom: 8px; }
+          .hub-actions, .hub-more { margin-bottom: 8px; }
         }
       `}</style>
 
