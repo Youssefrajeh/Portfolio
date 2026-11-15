@@ -8,7 +8,7 @@ I am a full-stack software developer and IT support specialist with a background
 
 PROFESSIONAL JOURNEY
 --------------------
-From diagnosing hardware/OS issues, installing Windows and drivers, and upgrading RAM/drives to deploying containerized full-stack web apps with Docker and managing DNS in AWS, I combine hands-on technical troubleshooting with calm root-cause analysis and clear documentation.
+From enterprise & full-stack apps (C#, ASP.NET Core, Java Spring Boot, Angular, React, Vue.js, Node.js, Kotlin Android, SQL, Docker, AWS DNS) to diagnosing hardware/OS issues, installing Windows and drivers, and upgrading RAM/drives, I combine hands-on technical troubleshooting with calm root-cause analysis and clear documentation.
 
 LANGUAGES SPOKEN
 ----------------

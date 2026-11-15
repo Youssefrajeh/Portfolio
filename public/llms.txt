@@ -12,7 +12,7 @@ The project is expanding from a single portfolio into a broader digital platform
 - Role: Software Developer & IT Support Specialist
 - Location: London, Ontario, Canada
 - Languages: Arabic (Native/Fluent), English (Advanced), French (Beginner)
-- Focus areas: C#, .NET Core, React, Vue.js, Node.js, TypeScript, Python, PHP, Java, C++, SQL Server, PostgreSQL, MySQL, MongoDB, Docker, AWS (DNS), Windows 10/11, hardware troubleshooting, TCP/IP networking, full-stack development, systems support
+- Focus areas: C#, .NET Core, Java, Spring Boot, Angular, React, Vue.js, Node.js, TypeScript, Kotlin (Android), Python, PHP, C++, COBOL, SQL Server, PostgreSQL, MySQL, MongoDB, Docker, AWS (DNS), Windows 10/11, hardware troubleshooting, TCP/IP networking, full-stack development, systems support
 - Portfolio path: /portfolio
 - Contact email: youssefrrajeh@gmail.com
 - GitHub: https://github.com/Youssefrajeh

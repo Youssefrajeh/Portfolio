@@ -274,7 +274,7 @@ const About = () => {
             </m.div>
 
             <m.p variants={staggerItem}>
-              I’m a full-stack software developer and IT support specialist who builds applications end to end—from database design to cloud deployment and DNS management in AWS—using C#, ASP.NET Core, React, Vue.js, Node.js, TypeScript, Python, PHP, SQL Server, PostgreSQL, MySQL, MongoDB, and Docker. I’m completing the Computer Programming and Analysis advanced diploma (co-op) at Fanshawe College in December 2026.
+              I’m a full-stack software developer and IT support specialist who builds web, enterprise, and mobile applications end to end—from database design to cloud deployment and DNS management in AWS—using C#, ASP.NET Core, Java, Spring Boot, Angular, React, Vue.js, Node.js, TypeScript, Kotlin (Android), Python, PHP, SQL Server, PostgreSQL, MySQL, MongoDB, and Docker. I’m completing the Computer Programming and Analysis advanced diploma (co-op) at Fanshawe College in December 2026.
             </m.p>
             <m.p variants={staggerItem}>
               Alongside software development, I bring 5 years of hands-on computer sales and service experience diagnosing hardware and OS problems, setting up Windows and drivers, and upgrading RAM and drives, plus 15+ years in manufacturing quality assurance and production leadership as a calm first responder who traces problems to their root cause, documents fixes, and explains them clearly in plain language.
